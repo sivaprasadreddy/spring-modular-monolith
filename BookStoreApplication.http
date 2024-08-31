@@ -1,0 +1,16 @@
+POST http://127.0.0.1:8080/api/orders
+Content-Type: application/json
+
+{
+  "customerId": 999,
+  "deliveryAddress": "Hyderabad",
+  "item": {
+    "code": "P100",
+    "name": "Product 1",
+    "price": "34.0",
+    "quantity": 1
+  }
+}
+
+###
+

@@ -8,17 +8,16 @@ import com.sivalabs.bookstore.customers.CustomerService;
 import com.sivalabs.bookstore.orders.domain.OrderService;
 import com.sivalabs.bookstore.orders.domain.models.CreateOrderRequest;
 import com.sivalabs.bookstore.orders.domain.models.CreateOrderResponse;
-import com.sivalabs.bookstore.orders.domain.models.CustomerDTO;
 import com.sivalabs.bookstore.orders.domain.models.OrderItem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.modulith.test.ApplicationModuleTest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
@@ -43,10 +42,10 @@ class OrderControllerTests {
     @Autowired
     private OrderService orderService;
 
-    @MockBean
+    @MockitoBean
     ProductService productService;
 
-    @MockBean
+    @MockitoBean
     CustomerService customerService;
 
     @BeforeEach
