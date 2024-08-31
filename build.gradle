@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.4.0-M2'
 	id 'io.spring.dependency-management' version '1.1.6'
+	id 'com.diffplug.spotless' version '6.25.0'
 }
 
 group = 'com.sivalabs'
@@ -61,4 +62,29 @@ dependencyManagement {
 
 tasks.named('test') {
 	useJUnitPlatform()
+	testLogging {
+		events = ['PASSED', 'FAILED', 'SKIPPED']
+		showStandardStreams = true
+		exceptionFormat = 'FULL'
+	}
 }
+
+spotless {
+	java {
+		target("src/*/java/**/*.java")
+		importOrder()
+		removeUnusedImports()
+		palantirJavaFormat("2.39.0")
+		formatAnnotations()
+	}
+}
+
+springBoot {
+	buildInfo()
+}
+
+tasks.named("bootBuildImage") {
+	builder = "dashaun/builder:tiny"
+	imageName = "sivaprasadreddy/${project.name}"
+}
+

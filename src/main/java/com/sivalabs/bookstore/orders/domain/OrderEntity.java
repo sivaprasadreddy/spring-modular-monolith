@@ -14,7 +14,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
-
 import java.time.LocalDateTime;
 
 @Entity
@@ -38,10 +37,10 @@ class OrderEntity {
     @Embedded
     @AttributeOverrides(
             value = {
-                    @AttributeOverride(name = "code", column = @Column(name = "product_code")),
-                    @AttributeOverride(name = "name", column = @Column(name = "product_name")),
-                    @AttributeOverride(name = "price", column = @Column(name = "product_price")),
-                    @AttributeOverride(name = "quantity", column = @Column(name = "quantity"))
+                @AttributeOverride(name = "code", column = @Column(name = "product_code")),
+                @AttributeOverride(name = "name", column = @Column(name = "product_name")),
+                @AttributeOverride(name = "price", column = @Column(name = "product_price")),
+                @AttributeOverride(name = "quantity", column = @Column(name = "quantity"))
             })
     private OrderItem orderItem;
 
@@ -54,11 +53,17 @@ class OrderEntity {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public OrderEntity(){
-    }
+    public OrderEntity() {}
 
-    public OrderEntity(Long id, String orderNumber, Long customerId, String deliveryAddress, OrderItem orderItem, OrderStatus status,
-                       LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public OrderEntity(
+            Long id,
+            String orderNumber,
+            Long customerId,
+            String deliveryAddress,
+            OrderItem orderItem,
+            OrderStatus status,
+            LocalDateTime createdAt,
+            LocalDateTime updatedAt) {
         this.id = id;
         this.orderNumber = orderNumber;
         this.customerId = customerId;

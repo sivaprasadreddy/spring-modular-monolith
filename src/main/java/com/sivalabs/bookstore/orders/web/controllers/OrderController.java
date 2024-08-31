@@ -7,6 +7,7 @@ import com.sivalabs.bookstore.orders.domain.models.CreateOrderResponse;
 import com.sivalabs.bookstore.orders.domain.models.OrderDTO;
 import com.sivalabs.bookstore.orders.domain.models.OrderView;
 import jakarta.validation.Valid;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -17,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -40,7 +39,8 @@ class OrderController {
     @GetMapping(value = "/{orderNumber}")
     OrderDTO getOrder(@PathVariable(value = "orderNumber") String orderNumber) {
         log.info("Fetching order by orderNumber: {}", orderNumber);
-        return orderService.findOrder(orderNumber)
+        return orderService
+                .findOrder(orderNumber)
                 .orElseThrow(() -> OrderNotFoundException.forOrderNumber(orderNumber));
     }
 

@@ -8,5 +8,4 @@ public record OrderDTO(
         CustomerDTO customer,
         String deliveryAddress,
         OrderStatus status,
-        LocalDateTime createdAt) {
-}
+        LocalDateTime createdAt) {}

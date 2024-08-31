@@ -1,16 +1,16 @@
 package com.sivalabs.bookstore.customers.domain;
 
 import com.sivalabs.bookstore.customers.Customer;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 public interface CustomerRepository extends JpaRepository<CustomerEntity, Long> {
 
-    @Query("""
+    @Query(
+            """
         select new com.sivalabs.bookstore.customers.Customer(
                 c.id, c.name, c.email, c.phone)
         from CustomerEntity c
@@ -18,7 +18,8 @@ public interface CustomerRepository extends JpaRepository<CustomerEntity, Long> 
         """)
     Optional<Customer> findByCustomerId(Long id);
 
-    @Query("""
+    @Query(
+            """
         select new com.sivalabs.bookstore.customers.Customer(
                 c.id, c.name, c.email, c.phone)
         from CustomerEntity c

@@ -30,9 +30,8 @@ class ProductController {
     }
 
     @GetMapping("/{code}")
-    Product getProductByCode(@PathVariable String code){
+    Product getProductByCode(@PathVariable String code) {
         log.info("Fetching product by code: {}", code);
-        return productService.getByCode(code)
-                .orElseThrow(() -> ProductNotFoundException.forCode(code));
+        return productService.getByCode(code).orElseThrow(() -> ProductNotFoundException.forCode(code));
     }
 }

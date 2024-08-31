@@ -2,12 +2,11 @@ package com.sivalabs.bookstore.customers.domain;
 
 import com.sivalabs.bookstore.customers.Customer;
 import com.sivalabs.bookstore.customers.CustomerService;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional(readOnly = true)

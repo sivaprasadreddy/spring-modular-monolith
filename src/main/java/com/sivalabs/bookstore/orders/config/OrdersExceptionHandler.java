@@ -2,13 +2,12 @@ package com.sivalabs.bookstore.orders.config;
 
 import com.sivalabs.bookstore.orders.domain.InvalidOrderException;
 import com.sivalabs.bookstore.orders.domain.OrderNotFoundException;
+import java.time.Instant;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
-import java.time.Instant;
 
 @RestControllerAdvice
 class OrdersExceptionHandler extends ResponseEntityExceptionHandler {

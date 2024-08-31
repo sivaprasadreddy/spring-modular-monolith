@@ -10,7 +10,6 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-
 import java.math.BigDecimal;
 
 @Entity
@@ -31,13 +30,11 @@ class ProductEntity {
 
     private String description;
 
-    @NotNull(message = "Product price is required")
-    @DecimalMin("0.1")
+    @NotNull(message = "Product price is required") @DecimalMin("0.1")
     @Column(nullable = false)
     private BigDecimal price;
 
-    public ProductEntity() {
-    }
+    public ProductEntity() {}
 
     public ProductEntity(Long id, String code, String name, String description, BigDecimal price) {
         this.id = id;

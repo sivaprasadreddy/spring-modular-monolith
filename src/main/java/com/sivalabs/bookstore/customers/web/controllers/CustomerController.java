@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/customers")
 class CustomerController {
     private static final Logger log = LoggerFactory.getLogger(CustomerController.class);
-    
+
     private final CustomerService customerService;
 
     CustomerController(CustomerService CustomerService) {
@@ -22,9 +22,8 @@ class CustomerController {
     }
 
     @GetMapping("/{id}")
-    Customer getCustomerById(@PathVariable Long id){
+    Customer getCustomerById(@PathVariable Long id) {
         log.info("Fetching Customer by id: {}", id);
-        return customerService.getById(id)
-                .orElseThrow(() -> CustomerNotFoundException.forId(id));
+        return customerService.getById(id).orElseThrow(() -> CustomerNotFoundException.forId(id));
     }
 }

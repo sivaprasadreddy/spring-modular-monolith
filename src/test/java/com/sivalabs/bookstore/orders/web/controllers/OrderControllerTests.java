@@ -1,5 +1,12 @@
 package com.sivalabs.bookstore.orders.web.controllers;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.sivalabs.bookstore.TestcontainersConfiguration;
 import com.sivalabs.bookstore.catalog.Product;
 import com.sivalabs.bookstore.catalog.ProductService;
@@ -9,6 +16,10 @@ import com.sivalabs.bookstore.orders.domain.OrderService;
 import com.sivalabs.bookstore.orders.domain.models.CreateOrderRequest;
 import com.sivalabs.bookstore.orders.domain.models.CreateOrderResponse;
 import com.sivalabs.bookstore.orders.domain.models.OrderItem;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
@@ -19,18 +30,6 @@ import org.springframework.http.MediaType;
 import org.springframework.modulith.test.ApplicationModuleTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ApplicationModuleTest(webEnvironment = RANDOM_PORT)
 @Import(TestcontainersConfiguration.class)
@@ -56,14 +55,17 @@ class OrderControllerTests {
         Customer customer2 = new Customer(2L, "Prasad", "prasad@gmail.com", "888888888");
         Customer customer3 = new Customer(3L, "Ramu", "ramu@gmail.com", "9999999");
         BDDMockito.given(customerService.getById(1L)).willReturn(Optional.of(customer1));
-        BDDMockito.given(customerService.getByIds(Set.of(1L, 2L, 3L))).willReturn(List.of(customer1, customer2, customer3));
+        BDDMockito.given(customerService.getByIds(Set.of(1L, 2L, 3L)))
+                .willReturn(List.of(customer1, customer2, customer3));
     }
 
     @Test
     void shouldCreateOrderSuccessfully() throws Exception {
-        mockMvc.perform(post("/api/orders")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("""
+        mockMvc.perform(
+                        post("/api/orders")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(
+                                        """
                     {
                         "customerId": 1,
                         "deliveryAddress": "James, Bangalore, India",
@@ -74,8 +76,8 @@ class OrderControllerTests {
                                 "quantity": 1
                         }
                     }
-                    """)
-        ).andExpect(status().isCreated());
+                    """))
+                .andExpect(status().isCreated());
     }
 
     @Test
@@ -85,7 +87,7 @@ class OrderControllerTests {
     }
 
     @Test
-    void shouldGetOrderSuccessfully() throws  Exception {
+    void shouldGetOrderSuccessfully() throws Exception {
         CreateOrderRequest request = buildCreateOrderRequest();
         CreateOrderResponse createOrderResponse = orderService.createOrder(request);
 
@@ -95,12 +97,11 @@ class OrderControllerTests {
     }
 
     @Test
-    void shouldGetOrdersSuccessfully() throws  Exception {
+    void shouldGetOrdersSuccessfully() throws Exception {
         CreateOrderRequest request = buildCreateOrderRequest();
         orderService.createOrder(request);
 
-        mockMvc.perform(get("/api/orders"))
-                .andExpect(status().isOk());
+        mockMvc.perform(get("/api/orders")).andExpect(status().isOk());
     }
 
     private static CreateOrderRequest buildCreateOrderRequest() {
