@@ -1,8 +1,8 @@
-POST http://127.0.0.1:8080/api/orders
+POST http://localhost:8080/api/orders
 Content-Type: application/json
 
 {
-  "customerId": 999,
+  "customerId": 1233,
   "deliveryAddress": "Hyderabad",
   "item": {
     "code": "P100",
