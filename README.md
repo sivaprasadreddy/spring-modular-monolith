@@ -1,2 +1,2 @@
-# spring-modular-monolith-ddd
-An e-commerce application following Spring Modulith and DDD
+# spring-modular-monolith
+An e-commerce application following Spring Modulith

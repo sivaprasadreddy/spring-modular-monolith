@@ -4,4 +4,4 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
-rootProject.name = 'spring-modular-monolith-ddd'
+rootProject.name = 'spring-modular-monolith'
