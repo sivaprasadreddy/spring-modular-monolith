@@ -1,4 +1,4 @@
-name: Gradle Build
+name: Maven Build
 
 on:
   push:
@@ -15,10 +15,10 @@ jobs:
         with:
           java-version: 21
           distribution: 'temurin'
-          cache: 'gradle'
+          cache: 'maven'
 
-      - name: Make Gradle wrapper executable
-        run: chmod +x gradlew
+      - name: Make Maven wrapper executable
+        run: chmod +x mvnw
 
-      - name: Build with Gradle
-        run: ./gradlew build
+      - name: Build with Maven
+        run: ./mvnw -ntp verify

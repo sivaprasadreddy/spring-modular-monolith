@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class RabbitMQConfig {
+class RabbitMQConfig {
 
     public static final String EXCHANGE_NAME = "BookStoreExchange";
 
@@ -36,14 +36,14 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory, ObjectMapper objectMapper) {
+    RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory, ObjectMapper objectMapper) {
         final var rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(producerJackson2MessageConverter(objectMapper));
         return rabbitTemplate;
     }
 
     @Bean
-    public Jackson2JsonMessageConverter producerJackson2MessageConverter(ObjectMapper objectMapper) {
+    Jackson2JsonMessageConverter producerJackson2MessageConverter(ObjectMapper objectMapper) {
         return new Jackson2JsonMessageConverter(objectMapper);
     }
 }
