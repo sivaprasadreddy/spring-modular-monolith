@@ -3,6 +3,15 @@ name: Gradle Build
 on:
   push:
     branches: [ "**" ]
+    paths-ignore:
+      - '.gitignore'
+      - '.sdkmanrc'
+      - 'README.md'
+      - 'LICENSE'
+      - 'Taskfile.yml'
+      - 'renovate.json'
+      - 'k8s/**'
+      - 'kind/**'
 
 jobs:
   build:
