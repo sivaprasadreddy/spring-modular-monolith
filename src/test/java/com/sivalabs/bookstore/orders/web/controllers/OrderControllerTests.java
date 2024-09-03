@@ -1,5 +1,6 @@
 package com.sivalabs.bookstore.orders.web.controllers;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -13,6 +14,7 @@ import com.sivalabs.bookstore.catalog.ProductService;
 import com.sivalabs.bookstore.customers.Customer;
 import com.sivalabs.bookstore.customers.CustomerService;
 import com.sivalabs.bookstore.orders.domain.OrderService;
+import com.sivalabs.bookstore.orders.domain.events.OrderCreatedEvent;
 import com.sivalabs.bookstore.orders.domain.models.CreateOrderRequest;
 import com.sivalabs.bookstore.orders.domain.models.CreateOrderResponse;
 import com.sivalabs.bookstore.orders.domain.models.OrderItem;
@@ -28,6 +30,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.modulith.test.ApplicationModuleTest;
+import org.springframework.modulith.test.AssertablePublishedEvents;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -60,7 +63,7 @@ class OrderControllerTests {
     }
 
     @Test
-    void shouldCreateOrderSuccessfully() throws Exception {
+    void shouldCreateOrderSuccessfully(AssertablePublishedEvents events) throws Exception {
         mockMvc.perform(
                         post("/api/orders")
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -78,6 +81,11 @@ class OrderControllerTests {
                     }
                     """))
                 .andExpect(status().isCreated());
+
+        assertThat(events)
+                .contains(OrderCreatedEvent.class)
+                .matching(OrderCreatedEvent::customerId, 1L)
+                .matching(OrderCreatedEvent::productCode, "P100");
     }
 
     @Test
