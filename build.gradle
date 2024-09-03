@@ -54,7 +54,6 @@ dependencies {
 	testImplementation 'org.testcontainers:junit-jupiter'
 	testImplementation 'org.testcontainers:postgresql'
 	testImplementation 'org.testcontainers:rabbitmq'
-	testImplementation 'org.awaitility:awaitility'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
@@ -78,7 +77,7 @@ spotless {
 		target("src/*/java/**/*.java")
 		importOrder()
 		removeUnusedImports()
-		palantirJavaFormat("2.39.0")
+		palantirJavaFormat("2.50.0")
 		formatAnnotations()
 	}
 }
