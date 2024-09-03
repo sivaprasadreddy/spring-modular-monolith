@@ -1,5 +1,23 @@
 # spring-modular-monolith
-An e-commerce application following Spring Modulith
+An e-commerce application following Spring Modulith.
+
+![bookstore-modulith.png](bookstore-modulith.png)
+
+This application follows modular monolith architecture with the following modules:
+
+* **Catalog:** This module manages the catalog of products and store data in `catalog` schema.
+* **Customers:** This module implements the customer management and store data in `customers` schema.
+* **Orders:** This module implements the order management and store the data in `orders` schema.
+* **Inventory:** This module implements the inventory management and store the data in `inventory` schema.
+* **Notification:** This module handles the events published by other modules and sends notifications to the interested parties.
+
+**Module communication:**
+
+* **Orders** module invokes the **Catalog** modules public API to validate the order details
+* When an Order is successfully created, **Orders** module publishes **"OrderCreatedEvent"**
+* The **"OrderCreatedEvent"** will also be published to external broker like RabbitMQ. Other applications may consume and process those events.
+* **Inventory** module consumes "OrderCreatedEvent" and updates the stock level for the products.
+* **Notifications** module consumes "OrderCreatedEvent" and sends order confirmation email to the customer.
 
 ## Prerequisites
 * JDK 21
