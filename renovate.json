@@ -4,6 +4,6 @@
         "config:base"
     ],
     "schedule": [
-        "earlyMondays"
+        "before 4am on Monday"
     ]
 }
