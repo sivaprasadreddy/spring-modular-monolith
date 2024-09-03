@@ -40,6 +40,7 @@ $ curl -s "https://get.sdkman.io" | bash
 $ source "$HOME/.sdkman/bin/sdkman-init.sh"
 $ sdk install java 21.0.1-tem
 $ sdk install gradle
+$ sdk install maven
 ```
 
 Task is a task runner that we can use to run any arbitrary commands in easier way.
@@ -60,6 +61,18 @@ $ task --version
 ```
 
 ## Using `task` to perform various tasks:
+
+The default `Taskfile.yml` is configured to use Gradle.
+Another `Taskfile.maven.yml` is also created with Maven configuration.
+
+If you want to use Maven instead of Gradle, then add `-t Taskfile.maven.yml` for the `task` commands.
+
+For example: 
+
+```shell
+$ task test` // uses Gradle
+$ task -t Taskfile.maven.yml test` //uses Maven
+```
 
 ```shell
 # Run tests
