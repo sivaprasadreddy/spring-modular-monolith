@@ -22,5 +22,5 @@ public class TestcontainersConfiguration {
 
     @Container
     @ServiceConnection
-    static final RabbitMQContainer rabbitmq = new RabbitMQContainer(DockerImageName.parse("rabbitmq:3.13-alpine"));
+    static final RabbitMQContainer rabbitmq = new RabbitMQContainer(DockerImageName.parse("rabbitmq:4.0.2-alpine"));
 }

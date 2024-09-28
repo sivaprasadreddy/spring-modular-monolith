@@ -26,7 +26,7 @@ public class InventoryService {
         if (STOCK.containsKey(productCode)) {
             STOCK.put(productCode, STOCK.get(productCode) - quantity);
         }
-        System.out.println(STOCK);
+        log.info("Current Stock: {}", STOCK);
     }
 
     public Long getStockLevel(String productCode) {
