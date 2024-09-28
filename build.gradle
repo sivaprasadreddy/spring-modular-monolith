@@ -34,6 +34,10 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-web"
 	implementation "org.springframework.boot:spring-boot-starter-validation"
 	implementation "org.springframework.boot:spring-boot-starter-actuator"
+	runtimeOnly "io.micrometer:micrometer-registry-prometheus"
+	implementation "io.micrometer:micrometer-tracing-bridge-brave"
+	implementation "io.zipkin.reporter2:zipkin-reporter-brave"
+
 	implementation "org.springframework.boot:spring-boot-starter-data-jpa"
 	implementation "org.flywaydb:flyway-core"
 	implementation "org.flywaydb:flyway-database-postgresql"
@@ -45,6 +49,7 @@ dependencies {
 	implementation "org.springframework.modulith:spring-modulith-starter-jdbc"
 	implementation "org.springframework.modulith:spring-modulith-events-amqp"
 	runtimeOnly "org.springframework.modulith:spring-modulith-actuator"
+	runtimeOnly "org.springframework.modulith:spring-modulith-observability"
 
 	developmentOnly "org.springframework.boot:spring-boot-docker-compose"
 	developmentOnly "org.springframework.boot:spring-boot-devtools"

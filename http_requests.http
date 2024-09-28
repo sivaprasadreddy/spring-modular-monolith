@@ -1,3 +1,7 @@
+### Get Products
+GET http://127.0.0.1:8080/api/products
+
+###
 POST http://localhost:8080/api/orders
 Content-Type: application/json
 
