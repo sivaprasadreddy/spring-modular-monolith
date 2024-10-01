@@ -90,6 +90,12 @@ $ task stop
 $ task restart
 ```
 
+* Application URL: http://localhost:8080 
+* Actuator URL: http://localhost:8080/actuator 
+* Actuator URL for modulith: http://localhost:8080/actuator/modulith
+* RabbitMQ Admin URL: http://localhost:15672 (Credentials: guest/guest)
+* Zipkin URL: http://localhost:9411
+
 ## Deploying on k8s cluster
 * [Install kubectl](https://kubernetes.io/docs/tasks/tools/)
 * [Install kind](https://kind.sigs.k8s.io/docs/user/quick-start/)
