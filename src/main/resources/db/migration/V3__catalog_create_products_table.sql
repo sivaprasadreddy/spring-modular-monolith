@@ -7,6 +7,7 @@ create table products
     id bigint default nextval('catalog.product_id_seq') not null,
     code        text not null unique,
     name        text not null,
+    image_url   text,
     description text,
     price       numeric not null,
     primary key (id)

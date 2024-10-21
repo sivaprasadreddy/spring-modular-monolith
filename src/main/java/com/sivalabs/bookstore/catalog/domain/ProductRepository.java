@@ -12,7 +12,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
     @Query(
             """
         select new com.sivalabs.bookstore.catalog.Product(
-                p.code, p.name, p.description, p.price)
+                p.code, p.name, p.description, p.imageUrl, p.price)
         from ProductEntity p
         """)
     Page<Product> findAllBy(Pageable pageable);
@@ -20,7 +20,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
     @Query(
             """
         select new com.sivalabs.bookstore.catalog.Product(
-                p.code, p.name, p.description, p.price)
+                p.code, p.name, p.description, p.imageUrl, p.price)
         from ProductEntity p
         where p.code = :code
         """)

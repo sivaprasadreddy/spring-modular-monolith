@@ -50,7 +50,7 @@ class OrderControllerTests {
 
     @BeforeEach
     void setUp() {
-        Product product = new Product("P100", "The Hunger Games", "", new BigDecimal("34.0"));
+        Product product = new Product("P100", "The Hunger Games", "", null, new BigDecimal("34.0"));
         BDDMockito.given(productService.getByCode("P100")).willReturn(Optional.of(product));
         Customer customer1 = new Customer(1L, "Siva", "siva@gmail.com", "77777777");
         Customer customer2 = new Customer(2L, "Prasad", "prasad@gmail.com", "888888888");

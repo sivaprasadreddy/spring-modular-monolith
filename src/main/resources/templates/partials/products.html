@@ -1,0 +1,28 @@
+<div id="products" th:fragment="products" xmlns:hx="http://www.w3.org/1999/xhtml">
+    <div th:replace="~{partials/pagination :: pagination}"></div>
+    <div class="row row-cols-1 row-cols-md-5">
+        <div th:each="product : ${ productsPage.data}">
+            <div class="col mb-3">
+                <div class="card h-100 product">
+                    <img th:src="${product.imageUrl}"
+                         src="/images/books.png"
+                         alt="Product Image"
+                         class="card-img-top"
+                         height="300" width="200"
+                    />
+
+                    <div class="card-body">
+                        <h6 class="card-title"
+                            data-toggle="tooltip"
+                            data-placement="top"
+                            th:text="${product.getDisplayName()}">product.name</h6>
+                        <p class="card-text"
+                           data-toggle="tooltip"
+                           data-placement="top"
+                           th:text="${'Price: $'+product.price}">product.price</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
