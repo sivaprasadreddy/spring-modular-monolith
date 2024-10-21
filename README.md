@@ -62,16 +62,16 @@ $ task --version
 
 ## Using `task` to perform various tasks:
 
-The default `Taskfile.yml` is configured to use Gradle.
-Another `Taskfile.maven.yml` is also created with Maven configuration.
+The default `Taskfile.yml` is configured to use Maven.
+Another `Taskfile.gradle.yml` is also created with Gradle configuration.
 
-If you want to use Maven instead of Gradle, then add `-t Taskfile.maven.yml` for the `task` commands.
+If you want to use Gradle instead of Maven, then add `-t Taskfile.gradle.yml` for the `task` commands.
 
 For example: 
 
 ```shell
-$ task test` // uses Gradle
-$ task -t Taskfile.maven.yml test` //uses Maven
+$ task test` // uses Maven
+$ task -t Taskfile.gradle.yml test` //uses Gradle
 ```
 
 ```shell

@@ -2,7 +2,7 @@ version: '3'
 
 vars:
   GOOS: "{{default OS .GOOS}}"
-  MVNW: '{{if eq .GOOS "windows"}}mvnw.cmd{{else}}./mvnw{{end}}'
+  GRADLEW: '{{if eq .GOOS "windows"}}gradlew.bat{{else}}./gradlew{{end}}'
   SLEEP_CMD: '{{if eq .GOOS "windows"}}timeout{{else}}sleep{{end}}'
   IMAGE_NAME: 'sivaprasadreddy/spring-modular-monolith'
   DC_FILE: "compose.yml"
@@ -14,15 +14,15 @@ tasks:
   test:
     deps: [ format ]
     cmds:
-      - "{{.MVNW}} verify"
+      - "{{.GRADLEW}} build"
 
   format:
     cmds:
-      - "{{.MVNW}} spotless:apply"
+      - "{{.GRADLEW}} spotlessApply"
 
   build_image:
     cmds:
-      - "{{.MVNW}} clean compile spring-boot:build-image -DskipTests -DdockerImageName={{.IMAGE_NAME}}"
+      - "{{.GRADLEW}} -x test bootBuildImage --imageName={{.IMAGE_NAME}}"
 
   start:
     deps: [ build_image ]
