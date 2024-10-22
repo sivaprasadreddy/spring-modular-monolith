@@ -6,6 +6,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 import com.sivalabs.bookstore.TestcontainersConfiguration;
 import com.sivalabs.bookstore.inventory.internal.InventoryService;
 import com.sivalabs.bookstore.orders.domain.events.OrderCreatedEvent;
+import com.sivalabs.bookstore.orders.domain.models.Customer;
 import java.time.Duration;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,8 @@ class InventoryIntegrationTests {
 
     @Test
     void handleOrderCreatedEvent(Scenario scenario) {
-        scenario.publish(new OrderCreatedEvent(UUID.randomUUID().toString(), "P100", 2, 1L))
+        scenario.publish(new OrderCreatedEvent(
+                        UUID.randomUUID().toString(), "P100", 2, new Customer("Siva", "siva@gmail.com", "9987654")))
                 .andWaitAtMost(Duration.ofSeconds(1))
                 .andWaitForStateChange(() -> inventoryService.getStockLevel("P100"))
                 .andVerify(stockLevel -> assertThat(stockLevel).isEqualTo(98));

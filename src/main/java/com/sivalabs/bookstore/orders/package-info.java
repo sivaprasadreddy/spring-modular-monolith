@@ -1,2 +1,2 @@
-@org.springframework.modulith.ApplicationModule(allowedDependencies = {"catalog", "customers"})
+@org.springframework.modulith.ApplicationModule(allowedDependencies = {"catalog"})
 package com.sivalabs.bookstore.orders;

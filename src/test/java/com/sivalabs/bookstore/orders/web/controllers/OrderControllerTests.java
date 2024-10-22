@@ -11,17 +11,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.sivalabs.bookstore.TestcontainersConfiguration;
 import com.sivalabs.bookstore.catalog.Product;
 import com.sivalabs.bookstore.catalog.ProductService;
-import com.sivalabs.bookstore.customers.Customer;
-import com.sivalabs.bookstore.customers.CustomerService;
-import com.sivalabs.bookstore.orders.domain.OrderService;
+import com.sivalabs.bookstore.orders.OrderService;
 import com.sivalabs.bookstore.orders.domain.events.OrderCreatedEvent;
 import com.sivalabs.bookstore.orders.domain.models.CreateOrderRequest;
 import com.sivalabs.bookstore.orders.domain.models.CreateOrderResponse;
+import com.sivalabs.bookstore.orders.domain.models.Customer;
 import com.sivalabs.bookstore.orders.domain.models.OrderItem;
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
@@ -45,19 +42,10 @@ class OrderControllerTests {
     @MockitoBean
     ProductService productService;
 
-    @MockitoBean
-    CustomerService customerService;
-
     @BeforeEach
     void setUp() {
         Product product = new Product("P100", "The Hunger Games", "", null, new BigDecimal("34.0"));
         BDDMockito.given(productService.getByCode("P100")).willReturn(Optional.of(product));
-        Customer customer1 = new Customer(1L, "Siva", "siva@gmail.com", "77777777");
-        Customer customer2 = new Customer(2L, "Prasad", "prasad@gmail.com", "888888888");
-        Customer customer3 = new Customer(3L, "Ramu", "ramu@gmail.com", "9999999");
-        BDDMockito.given(customerService.getById(1L)).willReturn(Optional.of(customer1));
-        BDDMockito.given(customerService.getByIds(Set.of(1L, 2L, 3L)))
-                .willReturn(List.of(customer1, customer2, customer3));
     }
 
     @Test
@@ -67,22 +55,26 @@ class OrderControllerTests {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(
                                         """
-                    {
-                        "customerId": 1,
-                        "deliveryAddress": "James, Bangalore, India",
-                        "item":{
-                                "code": "P100",
-                                "name": "The Hunger Games",
-                                "price": 34.0,
-                                "quantity": 1
-                        }
-                    }
-                    """))
+                                                {
+                                                    "customer": {
+                                                        "name": "Siva",
+                                                        "email": "siva123@gmail.com",
+                                                        "phone": "9876523456"
+                                                   },
+                                                    "deliveryAddress": "James, Bangalore, India",
+                                                    "item":{
+                                                            "code": "P100",
+                                                            "name": "The Hunger Games",
+                                                            "price": 34.0,
+                                                            "quantity": 1
+                                                    }
+                                                }
+                                                """))
                 .andExpect(status().isCreated());
 
         assertThat(events)
                 .contains(OrderCreatedEvent.class)
-                .matching(OrderCreatedEvent::customerId, 1L)
+                .matching(e -> e.customer().email(), "siva123@gmail.com")
                 .matching(OrderCreatedEvent::productCode, "P100");
     }
 
@@ -112,6 +104,7 @@ class OrderControllerTests {
 
     private static CreateOrderRequest buildCreateOrderRequest() {
         OrderItem item = new OrderItem("P100", "The Hunger Games", new BigDecimal("34.0"), 1);
-        return new CreateOrderRequest(1L, "Siva, Hyderabad, India", item);
+        return new CreateOrderRequest(
+                new Customer("Siva", "siva@gmail.com", "77777777"), "Siva, Hyderabad, India", item);
     }
 }

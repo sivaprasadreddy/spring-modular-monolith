@@ -29,6 +29,6 @@ public class TestcontainersConfiguration {
     @Bean
     @ServiceConnection(name = "openzipkin/zipkin")
     GenericContainer<?> zipkinContainer() {
-        return new GenericContainer<>(DockerImageName.parse("openzipkin/zipkin:3.4.1")).withExposedPorts(9411);
+        return new GenericContainer<>(DockerImageName.parse("openzipkin/zipkin:3.4.2")).withExposedPorts(9411);
     }
 }

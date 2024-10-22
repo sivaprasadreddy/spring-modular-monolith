@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<body>
+<div layout:fragment="content">
+    <div>
+        <h2>All Orders</h2>
+        <hr/>
+        <div class="pb-3">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Order ID</th>
+                    <th scope="col">Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <th:block th:insert="~{partials/orders}"/>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

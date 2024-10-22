@@ -1,0 +1,4 @@
+<tr th:each="order : ${orders}">
+    <td><a th:href="${'/orders/'+order.orderNumber}" th:text="${order.orderNumber}">OrderNumber</a></td>
+    <td th:text="${order.status}">status</td>
+</tr>

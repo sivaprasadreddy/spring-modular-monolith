@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<body>
+<div layout:fragment="content">
+    <div th:insert="~{partials/cart}"> </div>
+    <div th:if="${cart.item != null }">
+        <div class="col-md-8 offset-md-2">
+        <div th:insert="~{partials/order-form}"> </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

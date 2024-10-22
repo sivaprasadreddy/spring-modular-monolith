@@ -1,0 +1,45 @@
+<div id="cart" hx-swap-oob="true">
+    <div class="col-md-8 offset-md-2">
+        <div th:if="${cart.item == null }">
+            <h3>Your cart is empty. <a href="/">Continue shopping</a></h3>
+        </div>
+        <div th:if="${cart.item != null }" class="pb-3">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Sub Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>[[${cart.item.name}]]</td>
+                        <td>[[${cart.item.price}]]</td>
+                        <td>
+                            <form>
+                                <input type="hidden" name="code" th:value="${cart.item.code}"/>
+                                <input type="number" min="0"
+                                   name="quantity"
+                                   th:value="${cart.item.quantity}"
+                                    hx-post="/update-cart"
+                                    hx-swap="none"
+                                />
+                            </form>
+                        </td>
+                        <td>[[${cart.item.quantity * cart.item.price}]]</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th colspan="3"></th>
+                    <th colspan="1" style="text-align: left">
+                        Total Amount: [[${cart.totalAmount}]]
+                    </th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>

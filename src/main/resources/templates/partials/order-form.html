@@ -1,0 +1,32 @@
+<form class="row g-3" method="post" th:action="@{/orders}">
+    <div class="col-md-6">
+        <label for="customerName" class="form-label">Customer Name</label>
+        <input type="text" class="form-control"
+               id="customerName"
+               name="customer.name"
+               value=""/>
+    </div>
+    <div class="col-md-6">
+        <label for="customerEmail" class="form-label">Customer Email</label>
+        <input type="email" class="form-control"
+               id="customerEmail"
+               name="customer.email"
+               value="">
+    </div>
+    <div class="col-md-6">
+        <label for="customerPhone" class="form-label">Customer Phone</label>
+        <input type="text" class="form-control"
+               id="customerPhone"
+               name="customer.phone"
+               value="">
+    </div>
+    <div class="col-6">
+        <label for="deliveryAddress" class="form-label">Delivery Address</label>
+        <input class="form-control"
+               id="deliveryAddress"
+               name="deliveryAddress"/>
+    </div>
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Place Order</button>
+    </div>
+</form>

@@ -1,4 +1,4 @@
-package com.sivalabs.bookstore.orders.domain;
+package com.sivalabs.bookstore.orders;
 
 public class InvalidOrderException extends RuntimeException {
 

@@ -1,5 +1,6 @@
 package com.sivalabs.bookstore.orders.domain;
 
+import com.sivalabs.bookstore.orders.domain.models.Customer;
 import com.sivalabs.bookstore.orders.domain.models.OrderItem;
 import com.sivalabs.bookstore.orders.domain.models.OrderStatus;
 import jakarta.persistence.AttributeOverride;
@@ -28,8 +29,14 @@ class OrderEntity {
     @Column(nullable = false, unique = true)
     private String orderNumber;
 
-    @Column(nullable = false)
-    private Long customerId;
+    @Embedded
+    @AttributeOverrides(
+            value = {
+                @AttributeOverride(name = "name", column = @Column(name = "customer_name")),
+                @AttributeOverride(name = "email", column = @Column(name = "customer_email")),
+                @AttributeOverride(name = "phone", column = @Column(name = "customer_phone"))
+            })
+    private Customer customer;
 
     @Column(nullable = false)
     private String deliveryAddress;
@@ -58,7 +65,7 @@ class OrderEntity {
     public OrderEntity(
             Long id,
             String orderNumber,
-            Long customerId,
+            Customer customer,
             String deliveryAddress,
             OrderItem orderItem,
             OrderStatus status,
@@ -66,7 +73,7 @@ class OrderEntity {
             LocalDateTime updatedAt) {
         this.id = id;
         this.orderNumber = orderNumber;
-        this.customerId = customerId;
+        this.customer = customer;
         this.deliveryAddress = deliveryAddress;
         this.orderItem = orderItem;
         this.status = status;
@@ -90,12 +97,12 @@ class OrderEntity {
         this.orderNumber = orderNumber;
     }
 
-    public Long getCustomerId() {
-        return customerId;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public String getDeliveryAddress() {

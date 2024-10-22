@@ -8,14 +8,14 @@ This application follows modular monolith architecture with the following module
 
 * **Common:** This module contains the code that is shared by all modules.
 * **Catalog:** This module manages the catalog of products and store data in `catalog` schema.
-* **Customers:** This module implements the customer management and store data in `customers` schema.
 * **Orders:** This module implements the order management and store the data in `orders` schema.
 * **Inventory:** This module implements the inventory management and store the data in `inventory` schema.
 * **Notifications:** This module handles the events published by other modules and sends notifications to the interested parties.
+* **Webapp:** This module implements web UI using Thymeleaf, HTMX and Bootstrap. 
 
 **Goals:**
 * Implement each module as independently as possible.
-* Prefer event driven communication over direct module dependency wherever applicable.
+* Prefer event-driven communication instead of direct module dependency wherever applicable.
 * Store data managed by each module in an isolated manner by using different schema or database.
 * Each module should be testable by loading only module-specific components.
 
@@ -26,7 +26,7 @@ This application follows modular monolith architecture with the following module
 * When an Order is successfully created, **Orders** module publishes **"OrderCreatedEvent"**
 * The **"OrderCreatedEvent"** will also be published to external broker like RabbitMQ. Other applications may consume and process those events.
 * **Inventory** module consumes "OrderCreatedEvent" and updates the stock level for the products.
-* **Notifications** module consumes "OrderCreatedEvent" and sends order confirmation email to the customer.
+* **Notifications** module consumes "OrderCreatedEvent" and sends an order confirmation email to the customer.
 
 ## Prerequisites
 * JDK 21
@@ -105,7 +105,7 @@ $ brew install kubectl
 $ brew install kind
 ```
 
-Create KinD cluster and deploy app.
+Create a KinD cluster and deploy an app.
 
 ```shell
 # Create KinD cluster
