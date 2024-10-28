@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/products")
-class ProductController {
-    private static final Logger log = LoggerFactory.getLogger(ProductController.class);
+class ProductRestController {
+    private static final Logger log = LoggerFactory.getLogger(ProductRestController.class);
 
     private final ProductService productService;
 
-    ProductController(ProductService productService) {
+    ProductRestController(ProductService productService) {
         this.productService = productService;
     }
 

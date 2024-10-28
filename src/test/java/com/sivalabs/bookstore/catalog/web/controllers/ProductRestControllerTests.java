@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @ApplicationModuleTest(webEnvironment = RANDOM_PORT, classes = TestcontainersConfiguration.class)
 @AutoConfigureMockMvc
 @Sql("/test-products-data.sql")
-class ProductControllerTests {
+class ProductRestControllerTests {
     @Autowired
     private MockMvc mockMvc;
 

@@ -21,12 +21,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/orders")
-class OrderController {
-    private static final Logger log = LoggerFactory.getLogger(OrderController.class);
+class OrderRestController {
+    private static final Logger log = LoggerFactory.getLogger(OrderRestController.class);
 
     private final OrderService orderService;
 
-    OrderController(OrderService orderService) {
+    OrderRestController(OrderService orderService) {
         this.orderService = orderService;
     }
 
