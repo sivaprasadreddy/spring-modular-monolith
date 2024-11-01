@@ -26,7 +26,6 @@ repositories {
 }
 
 ext {
-	set("springModulithVersion", "1.3.0-RC1")
 	set("datasourceMicrometerSpringBootVersion", "1.0.5")
 }
 
@@ -47,11 +46,6 @@ dependencies {
 	runtimeOnly "org.postgresql:postgresql"
 
 	implementation "org.springframework.boot:spring-boot-starter-amqp"
-	implementation "org.springframework.modulith:spring-modulith-starter-core"
-	implementation "org.springframework.modulith:spring-modulith-starter-jdbc"
-	implementation "org.springframework.modulith:spring-modulith-events-amqp"
-	runtimeOnly "org.springframework.modulith:spring-modulith-actuator"
-	runtimeOnly "org.springframework.modulith:spring-modulith-observability"
 
 	implementation "org.springframework.boot:spring-boot-starter-thymeleaf"
 	implementation "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect"
@@ -65,18 +59,11 @@ dependencies {
 
 	testImplementation "org.springframework.boot:spring-boot-starter-test"
 	testImplementation "org.springframework.amqp:spring-rabbit-test"
-	testImplementation "org.springframework.modulith:spring-modulith-starter-test"
 	testImplementation "org.springframework.boot:spring-boot-testcontainers"
 	testImplementation "org.testcontainers:junit-jupiter"
 	testImplementation "org.testcontainers:postgresql"
 	testImplementation "org.testcontainers:rabbitmq"
 	testRuntimeOnly "org.junit.platform:junit-platform-launcher"
-}
-
-dependencyManagement {
-	imports {
-		mavenBom "org.springframework.modulith:spring-modulith-bom:${springModulithVersion}"
-	}
 }
 
 tasks.named("test") {
@@ -106,4 +93,3 @@ tasks.named("bootBuildImage") {
 	builder = "dashaun/builder:tiny"
 	imageName = "sivaprasadreddy/${project.name}"
 }
-
