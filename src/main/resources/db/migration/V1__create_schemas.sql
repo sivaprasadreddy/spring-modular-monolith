@@ -1,3 +1,2 @@
 CREATE SCHEMA catalog;
 CREATE SCHEMA orders;
-CREATE SCHEMA events;
