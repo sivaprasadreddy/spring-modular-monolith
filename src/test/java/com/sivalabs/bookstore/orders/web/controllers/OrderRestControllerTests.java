@@ -1,6 +1,5 @@
 package com.sivalabs.bookstore.orders.web.controllers;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
@@ -10,10 +9,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.sivalabs.bookstore.TestcontainersConfiguration;
-import com.sivalabs.bookstore.catalog.Product;
-import com.sivalabs.bookstore.catalog.ProductService;
-import com.sivalabs.bookstore.orders.OrderService;
-import com.sivalabs.bookstore.orders.domain.events.OrderCreatedEvent;
+import com.sivalabs.bookstore.catalog.domain.Product;
+import com.sivalabs.bookstore.catalog.domain.ProductService;
+import com.sivalabs.bookstore.orders.domain.OrderService;
 import com.sivalabs.bookstore.orders.domain.models.CreateOrderRequest;
 import com.sivalabs.bookstore.orders.domain.models.CreateOrderResponse;
 import com.sivalabs.bookstore.orders.domain.models.Customer;
@@ -24,13 +22,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.modulith.test.ApplicationModuleTest;
-import org.springframework.modulith.test.AssertablePublishedEvents;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-@ApplicationModuleTest(webEnvironment = RANDOM_PORT, classes = TestcontainersConfiguration.class)
+@SpringBootTest(webEnvironment = RANDOM_PORT, classes = TestcontainersConfiguration.class)
 @AutoConfigureMockMvc
 class OrderRestControllerTests {
     @Autowired
@@ -49,7 +46,7 @@ class OrderRestControllerTests {
     }
 
     @Test
-    void shouldCreateOrderSuccessfully(AssertablePublishedEvents events) throws Exception {
+    void shouldCreateOrderSuccessfully() throws Exception {
         mockMvc.perform(
                         post("/api/orders")
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -71,11 +68,6 @@ class OrderRestControllerTests {
                                                 }
                                                 """))
                 .andExpect(status().isCreated());
-
-        assertThat(events)
-                .contains(OrderCreatedEvent.class)
-                .matching(e -> e.customer().email(), "siva123@gmail.com")
-                .matching(OrderCreatedEvent::productCode, "P100");
     }
 
     @Test

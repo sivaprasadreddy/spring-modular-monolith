@@ -1,4 +1,4 @@
-package com.sivalabs.bookstore.catalog;
+package com.sivalabs.bookstore.catalog.domain;
 
 import java.math.BigDecimal;
 

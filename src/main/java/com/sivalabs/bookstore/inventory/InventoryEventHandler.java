@@ -4,7 +4,7 @@ import com.sivalabs.bookstore.inventory.internal.InventoryService;
 import com.sivalabs.bookstore.orders.domain.events.OrderCreatedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.modulith.events.ApplicationModuleListener;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,7 +16,7 @@ class InventoryEventHandler {
         this.inventoryService = inventoryService;
     }
 
-    @ApplicationModuleListener
+    @EventListener
     void handle(OrderCreatedEvent event) {
         log.info("[Inventory]: Received order created event: {}", event);
         inventoryService.decreaseStockLevel(event.productCode(), event.quantity());

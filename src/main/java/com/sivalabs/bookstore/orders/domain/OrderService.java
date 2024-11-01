@@ -1,8 +1,6 @@
 package com.sivalabs.bookstore.orders.domain;
 
-import com.sivalabs.bookstore.catalog.ProductService;
-import com.sivalabs.bookstore.orders.InvalidOrderException;
-import com.sivalabs.bookstore.orders.OrderService;
+import com.sivalabs.bookstore.catalog.domain.ProductService;
 import com.sivalabs.bookstore.orders.domain.events.OrderCreatedEvent;
 import com.sivalabs.bookstore.orders.domain.models.CreateOrderRequest;
 import com.sivalabs.bookstore.orders.domain.models.CreateOrderResponse;
@@ -20,21 +18,20 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-class OrderServiceImpl implements OrderService {
-    private static final Logger log = LoggerFactory.getLogger(OrderServiceImpl.class);
+public class OrderService {
+    private static final Logger log = LoggerFactory.getLogger(OrderService.class);
 
     private final OrderRepository orderRepository;
     private final ProductService productService;
     private final ApplicationEventPublisher eventPublisher;
 
-    OrderServiceImpl(
+    OrderService(
             OrderRepository orderRepository, ProductService productService, ApplicationEventPublisher eventPublisher) {
         this.orderRepository = orderRepository;
         this.productService = productService;
         this.eventPublisher = eventPublisher;
     }
 
-    @Override
     public CreateOrderResponse createOrder(CreateOrderRequest request) {
         validate(request);
         OrderEntity newOrder = OrderMapper.convertToEntity(request);
@@ -59,7 +56,6 @@ class OrderServiceImpl implements OrderService {
         }
     }
 
-    @Override
     public Optional<OrderDTO> findOrder(String orderNumber) {
         Optional<OrderEntity> byOrderNumber = orderRepository.findByOrderNumber(orderNumber);
         if (byOrderNumber.isEmpty()) {
@@ -70,7 +66,6 @@ class OrderServiceImpl implements OrderService {
         return Optional.of(orderDTO);
     }
 
-    @Override
     public List<OrderView> findOrders() {
         Sort sort = Sort.by("id").descending();
         var orders = orderRepository.findAllBy(sort);

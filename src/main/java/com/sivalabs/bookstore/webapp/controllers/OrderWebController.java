@@ -1,7 +1,7 @@
 package com.sivalabs.bookstore.webapp.controllers;
 
-import com.sivalabs.bookstore.orders.OrderNotFoundException;
-import com.sivalabs.bookstore.orders.OrderService;
+import com.sivalabs.bookstore.orders.domain.OrderNotFoundException;
+import com.sivalabs.bookstore.orders.domain.OrderService;
 import com.sivalabs.bookstore.orders.domain.models.*;
 import com.sivalabs.bookstore.webapp.models.Cart;
 import com.sivalabs.bookstore.webapp.models.OrderForm;

@@ -1,7 +1,5 @@
 package com.sivalabs.bookstore.catalog.domain;
 
-import com.sivalabs.bookstore.catalog.Product;
-import com.sivalabs.bookstore.catalog.ProductService;
 import com.sivalabs.bookstore.common.models.PagedResult;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -13,11 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional(readOnly = true)
-public class ProductServiceImpl implements ProductService {
+public class ProductService {
     private static final int PRODUCT_PAGE_SIZE = 10;
     private final ProductRepository repo;
 
-    ProductServiceImpl(ProductRepository repo) {
+    ProductService(ProductRepository repo) {
         this.repo = repo;
     }
 

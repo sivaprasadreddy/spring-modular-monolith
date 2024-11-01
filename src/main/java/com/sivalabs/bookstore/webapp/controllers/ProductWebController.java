@@ -1,7 +1,7 @@
 package com.sivalabs.bookstore.webapp.controllers;
 
-import com.sivalabs.bookstore.catalog.Product;
-import com.sivalabs.bookstore.catalog.ProductService;
+import com.sivalabs.bookstore.catalog.domain.Product;
+import com.sivalabs.bookstore.catalog.domain.ProductService;
 import com.sivalabs.bookstore.common.models.PagedResult;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
 import org.slf4j.Logger;

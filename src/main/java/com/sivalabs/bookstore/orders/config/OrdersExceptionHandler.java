@@ -1,7 +1,7 @@
 package com.sivalabs.bookstore.orders.config;
 
-import com.sivalabs.bookstore.orders.InvalidOrderException;
-import com.sivalabs.bookstore.orders.OrderNotFoundException;
+import com.sivalabs.bookstore.orders.domain.InvalidOrderException;
+import com.sivalabs.bookstore.orders.domain.OrderNotFoundException;
 import java.time.Instant;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;

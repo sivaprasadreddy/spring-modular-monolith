@@ -10,11 +10,11 @@ import com.sivalabs.bookstore.TestcontainersConfiguration;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.modulith.test.ApplicationModuleTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
-@ApplicationModuleTest(webEnvironment = RANDOM_PORT, classes = TestcontainersConfiguration.class)
+@SpringBootTest(webEnvironment = RANDOM_PORT, classes = TestcontainersConfiguration.class)
 @AutoConfigureMockMvc
 @Sql("/test-products-data.sql")
 class ProductRestControllerTests {
