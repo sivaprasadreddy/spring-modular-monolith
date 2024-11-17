@@ -120,3 +120,7 @@ $ task k8s_undeploy
 # Destroy KinD cluster
 $ task kind_destroy
 ```
+
+* Application URL: http://localhost:30090
+* RabbitMQ Admin URL: http://localhost:30091 (Credentials: guest/guest)
+* Zipkin URL: http://localhost:30092

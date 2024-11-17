@@ -42,6 +42,17 @@ spec:
               value: postgres
             - name: SPRING_DATASOURCE_PASSWORD
               value: postgres
+            - name: SPRING_RABBITMQ_HOST
+              value: spring-modular-monolith-rabbitmq-svc
+            - name: SPRING_RABBITMQ_PORT
+              value: '5672'
+            - name: SPRING_RABBITMQ_USERNAME
+              value: guest
+            - name: SPRING_RABBITMQ_PASSWORD
+              value: guest
+            - name: MANAGEMENT_ZIPKIN_TRACING_ENDPOINT
+              value: http://spring-modular-monolith-zipkin-svc:9411/api/v2/spans
+
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness

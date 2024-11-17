@@ -6,7 +6,7 @@ services:
       - 'POSTGRES_PASSWORD=postgres'
       - 'POSTGRES_USER=postgres'
     ports:
-      - '25432:5432'
+      - '5432:5432'
 
   rabbitmq:
     image: 'rabbitmq:4.0.3-management'
@@ -32,10 +32,17 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: guest
+      SPRING_RABBITMQ_PASSWORD: guest
+      MANAGEMENT_ZIPKIN_TRACING_ENDPOINT: http://zipkin:9411/api/v2/spans
     ports:
-      - "18080:8080"
+      - "8080:8080"
     depends_on:
       - postgres
+      - rabbitmq
+      - zipkin
     restart: unless-stopped
     profiles:
       - app
