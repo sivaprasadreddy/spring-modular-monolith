@@ -24,7 +24,7 @@
         <datasource-micrometer-spring-boot.version>1.0.5</datasource-micrometer-spring-boot.version>
         <spotless.version>2.43.0</spotless.version>
         <rewrite-maven-plugin.version>5.45.0</rewrite-maven-plugin.version>
-        <rewrite-spring.version>5.23.0</rewrite-spring.version>
+        <rewrite-spring.version>5.23.1</rewrite-spring.version>
     </properties>
 
     <dependencies>
