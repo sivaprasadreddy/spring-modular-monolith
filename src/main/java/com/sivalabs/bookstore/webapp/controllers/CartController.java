@@ -38,7 +38,7 @@ class CartController {
         return "redirect:/cart";
     }
 
-    @GetMapping("/cart")
+    @GetMapping({"/cart", "/cart/"})
     String showCart(Model model, HttpSession session) {
         Cart cart = (Cart) session.getAttribute("cart");
         if (cart == null) {
@@ -50,8 +50,7 @@ class CartController {
 
     @HxRequest
     @PostMapping("/update-cart")
-    HtmxResponse updateCart(
-            @RequestParam String code, @RequestParam int quantity, HttpSession session) {
+    HtmxResponse updateCart(@RequestParam String code, @RequestParam int quantity, HttpSession session) {
         log.info("Updating cart code:{}, quantity:{}", code, quantity);
         Cart cart = (Cart) session.getAttribute("cart");
         if (cart == null) {

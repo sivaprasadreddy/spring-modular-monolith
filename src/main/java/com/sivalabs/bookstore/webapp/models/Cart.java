@@ -14,7 +14,9 @@ public class Cart {
     }
 
     public BigDecimal getTotalAmount() {
-        if (item == null) return BigDecimal.ZERO;
+        if (item == null) {
+            return BigDecimal.ZERO;
+        }
         return item.getPrice().multiply(BigDecimal.valueOf(item.getQuantity()));
     }
 

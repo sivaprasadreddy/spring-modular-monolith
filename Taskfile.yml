@@ -20,6 +20,10 @@ tasks:
     cmds:
       - "{{.MVNW}} spotless:apply"
 
+  open_rewrite:
+    cmds:
+      - "{{.MVNW}} rewrite:run"
+
   build_image:
     cmds:
       - "{{.MVNW}} clean compile spring-boot:build-image -DskipTests -DdockerImageName={{.IMAGE_NAME}}"

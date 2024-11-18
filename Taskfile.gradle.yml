@@ -20,6 +20,10 @@ tasks:
     cmds:
       - "{{.GRADLEW}} spotlessApply"
 
+  open_rewrite:
+    cmds:
+      - "{{.GRADLEW}} rewriteRun"
+
   build_image:
     cmds:
       - "{{.GRADLEW}} -x test bootBuildImage --imageName={{.IMAGE_NAME}}"

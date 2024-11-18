@@ -64,6 +64,8 @@ dependencies {
 	developmentOnly "org.springframework.boot:spring-boot-devtools"
 	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 	rewrite "org.openrewrite.recipe:rewrite-spring:5.23.0"
+	rewrite "org.openrewrite.recipe:rewrite-testing-frameworks:2.22.0"
+	rewrite "org.openrewrite.recipe:rewrite-static-analysis:1.20.0"
 
 	testImplementation "org.springframework.boot:spring-boot-starter-test"
 	testImplementation "org.springframework.amqp:spring-rabbit-test"
@@ -73,6 +75,8 @@ dependencies {
 	testImplementation "org.testcontainers:postgresql"
 	testImplementation "org.testcontainers:rabbitmq"
 	testRuntimeOnly "org.junit.platform:junit-platform-launcher"
+	testImplementation "org.hamcrest:hamcrest"
+
 }
 
 dependencyManagement {
@@ -91,8 +95,12 @@ tasks.named("test") {
 }
 
 rewrite {
-	activeRecipe("org.openrewrite.java.spring.boot3.UpgradeSpringBoot_3_3")
 	setExportDatatables(true)
+	activeRecipe("org.openrewrite.java.spring.boot3.UpgradeSpringBoot_3_3")
+	activeRecipe("org.openrewrite.java.testing.junit5.JUnit5BestPractices")
+	activeRecipe("org.openrewrite.java.testing.testcontainers.TestContainersBestPractices")
+	activeRecipe("org.openrewrite.staticanalysis.CodeCleanup")
+	activeRecipe("org.openrewrite.staticanalysis.CommonStaticAnalysis")
 }
 
 spotless {
@@ -113,4 +121,3 @@ tasks.named("bootBuildImage") {
 	builder = "dashaun/builder:tiny"
 	imageName = "sivaprasadreddy/${project.name}"
 }
-

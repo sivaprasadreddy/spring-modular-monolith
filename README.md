@@ -84,6 +84,9 @@ $ task format
 # Build docker image
 $ task build_image
 
+# Run OpenRewrite Recipes
+$ task open_rewrite
+
 # Run application in docker container
 $ task start
 $ task stop

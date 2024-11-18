@@ -5,7 +5,8 @@ import com.sivalabs.bookstore.orders.domain.models.OrderDTO;
 import com.sivalabs.bookstore.orders.domain.models.OrderStatus;
 import java.util.UUID;
 
-class OrderMapper {
+final class OrderMapper {
+    private OrderMapper() {}
 
     static OrderEntity convertToEntity(CreateOrderRequest request) {
         OrderEntity entity = new OrderEntity();
