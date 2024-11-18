@@ -24,7 +24,7 @@ class ProductRestController {
     }
 
     @GetMapping
-    PagedResult<Product> getProducts(@RequestParam(name = "page", defaultValue = "1") int page) {
+    PagedResult<Product> getProducts(@RequestParam(defaultValue = "1") int page) {
         log.info("Fetching products for page: {}", page);
         return productService.getProducts(page);
     }

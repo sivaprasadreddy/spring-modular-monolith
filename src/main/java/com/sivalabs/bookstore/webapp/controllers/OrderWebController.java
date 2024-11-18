@@ -55,7 +55,7 @@ class OrderWebController {
     }
 
     @GetMapping("/orders/{orderNumber}")
-    String getOrder(@PathVariable("orderNumber") String orderNumber, Model model) {
+    String getOrder(@PathVariable String orderNumber, Model model) {
         log.info("Fetching order by orderNumber: {}", orderNumber);
         OrderDTO orderDTO =
                 orderService.findOrder(orderNumber).orElseThrow(() -> new OrderNotFoundException(orderNumber));

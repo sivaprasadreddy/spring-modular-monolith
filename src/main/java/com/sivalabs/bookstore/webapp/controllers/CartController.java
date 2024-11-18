@@ -26,7 +26,7 @@ class CartController {
     }
 
     @PostMapping("/buy")
-    String addProductToCart(@RequestParam("code") String code, HttpSession session) {
+    String addProductToCart(@RequestParam String code, HttpSession session) {
         log.info("Adding product code:{} to cart", code);
         Cart cart = (Cart) session.getAttribute("cart");
         if (cart == null) {
@@ -51,7 +51,7 @@ class CartController {
     @HxRequest
     @PostMapping("/update-cart")
     HtmxResponse updateCart(
-            @RequestParam("code") String code, @RequestParam("quantity") int quantity, HttpSession session) {
+            @RequestParam String code, @RequestParam int quantity, HttpSession session) {
         log.info("Updating cart code:{}, quantity:{}", code, quantity);
         Cart cart = (Cart) session.getAttribute("cart");
         if (cart == null) {

@@ -27,7 +27,7 @@ class ProductWebController {
     }
 
     @GetMapping("/products")
-    String showProducts(@RequestParam(name = "page", defaultValue = "1") int page, Model model) {
+    String showProducts(@RequestParam(defaultValue = "1") int page, Model model) {
         log.info("Fetching products for page: {}", page);
         PagedResult<Product> productsPage = productService.getProducts(page);
         model.addAttribute("productsPage", productsPage);
@@ -36,7 +36,7 @@ class ProductWebController {
 
     @HxRequest
     @GetMapping("/partials/products")
-    String getProductsPartial(@RequestParam(name = "page", defaultValue = "1") int page, Model model) {
+    String getProductsPartial(@RequestParam(defaultValue = "1") int page, Model model) {
         log.info("Fetching products-partial for page: {}", page);
         PagedResult<Product> productsPage = productService.getProducts(page);
         model.addAttribute("productsPage", productsPage);

@@ -37,7 +37,7 @@ class OrderRestController {
     }
 
     @GetMapping(value = "/{orderNumber}")
-    OrderDTO getOrder(@PathVariable(value = "orderNumber") String orderNumber) {
+    OrderDTO getOrder(@PathVariable String orderNumber) {
         log.info("Fetching order by orderNumber: {}", orderNumber);
         return orderService
                 .findOrder(orderNumber)
