@@ -1,6 +1,5 @@
 package com.sivalabs.bookstore.inventory;
 
-import com.sivalabs.bookstore.inventory.internal.InventoryService;
 import com.sivalabs.bookstore.orders.domain.events.OrderCreatedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
