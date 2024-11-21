@@ -2,7 +2,9 @@ package com.sivalabs.bookstore.webapp.controllers;
 
 import com.sivalabs.bookstore.catalog.Product;
 import com.sivalabs.bookstore.catalog.ProductService;
+import com.sivalabs.bookstore.orders.domain.models.Customer;
 import com.sivalabs.bookstore.webapp.models.Cart;
+import com.sivalabs.bookstore.webapp.models.OrderForm;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxResponse;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
 import jakarta.servlet.http.HttpSession;
@@ -28,23 +30,19 @@ class CartController {
     @PostMapping("/buy")
     String addProductToCart(@RequestParam String code, HttpSession session) {
         log.info("Adding product code:{} to cart", code);
-        Cart cart = (Cart) session.getAttribute("cart");
-        if (cart == null) {
-            cart = new Cart();
-        }
+        Cart cart = CartUtil.getCart(session);
         Product product = productService.getByCode(code).orElseThrow();
         cart.setItem(new Cart.LineItem(product.code(), product.name(), product.price(), 1));
         session.setAttribute("cart", cart);
         return "redirect:/cart";
     }
 
-    @GetMapping({"/cart", "/cart/"})
+    @GetMapping({"/cart"})
     String showCart(Model model, HttpSession session) {
-        Cart cart = (Cart) session.getAttribute("cart");
-        if (cart == null) {
-            cart = new Cart();
-        }
+        Cart cart = CartUtil.getCart(session);
         model.addAttribute("cart", cart);
+        OrderForm orderForm = new OrderForm(new Customer("", "", ""), "");
+        model.addAttribute("orderForm", orderForm);
         return "cart";
     }
 
@@ -52,10 +50,7 @@ class CartController {
     @PostMapping("/update-cart")
     HtmxResponse updateCart(@RequestParam String code, @RequestParam int quantity, HttpSession session) {
         log.info("Updating cart code:{}, quantity:{}", code, quantity);
-        Cart cart = (Cart) session.getAttribute("cart");
-        if (cart == null) {
-            cart = new Cart();
-        }
+        Cart cart = CartUtil.getCart(session);
         cart.updateItemQuantity(quantity);
         session.setAttribute("cart", cart);
         boolean refresh = cart.getItem() == null;

@@ -21,10 +21,11 @@ class InventoryIntegrationTests {
 
     @Test
     void handleOrderCreatedEvent(Scenario scenario) {
-        scenario.publish(new OrderCreatedEvent(
-                        UUID.randomUUID().toString(), "P100", 2, new Customer("Siva", "siva@gmail.com", "9987654")))
+        var customer = new Customer("Siva", "siva@gmail.com", "9987654");
+        var event = new OrderCreatedEvent(UUID.randomUUID().toString(), "P114", 2, customer);
+        scenario.publish(event)
                 .andWaitAtMost(Duration.ofSeconds(1))
-                .andWaitForStateChange(() -> inventoryService.getStockLevel("P100"))
-                .andVerify(stockLevel -> assertThat(stockLevel).isEqualTo(98));
+                .andWaitForStateChange(() -> inventoryService.getStockLevel("P114"))
+                .andVerify(stockLevel -> assertThat(stockLevel).isEqualTo(598));
     }
 }

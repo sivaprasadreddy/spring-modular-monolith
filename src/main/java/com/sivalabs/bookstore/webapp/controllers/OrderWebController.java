@@ -13,7 +13,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -28,8 +30,16 @@ class OrderWebController {
     }
 
     @PostMapping("/orders")
-    String createOrder(@Valid OrderForm orderForm, HttpSession session) {
-        Cart cart = (Cart) session.getAttribute("cart");
+    String createOrder(
+            @ModelAttribute("orderForm") @Valid OrderForm orderForm,
+            BindingResult bindingResult,
+            Model model,
+            HttpSession session) {
+        Cart cart = CartUtil.getCart(session);
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("cart", cart);
+            return "cart";
+        }
         Cart.LineItem lineItem = cart.getItem();
         OrderItem orderItem = new OrderItem(
                 lineItem.getCode(), lineItem.getName(),

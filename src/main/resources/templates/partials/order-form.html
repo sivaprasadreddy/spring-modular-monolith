@@ -1,30 +1,60 @@
-<form class="row g-3" method="post" th:action="@{/orders}">
+<form class="row g-3" method="post" th:action="@{/orders}"
+                        th:object="${orderForm}">
     <div class="col-md-6">
         <label for="customerName" class="form-label">Customer Name</label>
         <input type="text" class="form-control"
                id="customerName"
                name="customer.name"
-               value=""/>
+               th:field="*{customer.name}"
+               th:classappend="${#fields.hasErrors('customer.name')} ? 'is-invalid' : ''"
+               />
+        <div class="invalid-feedback"
+             th:if="${#fields.hasErrors('customer.name')}"
+             th:errors="*{customer.name}">
+            Incorrect data
+        </div>
     </div>
     <div class="col-md-6">
         <label for="customerEmail" class="form-label">Customer Email</label>
         <input type="email" class="form-control"
                id="customerEmail"
                name="customer.email"
-               value="">
+               th:field="*{customer.email}"
+               th:classappend="${#fields.hasErrors('customer.email')} ? 'is-invalid' : ''"
+                >
+        <div class="invalid-feedback"
+             th:if="${#fields.hasErrors('customer.email')}"
+             th:errors="*{customer.email}">
+            Incorrect data
+        </div>
     </div>
     <div class="col-md-6">
         <label for="customerPhone" class="form-label">Customer Phone</label>
         <input type="text" class="form-control"
                id="customerPhone"
                name="customer.phone"
-               value="">
+               th:field="*{customer.phone}"
+               th:classappend="${#fields.hasErrors('customer.phone')} ? 'is-invalid' : ''"
+                >
+        <div class="invalid-feedback"
+             th:if="${#fields.hasErrors('customer.phone')}"
+             th:errors="*{customer.phone}">
+            Incorrect data
+        </div>
     </div>
     <div class="col-6">
         <label for="deliveryAddress" class="form-label">Delivery Address</label>
         <input class="form-control"
                id="deliveryAddress"
-               name="deliveryAddress"/>
+               name="deliveryAddress"
+               th:field="*{deliveryAddress}"
+               th:classappend="${#fields.hasErrors('deliveryAddress')} ? 'is-invalid' : ''"
+        />
+        <div class="invalid-feedback"
+             th:if="${#fields.hasErrors('deliveryAddress')}"
+             th:errors="*{deliveryAddress}">
+            Incorrect data
+        </div>
     </div>
     <div class="col-12">
         <button type="submit" class="btn btn-primary">Place Order</button>
