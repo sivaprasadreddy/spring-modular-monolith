@@ -22,15 +22,18 @@ class InventoryService {
             long newQuantity = inventory.getQuantity() - quantity;
             inventory.setQuantity(newQuantity);
             inventoryRepository.save(inventory);
+            log.info("Updated stock level for product code {} to : {}", productCode, newQuantity);
         } else {
             log.warn("Invalid product code {}", productCode);
         }
     }
 
     public Long getStockLevel(String productCode) {
-        return inventoryRepository
+        Long stock = inventoryRepository
                 .findByProductCode(productCode)
                 .map(InventoryEntity::getQuantity)
                 .orElse(0L);
+        log.info("Stock level for product code {} is : {}", productCode, stock);
+        return stock;
     }
 }

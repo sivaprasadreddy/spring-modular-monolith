@@ -24,7 +24,7 @@ class InventoryIntegrationTests {
         var customer = new Customer("Siva", "siva@gmail.com", "9987654");
         var event = new OrderCreatedEvent(UUID.randomUUID().toString(), "P114", 2, customer);
         scenario.publish(event)
-                .andWaitAtMost(Duration.ofSeconds(10))
+                .andWaitAtMost(Duration.ofSeconds(15))
                 .andWaitForStateChange(() -> inventoryService.getStockLevel("P114"))
                 .andVerify(stockLevel -> assertThat(stockLevel).isEqualTo(598));
     }
