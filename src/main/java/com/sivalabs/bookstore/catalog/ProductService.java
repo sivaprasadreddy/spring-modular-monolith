@@ -1,6 +1,6 @@
 package com.sivalabs.bookstore.catalog;
 
-import com.sivalabs.bookstore.common.models.PagedResult;
+import com.sivalabs.bookstore.common.PagedResult;
 import java.util.Optional;
 
 public interface ProductService {

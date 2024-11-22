@@ -2,7 +2,7 @@ package com.sivalabs.bookstore.catalog.domain;
 
 import com.sivalabs.bookstore.catalog.Product;
 import com.sivalabs.bookstore.catalog.ProductService;
-import com.sivalabs.bookstore.common.models.PagedResult;
+import com.sivalabs.bookstore.common.PagedResult;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
