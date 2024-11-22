@@ -1,8 +1,5 @@
 package com.sivalabs.bookstore.orders.domain;
 
-import com.sivalabs.bookstore.orders.domain.models.Customer;
-import com.sivalabs.bookstore.orders.domain.models.OrderItem;
-import com.sivalabs.bookstore.orders.domain.models.OrderStatus;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
@@ -19,7 +16,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "orders", schema = "orders")
-class OrderEntity {
+public class OrderEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_id_generator")

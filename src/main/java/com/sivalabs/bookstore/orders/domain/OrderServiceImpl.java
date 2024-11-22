@@ -1,13 +1,7 @@
 package com.sivalabs.bookstore.orders.domain;
 
-import com.sivalabs.bookstore.catalog.ProductService;
-import com.sivalabs.bookstore.orders.InvalidOrderException;
+import com.sivalabs.bookstore.orders.OrderCreatedEvent;
 import com.sivalabs.bookstore.orders.OrderService;
-import com.sivalabs.bookstore.orders.domain.events.OrderCreatedEvent;
-import com.sivalabs.bookstore.orders.domain.models.CreateOrderRequest;
-import com.sivalabs.bookstore.orders.domain.models.CreateOrderResponse;
-import com.sivalabs.bookstore.orders.domain.models.OrderDTO;
-import com.sivalabs.bookstore.orders.domain.models.OrderView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,20 +18,16 @@ class OrderServiceImpl implements OrderService {
     private static final Logger log = LoggerFactory.getLogger(OrderServiceImpl.class);
 
     private final OrderRepository orderRepository;
-    private final ProductService productService;
     private final ApplicationEventPublisher eventPublisher;
 
-    OrderServiceImpl(
-            OrderRepository orderRepository, ProductService productService, ApplicationEventPublisher eventPublisher) {
+    OrderServiceImpl(OrderRepository orderRepository, ApplicationEventPublisher eventPublisher) {
         this.orderRepository = orderRepository;
-        this.productService = productService;
         this.eventPublisher = eventPublisher;
     }
 
     @Override
-    public CreateOrderResponse createOrder(CreateOrderRequest request) {
-        validate(request);
-        OrderEntity newOrder = OrderMapper.convertToEntity(request);
+    public OrderEntity createOrder(OrderEntity newOrder) {
+
         OrderEntity savedOrder = this.orderRepository.save(newOrder);
         log.info("Created Order with orderNumber={}", savedOrder.getOrderNumber());
         OrderCreatedEvent event = new OrderCreatedEvent(
@@ -46,28 +36,12 @@ class OrderServiceImpl implements OrderService {
                 savedOrder.getOrderItem().quantity(),
                 savedOrder.getCustomer());
         eventPublisher.publishEvent(event);
-        return new CreateOrderResponse(savedOrder.getOrderNumber());
-    }
-
-    private void validate(CreateOrderRequest request) {
-        String code = request.item().code();
-        var product = productService
-                .getByCode(code)
-                .orElseThrow(() -> new InvalidOrderException("Product not found with code: " + code));
-        if (product.price().compareTo(request.item().price()) != 0) {
-            throw new InvalidOrderException("Product price mismatch");
-        }
+        return savedOrder;
     }
 
     @Override
-    public Optional<OrderDTO> findOrder(String orderNumber) {
-        Optional<OrderEntity> byOrderNumber = orderRepository.findByOrderNumber(orderNumber);
-        if (byOrderNumber.isEmpty()) {
-            return Optional.empty();
-        }
-        OrderEntity orderEntity = byOrderNumber.get();
-        var orderDTO = OrderMapper.convertToDTO(orderEntity);
-        return Optional.of(orderDTO);
+    public Optional<OrderEntity> findOrder(String orderNumber) {
+        return orderRepository.findByOrderNumber(orderNumber);
     }
 
     @Override
