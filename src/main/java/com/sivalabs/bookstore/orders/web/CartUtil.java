@@ -1,6 +1,5 @@
-package com.sivalabs.bookstore.webapp.controllers;
+package com.sivalabs.bookstore.orders.web;
 
-import com.sivalabs.bookstore.webapp.models.Cart;
 import jakarta.servlet.http.HttpSession;
 
 public class CartUtil {

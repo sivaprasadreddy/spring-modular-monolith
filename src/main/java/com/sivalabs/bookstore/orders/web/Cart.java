@@ -1,4 +1,4 @@
-package com.sivalabs.bookstore.webapp.models;
+package com.sivalabs.bookstore.orders.web;
 
 import java.math.BigDecimal;
 

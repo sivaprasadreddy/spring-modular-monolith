@@ -14,7 +14,7 @@ tasks:
   test:
     deps: [ format ]
     cmds:
-      - "{{.MVNW}} verify"
+      - "{{.MVNW}} clean verify"
 
   format:
     cmds:

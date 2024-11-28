@@ -7,11 +7,11 @@ import org.springframework.modulith.events.ApplicationModuleListener;
 import org.springframework.stereotype.Component;
 
 @Component
-class InventoryEventHandler {
-    private static final Logger log = LoggerFactory.getLogger(InventoryEventHandler.class);
+class OrderEventInventoryHandler {
+    private static final Logger log = LoggerFactory.getLogger(OrderEventInventoryHandler.class);
     private final InventoryService inventoryService;
 
-    InventoryEventHandler(InventoryService inventoryService) {
+    OrderEventInventoryHandler(InventoryService inventoryService) {
         this.inventoryService = inventoryService;
     }
 

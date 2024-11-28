@@ -8,10 +8,12 @@ import com.sivalabs.bookstore.orders.domain.models.Customer;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Import;
 import org.springframework.modulith.test.ApplicationModuleTest;
 import org.springframework.modulith.test.Scenario;
 
-@ApplicationModuleTest(webEnvironment = RANDOM_PORT, classes = TestcontainersConfiguration.class)
+@ApplicationModuleTest(webEnvironment = RANDOM_PORT)
+@Import(TestcontainersConfiguration.class)
 class InventoryIntegrationTests {
 
     @Autowired

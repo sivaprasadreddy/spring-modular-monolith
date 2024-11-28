@@ -1,4 +1,4 @@
-package com.sivalabs.bookstore.webapp.controllers;
+package com.sivalabs.bookstore.catalog.web;
 
 import com.sivalabs.bookstore.catalog.Product;
 import com.sivalabs.bookstore.catalog.ProductService;

@@ -1,4 +1,4 @@
-package com.sivalabs.bookstore.orders.web.controllers;
+package com.sivalabs.bookstore.orders.web;
 
 import com.sivalabs.bookstore.orders.OrderNotFoundException;
 import com.sivalabs.bookstore.orders.OrderService;

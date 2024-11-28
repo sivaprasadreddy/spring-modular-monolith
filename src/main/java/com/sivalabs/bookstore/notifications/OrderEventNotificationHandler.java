@@ -1,4 +1,4 @@
-package com.sivalabs.bookstore.notifications.orders;
+package com.sivalabs.bookstore.notifications;
 
 import com.sivalabs.bookstore.orders.domain.events.OrderCreatedEvent;
 import org.slf4j.Logger;
@@ -7,8 +7,8 @@ import org.springframework.modulith.events.ApplicationModuleListener;
 import org.springframework.stereotype.Component;
 
 @Component
-class OrderEventHandler {
-    private static final Logger log = LoggerFactory.getLogger(OrderEventHandler.class);
+class OrderEventNotificationHandler {
+    private static final Logger log = LoggerFactory.getLogger(OrderEventNotificationHandler.class);
 
     @ApplicationModuleListener
     void handle(OrderCreatedEvent event) {

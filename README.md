@@ -11,7 +11,6 @@ This application follows modular monolith architecture with the following module
 * **Orders:** This module implements the order management and store the data in `orders` schema.
 * **Inventory:** This module implements the inventory management and store the data in `inventory` schema.
 * **Notifications:** This module handles the events published by other modules and sends notifications to the interested parties.
-* **Webapp:** This module implements web UI using Thymeleaf, HTMX and Bootstrap. 
 
 **Goals:**
 * Implement each module as independently as possible.
@@ -33,7 +32,7 @@ This application follows modular monolith architecture with the following module
 * Docker and Docker Compose
 * Your favourite IDE (Recommended: [IntelliJ IDEA](https://www.jetbrains.com/idea/))
 
-Install JDK, Gradle using [SDKMAN](https://sdkman.io/)
+Install JDK, Maven, Gradle using [SDKMAN](https://sdkman.io/)
 
 ```shell
 $ curl -s "https://get.sdkman.io" | bash

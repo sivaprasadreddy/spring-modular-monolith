@@ -1,10 +1,8 @@
-package com.sivalabs.bookstore.webapp.controllers;
+package com.sivalabs.bookstore.orders.web;
 
 import com.sivalabs.bookstore.orders.OrderNotFoundException;
 import com.sivalabs.bookstore.orders.OrderService;
 import com.sivalabs.bookstore.orders.domain.models.*;
-import com.sivalabs.bookstore.webapp.models.Cart;
-import com.sivalabs.bookstore.webapp.models.OrderForm;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
