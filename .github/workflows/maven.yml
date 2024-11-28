@@ -9,9 +9,6 @@ on:
       - 'README.md'
       - 'LICENSE'
       - 'Taskfile.yml'
-      - 'renovate.json'
-      - 'k8s/**'
-      - 'kind/**'
   pull_request:
     types:
       - opened

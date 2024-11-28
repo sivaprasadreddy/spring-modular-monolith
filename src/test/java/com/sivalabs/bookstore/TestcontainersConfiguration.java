@@ -23,7 +23,7 @@ public class TestcontainersConfiguration {
     @Bean
     @ServiceConnection
     RabbitMQContainer rabbitmq() {
-        return new RabbitMQContainer(DockerImageName.parse("rabbitmq:4.0.2-alpine"));
+        return new RabbitMQContainer(DockerImageName.parse("rabbitmq:4.0.4-alpine"));
     }
 
     @Bean
