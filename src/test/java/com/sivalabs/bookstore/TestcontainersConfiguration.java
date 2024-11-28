@@ -5,7 +5,6 @@ import org.springframework.boot.testcontainers.service.connection.ServiceConnect
 import org.springframework.context.annotation.Bean;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.containers.RabbitMQContainer;
 import org.testcontainers.utility.DockerImageName;
 
 @TestConfiguration(proxyBeanMethods = false)
@@ -18,12 +17,6 @@ public class TestcontainersConfiguration {
                 .withDatabaseName("postgres")
                 .withUsername("postgres")
                 .withPassword("postgres");
-    }
-
-    @Bean
-    @ServiceConnection
-    RabbitMQContainer rabbitmq() {
-        return new RabbitMQContainer(DockerImageName.parse("rabbitmq:4.0.2-alpine"));
     }
 
     @Bean

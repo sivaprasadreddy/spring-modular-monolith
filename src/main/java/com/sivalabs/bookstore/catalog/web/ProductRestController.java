@@ -1,4 +1,4 @@
-package com.sivalabs.bookstore.catalog.web.controllers;
+package com.sivalabs.bookstore.catalog.web;
 
 import com.sivalabs.bookstore.catalog.domain.Product;
 import com.sivalabs.bookstore.catalog.domain.ProductNotFoundException;

@@ -4,9 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 import com.sivalabs.bookstore.TestcontainersConfiguration;
-import com.sivalabs.bookstore.inventory.internal.InventoryService;
-import com.sivalabs.bookstore.orders.domain.events.OrderCreatedEvent;
 import com.sivalabs.bookstore.orders.domain.models.Customer;
+import com.sivalabs.bookstore.orders.domain.models.OrderCreatedEvent;
 import java.time.Duration;
 import java.util.UUID;
 import org.awaitility.Awaitility;
@@ -14,8 +13,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.annotation.Import;
 
-@SpringBootTest(webEnvironment = RANDOM_PORT, classes = TestcontainersConfiguration.class)
+@SpringBootTest(webEnvironment = RANDOM_PORT)
+@Import(TestcontainersConfiguration.class)
 class InventoryIntegrationTests {
 
     @Autowired

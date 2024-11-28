@@ -1,8 +1,7 @@
-package com.sivalabs.bookstore.webapp.controllers;
+package com.sivalabs.bookstore.orders.web;
 
 import com.sivalabs.bookstore.catalog.domain.Product;
 import com.sivalabs.bookstore.catalog.domain.ProductService;
-import com.sivalabs.bookstore.webapp.models.Cart;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxResponse;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
 import jakarta.servlet.http.HttpSession;

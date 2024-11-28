@@ -1,4 +1,4 @@
-package com.sivalabs.bookstore.catalog.config;
+package com.sivalabs.bookstore.catalog.web;
 
 import com.sivalabs.bookstore.catalog.domain.ProductNotFoundException;
 import java.time.Instant;

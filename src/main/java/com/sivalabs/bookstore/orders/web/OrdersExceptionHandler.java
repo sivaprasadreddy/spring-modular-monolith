@@ -1,4 +1,4 @@
-package com.sivalabs.bookstore.orders.config;
+package com.sivalabs.bookstore.orders.web;
 
 import com.sivalabs.bookstore.orders.domain.InvalidOrderException;
 import com.sivalabs.bookstore.orders.domain.OrderNotFoundException;

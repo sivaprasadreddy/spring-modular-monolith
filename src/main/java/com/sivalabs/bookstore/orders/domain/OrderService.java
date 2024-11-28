@@ -1,9 +1,9 @@
 package com.sivalabs.bookstore.orders.domain;
 
 import com.sivalabs.bookstore.catalog.domain.ProductService;
-import com.sivalabs.bookstore.orders.domain.events.OrderCreatedEvent;
 import com.sivalabs.bookstore.orders.domain.models.CreateOrderRequest;
 import com.sivalabs.bookstore.orders.domain.models.CreateOrderResponse;
+import com.sivalabs.bookstore.orders.domain.models.OrderCreatedEvent;
 import com.sivalabs.bookstore.orders.domain.models.OrderDTO;
 import com.sivalabs.bookstore.orders.domain.models.OrderView;
 import java.util.ArrayList;

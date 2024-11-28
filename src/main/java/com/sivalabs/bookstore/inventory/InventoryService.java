@@ -1,4 +1,4 @@
-package com.sivalabs.bookstore.inventory.internal;
+package com.sivalabs.bookstore.inventory;
 
 import jakarta.annotation.PostConstruct;
 import java.util.HashMap;
@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class InventoryService {
+class InventoryService {
     private static final Logger log = LoggerFactory.getLogger(InventoryService.class);
     private static final Map<String, Long> STOCK = new HashMap<>();
 

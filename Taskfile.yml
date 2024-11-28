@@ -14,7 +14,7 @@ tasks:
   test:
     deps: [ format ]
     cmds:
-      - "{{.MVNW}} verify"
+      - "{{.MVNW}} clean verify"
 
   format:
     cmds:
@@ -39,23 +39,6 @@ tasks:
       - task: stop
       - task: sleep
       - task: start
-
-  kind_create:
-    cmds:
-      - ./kind/kind-cluster.sh create
-
-  kind_destroy:
-    cmds:
-      - ./kind/kind-cluster.sh destroy
-
-  k8s_deploy:
-    cmds:
-      - kind load docker-image sivaprasadreddy/spring-modular-monolith --name sivalabs-k8s
-      - kubectl apply -f k8s/
-
-  k8s_undeploy:
-    cmds:
-      - kubectl delete -f k8s/
 
   sleep:
     vars:
