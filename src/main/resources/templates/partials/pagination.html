@@ -2,22 +2,22 @@
     <nav aria-label="Page navigation" th:if="${productsPage.totalPages() > 1 }">
         <ul class="pagination pagination justify-content-center">
             <li class="page-item" th:classappend="${!productsPage.hasPrevious()} ? disabled : ''">
-                <a class="page-link" href="#" th:hx-get="${'/partials/products?page=1'}"
+                <a class="page-link" href="#" th:hx-get="${'/products?page=1'}"
                    th:hx-push-url="${'/products?page=1'}"
                    hx-target="#products" hx-swap="outerHTML">First</a>
             </li>
             <li class="page-item" th:classappend="${!productsPage.hasPrevious()} ? disabled : ''">
-                <a class="page-link" href="#" th:hx-get="${'/partials/products?page='+(productsPage.pageNumber() - 1)}"
+                <a class="page-link" href="#" th:hx-get="${'/products?page='+(productsPage.pageNumber() - 1)}"
                    th:hx-push-url="${'/products?page='+(productsPage.pageNumber() - 1)}"
                    hx-target="#products" hx-swap="outerHTML">Previous</a>
             </li>
             <li class="page-item" th:classappend="${!productsPage.hasNext()} ? disabled : ''">
-                <a class="page-link" href="#" th:hx-get="${'/partials/products?page='+(productsPage.pageNumber() + 1)}"
+                <a class="page-link" href="#" th:hx-get="${'/products?page='+(productsPage.pageNumber() + 1)}"
                    th:hx-push-url="${'/products?page='+(productsPage.pageNumber() + 1)}"
                    hx-target="#products" hx-swap="outerHTML">Next</a>
             </li>
             <li class="page-item" th:classappend="${!productsPage.hasNext()} ? disabled : ''">
-                <a class="page-link" href="#" th:hx-get="${'/partials/products?page='+(productsPage.totalPages())}"
+                <a class="page-link" href="#" th:hx-get="${'/products?page='+(productsPage.totalPages())}"
                    th:hx-push-url="${'/products?page='+(productsPage.totalPages())}"
                    hx-target="#products" hx-swap="outerHTML">Last</a>
             </li>
