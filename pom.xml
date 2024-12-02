@@ -262,7 +262,7 @@
                     <dependency>
                         <groupId>org.openrewrite.recipe</groupId>
                         <artifactId>rewrite-spring</artifactId>
-                        <version>5.23.2</version>
+                        <version>5.24.1</version>
                     </dependency>
                     <dependency>
                         <groupId>org.openrewrite.recipe</groupId>
