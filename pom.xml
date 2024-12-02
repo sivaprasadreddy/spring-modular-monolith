@@ -23,7 +23,7 @@
         <htmx-spring-boot-thymeleaf.version>3.6.1</htmx-spring-boot-thymeleaf.version>
         <datasource-micrometer-spring-boot.version>1.0.6</datasource-micrometer-spring-boot.version>
         <spotless.version>2.43.0</spotless.version>
-        <rewrite-maven-plugin.version>5.45.1</rewrite-maven-plugin.version>
+        <rewrite-maven-plugin.version>5.46.1</rewrite-maven-plugin.version>
     </properties>
 
     <dependencyManagement>
