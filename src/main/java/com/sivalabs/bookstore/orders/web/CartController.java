@@ -3,10 +3,8 @@ package com.sivalabs.bookstore.orders.web;
 import com.sivalabs.bookstore.catalog.Product;
 import com.sivalabs.bookstore.catalog.ProductService;
 import com.sivalabs.bookstore.orders.domain.models.Customer;
-import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxResponse;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
 import jakarta.servlet.http.HttpSession;
-import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -14,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 class CartController {
@@ -46,17 +43,16 @@ class CartController {
 
     @HxRequest
     @PostMapping("/update-cart")
-    HtmxResponse updateCart(@RequestParam String code, @RequestParam int quantity, HttpSession session) {
+    String updateCart(@RequestParam String code, @RequestParam int quantity, HttpSession session, Model model) {
         log.info("Updating cart code:{}, quantity:{}", code, quantity);
         Cart cart = CartUtil.getCart(session);
         cart.updateItemQuantity(quantity);
         session.setAttribute("cart", cart);
         boolean refresh = cart.getItem() == null;
         if (refresh) {
-            return HtmxResponse.builder().refresh().build();
+            return "refresh:htmx";
         }
-        return HtmxResponse.builder()
-                .view(new ModelAndView("partials/cart", Map.of("cart", cart)))
-                .build();
+        model.addAttribute("cart", cart);
+        return "partials/cart";
     }
 }
