@@ -1,11 +1,14 @@
 package com.sivalabs.bookstore.orders.web;
 
+import com.sivalabs.bookstore.catalog.ProductApi;
+import com.sivalabs.bookstore.orders.CreateOrderRequest;
+import com.sivalabs.bookstore.orders.CreateOrderResponse;
+import com.sivalabs.bookstore.orders.OrderDto;
 import com.sivalabs.bookstore.orders.OrderNotFoundException;
-import com.sivalabs.bookstore.orders.OrderService;
-import com.sivalabs.bookstore.orders.domain.models.CreateOrderRequest;
-import com.sivalabs.bookstore.orders.domain.models.CreateOrderResponse;
-import com.sivalabs.bookstore.orders.domain.models.OrderDTO;
-import com.sivalabs.bookstore.orders.domain.models.OrderView;
+import com.sivalabs.bookstore.orders.OrderView;
+import com.sivalabs.bookstore.orders.domain.OrderEntity;
+import com.sivalabs.bookstore.orders.domain.OrderService;
+import com.sivalabs.bookstore.orders.mappers.OrderMapper;
 import jakarta.validation.Valid;
 import java.util.List;
 import org.slf4j.Logger;
@@ -21,31 +24,37 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/orders")
-class OrderRestController {
+class OrderRestController extends OrderWebSupport {
     private static final Logger log = LoggerFactory.getLogger(OrderRestController.class);
 
     private final OrderService orderService;
 
-    OrderRestController(OrderService orderService) {
+    OrderRestController(OrderService orderService, ProductApi productApi) {
+        super(productApi);
         this.orderService = orderService;
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     CreateOrderResponse createOrder(@Valid @RequestBody CreateOrderRequest request) {
-        return orderService.createOrder(request);
+        validate(request);
+        OrderEntity newOrder = OrderMapper.convertToEntity(request);
+        var savedOrder = orderService.createOrder(newOrder);
+        return new CreateOrderResponse(savedOrder.getOrderNumber());
     }
 
     @GetMapping(value = "/{orderNumber}")
-    OrderDTO getOrder(@PathVariable String orderNumber) {
+    OrderDto getOrder(@PathVariable String orderNumber) {
         log.info("Fetching order by orderNumber: {}", orderNumber);
         return orderService
                 .findOrder(orderNumber)
+                .map(OrderMapper::convertToDto)
                 .orElseThrow(() -> OrderNotFoundException.forOrderNumber(orderNumber));
     }
 
     @GetMapping
     List<OrderView> getOrders() {
-        return orderService.findOrders();
+        List<OrderEntity> orders = orderService.findOrders();
+        return OrderMapper.convertToOrderViews(orders);
     }
 }

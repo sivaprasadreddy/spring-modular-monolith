@@ -10,14 +10,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.sivalabs.bookstore.TestcontainersConfiguration;
-import com.sivalabs.bookstore.catalog.Product;
-import com.sivalabs.bookstore.catalog.ProductService;
-import com.sivalabs.bookstore.orders.OrderService;
-import com.sivalabs.bookstore.orders.domain.events.OrderCreatedEvent;
-import com.sivalabs.bookstore.orders.domain.models.CreateOrderRequest;
-import com.sivalabs.bookstore.orders.domain.models.CreateOrderResponse;
+import com.sivalabs.bookstore.catalog.ProductApi;
+import com.sivalabs.bookstore.catalog.ProductDto;
+import com.sivalabs.bookstore.orders.CreateOrderRequest;
+import com.sivalabs.bookstore.orders.domain.OrderEntity;
+import com.sivalabs.bookstore.orders.domain.OrderService;
 import com.sivalabs.bookstore.orders.domain.models.Customer;
+import com.sivalabs.bookstore.orders.domain.models.OrderCreatedEvent;
 import com.sivalabs.bookstore.orders.domain.models.OrderItem;
+import com.sivalabs.bookstore.orders.mappers.OrderMapper;
 import java.math.BigDecimal;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,12 +43,12 @@ class OrderRestControllerTests {
     private OrderService orderService;
 
     @MockitoBean
-    ProductService productService;
+    ProductApi productApi;
 
     @BeforeEach
     void setUp() {
-        Product product = new Product("P100", "The Hunger Games", "", null, new BigDecimal("34.0"));
-        given(productService.getByCode("P100")).willReturn(Optional.of(product));
+        ProductDto product = new ProductDto("P100", "The Hunger Games", "", null, new BigDecimal("34.0"));
+        given(productApi.getByCode("P100")).willReturn(Optional.of(product));
     }
 
     @Test
@@ -88,20 +89,25 @@ class OrderRestControllerTests {
 
     @Test
     void shouldGetOrderSuccessfully() throws Exception {
-        CreateOrderRequest request = buildCreateOrderRequest();
-        CreateOrderResponse createOrderResponse = orderService.createOrder(request);
+        OrderEntity orderEntity = buildOrderEntity();
+        OrderEntity savedOrder = orderService.createOrder(orderEntity);
 
-        mockMvc.perform(get("/api/orders/{orderNumber}", createOrderResponse.orderNumber()))
+        mockMvc.perform(get("/api/orders/{orderNumber}", savedOrder.getOrderNumber()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.orderNumber", is(createOrderResponse.orderNumber())));
+                .andExpect(jsonPath("$.orderNumber", is(savedOrder.getOrderNumber())));
     }
 
     @Test
     void shouldGetOrdersSuccessfully() throws Exception {
-        CreateOrderRequest request = buildCreateOrderRequest();
-        orderService.createOrder(request);
+        OrderEntity orderEntity = buildOrderEntity();
+        orderService.createOrder(orderEntity);
 
         mockMvc.perform(get("/api/orders")).andExpect(status().isOk());
+    }
+
+    private static OrderEntity buildOrderEntity() {
+        CreateOrderRequest request = buildCreateOrderRequest();
+        return OrderMapper.convertToEntity(request);
     }
 
     private static CreateOrderRequest buildCreateOrderRequest() {

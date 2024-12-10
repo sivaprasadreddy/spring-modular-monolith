@@ -3,8 +3,8 @@ package com.sivalabs.bookstore.inventory;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 import com.sivalabs.bookstore.TestcontainersConfiguration;
-import com.sivalabs.bookstore.orders.domain.events.OrderCreatedEvent;
 import com.sivalabs.bookstore.orders.domain.models.Customer;
+import com.sivalabs.bookstore.orders.domain.models.OrderCreatedEvent;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

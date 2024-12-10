@@ -1,8 +1,9 @@
 package com.sivalabs.bookstore.catalog.web;
 
-import com.sivalabs.bookstore.catalog.Product;
-import com.sivalabs.bookstore.catalog.ProductService;
+import com.sivalabs.bookstore.catalog.ProductDto;
 import com.sivalabs.bookstore.catalog.domain.ProductNotFoundException;
+import com.sivalabs.bookstore.catalog.domain.ProductService;
+import com.sivalabs.bookstore.catalog.mappers.ProductMapper;
 import com.sivalabs.bookstore.common.models.PagedResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,20 +19,26 @@ class ProductRestController {
     private static final Logger log = LoggerFactory.getLogger(ProductRestController.class);
 
     private final ProductService productService;
+    private final ProductMapper productMapper;
 
-    ProductRestController(ProductService productService) {
+    ProductRestController(ProductService productService, ProductMapper productMapper) {
         this.productService = productService;
+        this.productMapper = productMapper;
     }
 
     @GetMapping
-    PagedResult<Product> getProducts(@RequestParam(defaultValue = "1") int page) {
+    PagedResult<ProductDto> getProducts(@RequestParam(defaultValue = "1") int page) {
         log.info("Fetching products for page: {}", page);
-        return productService.getProducts(page);
+        var pagedResult = productService.getProducts(page);
+        return PagedResult.of(pagedResult, productMapper::mapToDto);
     }
 
     @GetMapping("/{code}")
-    Product getProductByCode(@PathVariable String code) {
+    ProductDto getProductByCode(@PathVariable String code) {
         log.info("Fetching product by code: {}", code);
-        return productService.getByCode(code).orElseThrow(() -> ProductNotFoundException.forCode(code));
+        return productService
+                .getByCode(code)
+                .map(productMapper::mapToDto)
+                .orElseThrow(() -> ProductNotFoundException.forCode(code));
     }
 }

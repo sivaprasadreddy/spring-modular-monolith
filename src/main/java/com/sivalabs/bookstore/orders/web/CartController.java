@@ -1,7 +1,7 @@
 package com.sivalabs.bookstore.orders.web;
 
-import com.sivalabs.bookstore.catalog.Product;
-import com.sivalabs.bookstore.catalog.ProductService;
+import com.sivalabs.bookstore.catalog.ProductApi;
+import com.sivalabs.bookstore.catalog.ProductDto;
 import com.sivalabs.bookstore.orders.domain.models.Customer;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxRefreshView;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
@@ -20,17 +20,17 @@ import org.springframework.web.servlet.view.FragmentsRendering;
 @Controller
 class CartController {
     private static final Logger log = LoggerFactory.getLogger(CartController.class);
-    private final ProductService productService;
+    private final ProductApi productApi;
 
-    CartController(ProductService productService) {
-        this.productService = productService;
+    CartController(ProductApi productApi) {
+        this.productApi = productApi;
     }
 
     @PostMapping("/buy")
     String addProductToCart(@RequestParam String code, HttpSession session) {
         log.info("Adding product code:{} to cart", code);
         Cart cart = CartUtil.getCart(session);
-        Product product = productService.getByCode(code).orElseThrow();
+        ProductDto product = productApi.getByCode(code).orElseThrow();
         cart.setItem(new Cart.LineItem(product.code(), product.name(), product.price(), 1));
         session.setAttribute("cart", cart);
         return "redirect:/cart";

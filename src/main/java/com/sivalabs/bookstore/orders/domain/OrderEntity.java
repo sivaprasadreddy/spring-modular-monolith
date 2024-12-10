@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "orders", schema = "orders")
-class OrderEntity {
+public class OrderEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_id_generator")

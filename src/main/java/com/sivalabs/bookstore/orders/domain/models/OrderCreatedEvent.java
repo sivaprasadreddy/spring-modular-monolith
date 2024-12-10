@@ -1,6 +1,5 @@
-package com.sivalabs.bookstore.orders.domain.events;
+package com.sivalabs.bookstore.orders.domain.models;
 
-import com.sivalabs.bookstore.orders.domain.models.Customer;
 import org.springframework.modulith.events.Externalized;
 
 @Externalized("BookStoreExchange::orders.new")

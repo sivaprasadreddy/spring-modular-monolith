@@ -1,9 +1,10 @@
 package com.sivalabs.bookstore.catalog.domain;
 
+import static jakarta.persistence.GenerationType.SEQUENCE;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
@@ -14,9 +15,9 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "products", schema = "catalog")
-class ProductEntity {
+public class ProductEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_id_generator")
+    @GeneratedValue(strategy = SEQUENCE, generator = "product_id_generator")
     @SequenceGenerator(name = "product_id_generator", sequenceName = "product_id_seq", schema = "catalog")
     private Long id;
 
@@ -35,17 +36,6 @@ class ProductEntity {
     @NotNull(message = "Product price is required") @DecimalMin("0.1")
     @Column(nullable = false)
     private BigDecimal price;
-
-    public ProductEntity() {}
-
-    public ProductEntity(Long id, String code, String name, String description, String imageUrl, BigDecimal price) {
-        this.id = id;
-        this.code = code;
-        this.name = name;
-        this.description = description;
-        this.imageUrl = imageUrl;
-        this.price = price;
-    }
 
     public Long getId() {
         return id;

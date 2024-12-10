@@ -1,6 +1,6 @@
 package com.sivalabs.bookstore.inventory;
 
-import com.sivalabs.bookstore.orders.domain.events.OrderCreatedEvent;
+import com.sivalabs.bookstore.orders.domain.models.OrderCreatedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.modulith.events.ApplicationModuleListener;

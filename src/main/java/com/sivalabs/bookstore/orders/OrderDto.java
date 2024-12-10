@@ -1,10 +1,13 @@
-package com.sivalabs.bookstore.orders.domain.models;
+package com.sivalabs.bookstore.orders;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sivalabs.bookstore.orders.domain.models.Customer;
+import com.sivalabs.bookstore.orders.domain.models.OrderItem;
+import com.sivalabs.bookstore.orders.domain.models.OrderStatus;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public record OrderDTO(
+public record OrderDto(
         String orderNumber,
         OrderItem item,
         Customer customer,

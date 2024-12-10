@@ -1,6 +1,7 @@
 package com.sivalabs.bookstore.common.models;
 
 import java.util.List;
+import java.util.function.Function;
 import org.springframework.data.domain.Page;
 
 public record PagedResult<T>(
@@ -23,5 +24,17 @@ public record PagedResult<T>(
                 page.isLast(),
                 page.hasNext(),
                 page.hasPrevious());
+    }
+
+    public static <S, T> PagedResult<T> of(PagedResult<S> pagedResult, Function<S, T> mapper) {
+        return new PagedResult<>(
+                pagedResult.data.stream().map(mapper).toList(),
+                pagedResult.totalElements,
+                pagedResult.pageNumber,
+                pagedResult.totalPages,
+                pagedResult.isFirst,
+                pagedResult.isLast,
+                pagedResult.hasNext,
+                pagedResult.hasPrevious);
     }
 }

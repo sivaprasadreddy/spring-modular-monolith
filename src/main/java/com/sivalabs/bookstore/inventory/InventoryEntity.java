@@ -1,9 +1,10 @@
 package com.sivalabs.bookstore.inventory;
 
+import static jakarta.persistence.GenerationType.SEQUENCE;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
@@ -13,7 +14,7 @@ import jakarta.validation.constraints.NotEmpty;
 @Table(name = "inventory", schema = "inventory")
 class InventoryEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "inventory_id_generator")
+    @GeneratedValue(strategy = SEQUENCE, generator = "inventory_id_generator")
     @SequenceGenerator(name = "inventory_id_generator", sequenceName = "inventory_id_seq", schema = "catalog")
     private Long id;
 
@@ -23,14 +24,6 @@ class InventoryEntity {
 
     @Column(nullable = false)
     private Long quantity;
-
-    public InventoryEntity() {}
-
-    public InventoryEntity(Long id, String productCode, Long quantity) {
-        this.id = id;
-        this.productCode = productCode;
-        this.quantity = quantity;
-    }
 
     public Long getId() {
         return id;
