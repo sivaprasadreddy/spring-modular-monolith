@@ -23,7 +23,7 @@
         <htmx-spring-boot-thymeleaf.version>4.0.1</htmx-spring-boot-thymeleaf.version>
         <datasource-micrometer-spring-boot.version>1.0.6</datasource-micrometer-spring-boot.version>
         <spotless.version>2.43.0</spotless.version>
-        <rewrite-maven-plugin.version>5.46.1</rewrite-maven-plugin.version>
+        <rewrite-maven-plugin.version>5.46.2</rewrite-maven-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -267,12 +267,12 @@
                     <dependency>
                         <groupId>org.openrewrite.recipe</groupId>
                         <artifactId>rewrite-testing-frameworks</artifactId>
-                        <version>2.22.0</version>
+                        <version>2.23.1</version>
                     </dependency>
                     <dependency>
                         <groupId>org.openrewrite.recipe</groupId>
                         <artifactId>rewrite-static-analysis</artifactId>
-                        <version>1.20.0</version>
+                        <version>1.21.1</version>
                     </dependency>
                 </dependencies>
             </plugin>

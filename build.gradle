@@ -3,7 +3,7 @@ plugins {
 	id "org.springframework.boot" version "3.4.0"
 	id "io.spring.dependency-management" version "1.1.6"
 	id "com.diffplug.spotless" version "6.25.0"
-	id "org.openrewrite.rewrite" version "6.27.2"
+	id "org.openrewrite.rewrite" version "6.28.3"
 }
 
 group = "com.sivalabs"
@@ -64,8 +64,8 @@ dependencies {
 	developmentOnly "org.springframework.boot:spring-boot-devtools"
 	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 	rewrite "org.openrewrite.recipe:rewrite-spring:5.24.1"
-	rewrite "org.openrewrite.recipe:rewrite-testing-frameworks:2.22.0"
-	rewrite "org.openrewrite.recipe:rewrite-static-analysis:1.20.0"
+	rewrite "org.openrewrite.recipe:rewrite-testing-frameworks:2.23.1"
+	rewrite "org.openrewrite.recipe:rewrite-static-analysis:1.21.1"
 
 	testImplementation "org.springframework.boot:spring-boot-starter-test"
 	testImplementation "org.springframework.amqp:spring-rabbit-test"

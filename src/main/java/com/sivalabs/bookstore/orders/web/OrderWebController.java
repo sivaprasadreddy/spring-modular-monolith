@@ -36,10 +36,7 @@ class OrderWebController extends OrderWebSupport {
 
     @PostMapping("/orders")
     String createOrder(
-            @ModelAttribute("orderForm") @Valid OrderForm orderForm,
-            BindingResult bindingResult,
-            Model model,
-            HttpSession session) {
+            @ModelAttribute @Valid OrderForm orderForm, BindingResult bindingResult, Model model, HttpSession session) {
         Cart cart = CartUtil.getCart(session);
         if (bindingResult.hasErrors()) {
             model.addAttribute("cart", cart);
