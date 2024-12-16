@@ -58,7 +58,7 @@ dependencies {
 	implementation "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect"
 	implementation "io.github.wimdeblauwe:htmx-spring-boot-thymeleaf:4.0.1"
 	implementation "org.webjars:bootstrap:5.3.3"
-	implementation "org.webjars.npm:htmx.org:2.0.3"
+	implementation "org.webjars.npm:htmx.org:2.0.4"
 
 	developmentOnly "org.springframework.boot:spring-boot-docker-compose"
 	developmentOnly "org.springframework.boot:spring-boot-devtools"
