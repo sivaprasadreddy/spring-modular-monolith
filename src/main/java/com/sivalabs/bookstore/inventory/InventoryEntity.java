@@ -19,8 +19,7 @@ class InventoryEntity {
     private Long id;
 
     @Column(name = "product_code", nullable = false, unique = true)
-    @NotEmpty(message = "Product code is required")
-    private String productCode;
+    @NotEmpty(message = "Product code is required") private String productCode;
 
     @Column(nullable = false)
     private Long quantity;
