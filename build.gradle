@@ -64,8 +64,8 @@ dependencies {
 	developmentOnly "org.springframework.boot:spring-boot-devtools"
 	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 	rewrite "org.openrewrite.recipe:rewrite-spring:6.1.0"
-	rewrite "org.openrewrite.recipe:rewrite-testing-frameworks:3.1.0"
-	rewrite "org.openrewrite.recipe:rewrite-static-analysis:2.1.0"
+	rewrite "org.openrewrite.recipe:rewrite-testing-frameworks:3.2.0"
+	rewrite "org.openrewrite.recipe:rewrite-static-analysis:2.2.0"
 
 	testImplementation "org.springframework.boot:spring-boot-starter-test"
 	testImplementation "org.springframework.amqp:spring-rabbit-test"
