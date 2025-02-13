@@ -3,7 +3,7 @@ plugins {
 	id "org.springframework.boot" version "3.4.2"
 	id "io.spring.dependency-management" version "1.1.7"
 	id "com.diffplug.spotless" version "7.0.2"
-	id "org.openrewrite.rewrite" version "7.0.4"
+	id "org.openrewrite.rewrite" version "7.1.2"
 }
 
 group = "com.sivalabs"
@@ -63,7 +63,7 @@ dependencies {
 	developmentOnly "org.springframework.boot:spring-boot-docker-compose"
 	developmentOnly "org.springframework.boot:spring-boot-devtools"
 	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
-	rewrite "org.openrewrite.recipe:rewrite-spring:6.0.2"
+	rewrite "org.openrewrite.recipe:rewrite-spring:6.1.0"
 	rewrite "org.openrewrite.recipe:rewrite-testing-frameworks:3.1.0"
 	rewrite "org.openrewrite.recipe:rewrite-static-analysis:2.1.0"
 

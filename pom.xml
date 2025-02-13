@@ -23,7 +23,7 @@
         <htmx-spring-boot-thymeleaf.version>4.0.1</htmx-spring-boot-thymeleaf.version>
         <datasource-micrometer-spring-boot.version>1.0.6</datasource-micrometer-spring-boot.version>
         <spotless.version>2.44.2</spotless.version>
-        <rewrite-maven-plugin.version>6.0.5</rewrite-maven-plugin.version>
+        <rewrite-maven-plugin.version>6.1.2</rewrite-maven-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -262,7 +262,7 @@
                     <dependency>
                         <groupId>org.openrewrite.recipe</groupId>
                         <artifactId>rewrite-spring</artifactId>
-                        <version>6.0.2</version>
+                        <version>6.1.0</version>
                     </dependency>
                     <dependency>
                         <groupId>org.openrewrite.recipe</groupId>
