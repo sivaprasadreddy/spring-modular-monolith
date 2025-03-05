@@ -17,7 +17,7 @@
     <name>spring-modular-monolith</name>
 
     <properties>
-        <java.version>21</java.version>
+        <java.version>23</java.version>
         <dockerImageName>sivaprasadreddy/${project.artifactId}</dockerImageName>
         <spring-modulith.version>1.4.0-M2</spring-modulith.version>
         <htmx-spring-boot-thymeleaf.version>4.0.1</htmx-spring-boot-thymeleaf.version>
