@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
         - name: zipkin
-          image: "openzipkin/zipkin:3.4.4"
+          image: "openzipkin/zipkin:3.5.0"
           ports:
             - name: zipkin
               containerPort: 9411
