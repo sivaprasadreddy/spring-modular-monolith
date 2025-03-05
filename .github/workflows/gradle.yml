@@ -12,11 +12,6 @@ on:
       - 'renovate.json'
       - 'k8s/**'
       - 'kind/**'
-  pull_request:
-    types:
-      - opened
-      - synchronize
-      - reopened
 
 jobs:
   build:
