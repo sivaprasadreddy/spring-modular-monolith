@@ -28,7 +28,7 @@ repositories {
 
 ext {
 	set("springModulithVersion", "1.4.0-M2")
-	set("datasourceMicrometerSpringBootVersion", "1.0.6")
+	set("datasourceMicrometerSpringBootVersion", "1.1.0")
 }
 
 dependencies {
