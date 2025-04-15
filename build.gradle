@@ -63,7 +63,7 @@ dependencies {
 	developmentOnly "org.springframework.boot:spring-boot-docker-compose"
 	developmentOnly "org.springframework.boot:spring-boot-devtools"
 	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
-	rewrite "org.openrewrite.recipe:rewrite-spring:6.1.0"
+	rewrite "org.openrewrite.recipe:rewrite-spring:6.5.1"
 	rewrite "org.openrewrite.recipe:rewrite-testing-frameworks:3.2.0"
 	rewrite "org.openrewrite.recipe:rewrite-static-analysis:2.2.0"
 
