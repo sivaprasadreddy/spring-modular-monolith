@@ -1,6 +1,6 @@
 plugins {
 	id "java"
-	id "org.springframework.boot" version "3.5.0-M2"
+	id "org.springframework.boot" version "3.5.0-M3"
 	id "io.spring.dependency-management" version "1.1.7"
 	id "com.diffplug.spotless" version "7.0.2"
 	id "org.openrewrite.rewrite" version "7.1.7"
@@ -11,7 +11,7 @@ version = "0.0.1-SNAPSHOT"
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(23)
+		languageVersion = JavaLanguageVersion.of(21)
 	}
 }
 
@@ -57,7 +57,7 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-thymeleaf"
 	implementation "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect"
 	implementation "io.github.wimdeblauwe:htmx-spring-boot-thymeleaf:4.0.1"
-	implementation "org.webjars:bootstrap:5.3.3"
+	implementation "org.webjars:bootstrap:5.3.5"
 	implementation "org.webjars.npm:htmx.org:2.0.4"
 
 	developmentOnly "org.springframework.boot:spring-boot-docker-compose"
