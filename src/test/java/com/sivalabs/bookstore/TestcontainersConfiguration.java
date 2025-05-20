@@ -22,7 +22,7 @@ public class TestcontainersConfiguration {
 
     @Container
     static GenericContainer<?> zipkin =
-            new GenericContainer<>(DockerImageName.parse("openzipkin/zipkin:3.5.0")).withExposedPorts(9411);
+            new GenericContainer<>(DockerImageName.parse("openzipkin/zipkin:3.5.1")).withExposedPorts(9411);
 
     @Bean
     @ServiceConnection
