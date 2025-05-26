@@ -19,7 +19,7 @@
     <properties>
         <java.version>21</java.version>
         <dockerImageName>sivaprasadreddy/${project.artifactId}</dockerImageName>
-        <spring-modulith.version>1.4.0-M2</spring-modulith.version>
+        <spring-modulith.version>1.4.0</spring-modulith.version>
         <htmx-spring-boot-thymeleaf.version>4.0.1</htmx-spring-boot-thymeleaf.version>
         <datasource-micrometer-spring-boot.version>1.1.1</datasource-micrometer-spring-boot.version>
         <spotless.version>2.44.4</spotless.version>
