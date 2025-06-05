@@ -9,7 +9,7 @@ services:
       - '5432:5432'
 
   rabbitmq:
-    image: 'rabbitmq:4.0.9-management'
+    image: 'rabbitmq:4.1.1-management'
     environment:
       - 'RABBITMQ_DEFAULT_USER=guest'
       - 'RABBITMQ_DEFAULT_PASS=guest'
