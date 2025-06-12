@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional(readOnly = true)
 public class ProductService {
     private static final int PRODUCT_PAGE_SIZE = 10;
     private final ProductRepository repo;
@@ -19,6 +18,7 @@ public class ProductService {
         this.repo = repo;
     }
 
+    @Transactional(readOnly = true)
     public PagedResult<ProductEntity> getProducts(int pageNo) {
         Sort sort = Sort.by("name").ascending();
         int page = pageNo <= 1 ? 0 : pageNo - 1;
@@ -27,6 +27,7 @@ public class ProductService {
         return new PagedResult<>(productsPage);
     }
 
+    @Transactional(readOnly = true)
     public Optional<ProductEntity> getByCode(String code) {
         return repo.findByCode(code);
     }

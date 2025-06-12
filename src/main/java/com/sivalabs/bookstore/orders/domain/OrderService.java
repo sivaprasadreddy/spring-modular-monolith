@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional(readOnly = true)
 public class OrderService {
     private static final Logger log = LoggerFactory.getLogger(OrderService.class);
 
@@ -36,10 +35,12 @@ public class OrderService {
         return savedOrder;
     }
 
+    @Transactional(readOnly = true)
     public Optional<OrderEntity> findOrder(String orderNumber) {
         return orderRepository.findByOrderNumber(orderNumber);
     }
 
+    @Transactional(readOnly = true)
     public List<OrderEntity> findOrders() {
         Sort sort = Sort.by("id").descending();
         return orderRepository.findAllBy(sort);
