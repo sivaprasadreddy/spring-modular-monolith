@@ -1,9 +1,8 @@
 plugins {
 	id "java"
-	id "org.springframework.boot" version "3.5.0-RC1"
+	id "org.springframework.boot" version "3.5.0"
 	id "io.spring.dependency-management" version "1.1.7"
-	id "com.diffplug.spotless" version "7.0.3"
-	id "org.openrewrite.rewrite" version "7.1.7"
+	id "com.diffplug.spotless" version "7.0.4"
 }
 
 group = "com.sivalabs"
@@ -27,7 +26,7 @@ repositories {
 }
 
 ext {
-	set("springModulithVersion", "1.4.0-M2")
+	set("springModulithVersion", "1.4.0")
 	set("datasourceMicrometerSpringBootVersion", "1.1.1")
 }
 
@@ -57,15 +56,12 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-thymeleaf"
 	implementation "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect"
 	implementation "io.github.wimdeblauwe:htmx-spring-boot-thymeleaf:4.0.1"
-	implementation "org.webjars:bootstrap:5.3.5"
+	implementation "org.webjars:bootstrap:5.3.6"
 	implementation "org.webjars.npm:htmx.org:2.0.4"
 
 	developmentOnly "org.springframework.boot:spring-boot-docker-compose"
 	developmentOnly "org.springframework.boot:spring-boot-devtools"
 	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
-	rewrite "org.openrewrite.recipe:rewrite-spring:6.5.1"
-	rewrite "org.openrewrite.recipe:rewrite-testing-frameworks:3.2.0"
-	rewrite "org.openrewrite.recipe:rewrite-static-analysis:2.2.0"
 
 	testImplementation "org.springframework.boot:spring-boot-starter-test"
 	testImplementation "org.springframework.amqp:spring-rabbit-test"
@@ -92,15 +88,6 @@ tasks.named("test") {
 		showStandardStreams = true
 		exceptionFormat = "FULL"
 	}
-}
-
-rewrite {
-	setExportDatatables(true)
-	activeRecipe("org.openrewrite.java.spring.boot3.UpgradeSpringBoot_3_3")
-	activeRecipe("org.openrewrite.java.testing.junit5.JUnit5BestPractices")
-	activeRecipe("org.openrewrite.java.testing.testcontainers.TestContainersBestPractices")
-	activeRecipe("org.openrewrite.staticanalysis.CodeCleanup")
-	activeRecipe("org.openrewrite.staticanalysis.CommonStaticAnalysis")
 }
 
 spotless {
