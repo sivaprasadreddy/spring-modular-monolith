@@ -22,7 +22,7 @@
         <spring-modulith.version>1.4.1</spring-modulith.version>
         <htmx-spring-boot-thymeleaf.version>4.0.1</htmx-spring-boot-thymeleaf.version>
         <datasource-micrometer-spring-boot.version>1.1.2</datasource-micrometer-spring-boot.version>
-        <spotless.version>2.44.5</spotless.version>
+        <spotless.version>2.46.1</spotless.version>
     </properties>
 
     <dependencyManagement>
