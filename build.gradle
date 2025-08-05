@@ -30,7 +30,7 @@ ext {
 	set("datasourceMicrometerSpringBootVersion", "1.1.2")
 	set("htmxSpringBootVersion", "4.0.1")
 	set("bootstrapVersion", "5.3.7")
-	set("htmxVersion", "5.3.7")
+	set("htmxVersion", "2.0.6")
 }
 
 dependencies {
