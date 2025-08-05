@@ -28,7 +28,7 @@ This application follows modular monolith architecture with the following module
 * **Notifications** module consumes "OrderCreatedEvent" and sends an order confirmation email to the customer.
 
 ## Prerequisites
-* JDK 21
+* JDK 24
 * Docker and Docker Compose
 * Your favourite IDE (Recommended: [IntelliJ IDEA](https://www.jetbrains.com/idea/))
 
@@ -37,9 +37,8 @@ Install JDK, Maven, Gradle using [SDKMAN](https://sdkman.io/)
 ```shell
 $ curl -s "https://get.sdkman.io" | bash
 $ source "$HOME/.sdkman/bin/sdkman-init.sh"
-$ sdk install java 21.0.1-tem
+$ sdk install java 24.0.1-tem
 $ sdk install gradle
-$ sdk install maven
 ```
 
 Task is a task runner that we can use to run any arbitrary commands in easier way.
@@ -61,30 +60,15 @@ $ task --version
 
 ## Using `task` to perform various tasks:
 
-The default `Taskfile.yml` is configured to use Maven.
-Another `Taskfile.gradle.yml` is also created with Gradle configuration.
-
-If you want to use Gradle instead of Maven, then add `-t Taskfile.gradle.yml` for the `task` commands.
-
-For example: 
-
-```shell
-$ task test // uses Maven
-$ task -t Taskfile.gradle.yml test //uses Gradle
-```
-
 ```shell
 # Run tests
 $ task test
 
-# Automatically format code using spotless-maven-plugin
+# Automatically format code using spotless plugin
 $ task format
 
 # Build docker image
 $ task build_image
-
-# Run OpenRewrite Recipes
-$ task open_rewrite
 
 # Run application in docker container
 $ task start
