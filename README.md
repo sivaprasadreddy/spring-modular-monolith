@@ -69,8 +69,8 @@ If you want to use Gradle instead of Maven, then add `-t Taskfile.gradle.yml` fo
 For example: 
 
 ```shell
-$ task test` // uses Maven
-$ task -t Taskfile.gradle.yml test` //uses Gradle
+$ task test // uses Maven
+$ task -t Taskfile.gradle.yml test //uses Gradle
 ```
 
 ```shell
