@@ -2,7 +2,9 @@ name: Gradle Build
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - "main"
+      - "package-by-*"
     paths-ignore:
       - '.gitignore'
       - '.sdkmanrc'
