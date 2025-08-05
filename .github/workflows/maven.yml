@@ -2,7 +2,9 @@ name: Maven Build
 
 on:
   push:
-    branches: [ "**" ]
+    branches:
+      - "main"
+      - "package-by-*"
     paths-ignore:
       - '.gitignore'
       - '.sdkmanrc'
