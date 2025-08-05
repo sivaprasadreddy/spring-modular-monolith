@@ -20,10 +20,6 @@ tasks:
     cmds:
       - "{{.MVNW}} spotless:apply"
 
-  open_rewrite:
-    cmds:
-      - "{{.MVNW}} rewrite:run"
-
   build_image:
     cmds:
       - "{{.MVNW}} clean compile spring-boot:build-image -DskipTests -DdockerImageName={{.IMAGE_NAME}}"
@@ -46,20 +42,20 @@ tasks:
 
   kind_create:
     cmds:
-      - ./kind/kind-cluster.sh create
+      - ./k8s/kind/kind-cluster.sh create
 
   kind_destroy:
     cmds:
-      - ./kind/kind-cluster.sh destroy
+      - ./k8s/kind/kind-cluster.sh destroy
 
   k8s_deploy:
     cmds:
       - kind load docker-image sivaprasadreddy/spring-modular-monolith --name sivalabs-k8s
-      - kubectl apply -f k8s/
+      - kubectl apply -f k8s/manifests/
 
   k8s_undeploy:
     cmds:
-      - kubectl delete -f k8s/
+      - kubectl delete -f k8s/manifests/
 
   sleep:
     vars:

@@ -2,7 +2,7 @@
 An e-commerce application following Modular Monolith architecture using [Spring Modulith](https://spring.io/projects/spring-modulith).
 The goal of this application is to demonstrate various features of Spring Modulith with a practical application.
 
-![bookstore-modulith.png](bookstore-modulith.png)
+![bookstore-modulith.png](docs/bookstore-modulith.png)
 
 This application follows modular monolith architecture with the following modules:
 
@@ -28,17 +28,16 @@ This application follows modular monolith architecture with the following module
 * **Notifications** module consumes "OrderCreatedEvent" and sends an order confirmation email to the customer.
 
 ## Prerequisites
-* JDK 21
+* JDK 24
 * Docker and Docker Compose
 * Your favourite IDE (Recommended: [IntelliJ IDEA](https://www.jetbrains.com/idea/))
 
-Install JDK, Maven, Gradle using [SDKMAN](https://sdkman.io/)
+Install JDK, Maven, Gradle, etc using [SDKMAN](https://sdkman.io/)
 
 ```shell
 $ curl -s "https://get.sdkman.io" | bash
 $ source "$HOME/.sdkman/bin/sdkman-init.sh"
-$ sdk install java 21.0.1-tem
-$ sdk install gradle
+$ sdk install java 24.0.1-tem
 $ sdk install maven
 ```
 
@@ -61,18 +60,6 @@ $ task --version
 
 ## Using `task` to perform various tasks:
 
-The default `Taskfile.yml` is configured to use Maven.
-Another `Taskfile.gradle.yml` is also created with Gradle configuration.
-
-If you want to use Gradle instead of Maven, then add `-t Taskfile.gradle.yml` for the `task` commands.
-
-For example: 
-
-```shell
-$ task test // uses Maven
-$ task -t Taskfile.gradle.yml test //uses Gradle
-```
-
 ```shell
 # Run tests
 $ task test
@@ -82,9 +69,6 @@ $ task format
 
 # Build docker image
 $ task build_image
-
-# Run OpenRewrite Recipes
-$ task open_rewrite
 
 # Run application in docker container
 $ task start

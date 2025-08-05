@@ -13,7 +13,6 @@ on:
       - 'Taskfile.yml'
       - 'renovate.json'
       - 'k8s/**'
-      - 'kind/**'
 
 jobs:
   build:
@@ -21,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Java
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
           java-version: 24
