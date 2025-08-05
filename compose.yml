@@ -9,7 +9,7 @@ services:
       - '25432:5432'
 
   rabbitmq:
-    image: 'rabbitmq:4.0.4-management'
+    image: 'rabbitmq:4.1.2-management'
     environment:
       - 'RABBITMQ_DEFAULT_USER=guest'
       - 'RABBITMQ_DEFAULT_PASS=guest'
@@ -17,7 +17,7 @@ services:
       - '5672:5672'
       - '15672:15672'
   zipkin:
-    image: 'openzipkin/zipkin:3.4.2'
+    image: 'openzipkin/zipkin:3.5.1'
     environment:
       - STORAGE_TYPE=mem
     ports:

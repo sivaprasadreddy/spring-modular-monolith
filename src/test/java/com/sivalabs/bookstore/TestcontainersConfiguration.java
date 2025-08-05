@@ -23,12 +23,12 @@ public class TestcontainersConfiguration {
     @Bean
     @ServiceConnection
     RabbitMQContainer rabbitmq() {
-        return new RabbitMQContainer(DockerImageName.parse("rabbitmq:4.0.4-alpine"));
+        return new RabbitMQContainer(DockerImageName.parse("rabbitmq:4.1.2-alpine"));
     }
 
     @Bean
     @ServiceConnection(name = "openzipkin/zipkin")
     GenericContainer<?> zipkinContainer() {
-        return new GenericContainer<>(DockerImageName.parse("openzipkin/zipkin:3.4.2")).withExposedPorts(9411);
+        return new GenericContainer<>(DockerImageName.parse("openzipkin/zipkin:3.5.1")).withExposedPorts(9411);
     }
 }
