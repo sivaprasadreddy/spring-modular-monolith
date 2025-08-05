@@ -9,7 +9,7 @@ services:
       - '25432:5432'
 
   zipkin:
-    image: 'openzipkin/zipkin:3.4.2'
+    image: 'openzipkin/zipkin:3.5.1'
     environment:
       - STORAGE_TYPE=mem
     ports:

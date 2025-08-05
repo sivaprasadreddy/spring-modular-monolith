@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.0</version>
+        <version>3.5.4</version>
         <relativePath/>
     </parent>
     <groupId>com.sivalabs</groupId>
@@ -17,8 +17,9 @@
     <name>spring-modular-monolith</name>
 
     <properties>
-        <java.version>21</java.version>
-        <dockerImageName>sivaprasadreddy/${project.artifactId}</dockerImageName>
+        <java.version>24</java.version>
+        <htmx-spring-boot-thymeleaf.version>4.0.1</htmx-spring-boot-thymeleaf.version>
+        <datasource-micrometer-spring-boot.version>1.1.2</datasource-micrometer-spring-boot.version>
     </properties>
 
     <dependencies>
@@ -60,7 +61,7 @@
         <dependency>
             <groupId>net.ttddyy.observation</groupId>
             <artifactId>datasource-micrometer-spring-boot</artifactId>
-            <version>1.0.6</version>
+            <version>${datasource-micrometer-spring-boot.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -92,19 +93,20 @@
         <dependency>
             <groupId>io.github.wimdeblauwe</groupId>
             <artifactId>htmx-spring-boot-thymeleaf</artifactId>
-            <version>3.6.1</version>
+            <version>${htmx-spring-boot-thymeleaf.version}</version>
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap</artifactId>
-            <version>5.3.3</version>
+            <version>5.3.7</version>
         </dependency>
         <dependency>
             <groupId>org.webjars.npm</groupId>
             <artifactId>htmx.org</artifactId>
-            <version>2.0.3</version>
+            <version>2.0.6</version>
         </dependency>
 
+        <!-- Dev dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -150,30 +152,17 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <image>
-                        <name>${dockerImageName}</name>
-                        <builder>dashaun/builder:tiny</builder>
-                    </image>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>build-info</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>com.diffplug.spotless</groupId>
                 <artifactId>spotless-maven-plugin</artifactId>
-                <version>2.43.0</version>
+                <version>2.46.1</version>
                 <configuration>
                     <java>
                         <importOrder />
                         <removeUnusedImports />
                         <palantirJavaFormat>
-                            <version>2.50.0</version>
+                            <version>2.72.0</version>
                         </palantirJavaFormat>
                         <formatAnnotations />
                     </java>
