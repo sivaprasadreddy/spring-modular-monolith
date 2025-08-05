@@ -28,6 +28,9 @@ repositories {
 ext {
 	set("springModulithVersion", "1.4.2")
 	set("datasourceMicrometerSpringBootVersion", "1.1.2")
+	set("htmxSpringBootVersion", "4.0.1")
+	set("bootstrapVersion", "5.3.7")
+	set("htmxVersion", "5.3.7")
 }
 
 dependencies {
@@ -55,9 +58,10 @@ dependencies {
 
 	implementation "org.springframework.boot:spring-boot-starter-thymeleaf"
 	implementation "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect"
-	implementation "io.github.wimdeblauwe:htmx-spring-boot-thymeleaf:4.0.1"
-	implementation "org.webjars:bootstrap:5.3.7"
-	implementation "org.webjars.npm:htmx.org:2.0.6"
+	implementation "io.github.wimdeblauwe:htmx-spring-boot-thymeleaf:${htmxSpringBootVersion}"
+    implementation "org.webjars:webjars-locator-lite"
+	implementation "org.webjars:bootstrap:${bootstrapVersion}"
+	implementation "org.webjars.npm:htmx.org:${htmxVersion}"
 
 	developmentOnly "org.springframework.boot:spring-boot-docker-compose"
 	developmentOnly "org.springframework.boot:spring-boot-devtools"
