@@ -1,12 +1,12 @@
 package com.sivalabs.bookstore.orders.web;
 
-import com.sivalabs.bookstore.catalog.ProductApi;
 import com.sivalabs.bookstore.orders.CreateOrderRequest;
 import com.sivalabs.bookstore.orders.OrderDto;
 import com.sivalabs.bookstore.orders.OrderNotFoundException;
 import com.sivalabs.bookstore.orders.OrderView;
 import com.sivalabs.bookstore.orders.domain.OrderEntity;
 import com.sivalabs.bookstore.orders.domain.OrderService;
+import com.sivalabs.bookstore.orders.domain.ProductServiceClient;
 import com.sivalabs.bookstore.orders.domain.models.*;
 import com.sivalabs.bookstore.orders.mappers.OrderMapper;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxRequest;
@@ -24,14 +24,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-class OrderWebController extends OrderWebSupport {
+class OrderWebController {
     private static final Logger log = LoggerFactory.getLogger(OrderWebController.class);
 
     private final OrderService orderService;
+    private final ProductServiceClient productServiceClient;
 
-    OrderWebController(OrderService orderService, ProductApi productApi) {
-        super(productApi);
+    OrderWebController(OrderService orderService, ProductServiceClient productServiceClient) {
         this.orderService = orderService;
+        this.productServiceClient = productServiceClient;
     }
 
     @PostMapping("/orders")
@@ -47,7 +48,7 @@ class OrderWebController extends OrderWebSupport {
                 lineItem.getCode(), lineItem.getName(),
                 lineItem.getPrice(), lineItem.getQuantity());
         var request = new CreateOrderRequest(orderForm.customer(), orderForm.deliveryAddress(), orderItem);
-        validate(request);
+        productServiceClient.validate(request.item().code(), request.item().price());
         OrderEntity newOrder = OrderMapper.convertToEntity(request);
         var savedOrder = orderService.createOrder(newOrder);
         session.removeAttribute("cart");
