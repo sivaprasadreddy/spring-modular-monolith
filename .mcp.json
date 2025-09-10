@@ -1,0 +1,13 @@
+{
+    "mcpServers": {
+        "spec-workflow": {
+          "type": "stdio",
+          "command": "npx",
+          "args": [
+            "@pimzino/spec-workflow-mcp@latest",
+            "/Users/cfh00805122/lab/springboot/modulith/spring-modular-monolith"
+          ],
+          "env": {}
+        }
+    }
+}

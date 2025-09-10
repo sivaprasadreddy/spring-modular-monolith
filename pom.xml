@@ -26,6 +26,7 @@
         <htmx.version>2.0.6</htmx.version>
         <spotless.version>2.46.1</spotless.version>
         <palantir-java-format.version>2.72.0</palantir-java-format.version>
+        <hazelcast.version>5.5.0</hazelcast.version>
     </properties>
 
     <dependencyManagement>
@@ -124,6 +125,18 @@
             <groupId>org.springframework.modulith</groupId>
             <artifactId>spring-modulith-observability</artifactId>
             <scope>runtime</scope>
+        </dependency>
+        
+        <!-- Cache dependencies -->
+        <dependency>
+            <groupId>com.hazelcast</groupId>
+            <artifactId>hazelcast-spring</artifactId>
+            <version>${hazelcast.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.hazelcast</groupId>
+            <artifactId>hazelcast</artifactId>
+            <version>${hazelcast.version}</version>
         </dependency>
 
         <!-- WebApp dependencies -->

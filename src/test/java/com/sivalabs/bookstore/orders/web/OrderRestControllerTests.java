@@ -35,6 +35,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @ApplicationModuleTest(webEnvironment = RANDOM_PORT)
 @Import(TestcontainersConfiguration.class)
 @AutoConfigureMockMvc
+@org.springframework.test.context.TestPropertySource(properties = {"bookstore.cache.enabled=false"})
 class OrderRestControllerTests {
     @Autowired
     private MockMvc mockMvc;
