@@ -90,9 +90,22 @@ function help() {
 
 action="help"
 
-if [[ "$#" != "0"  ]]
-then
-    action=$*
+# Handle the --force-hostports flag and action separately
+if [[ "$#" != "0" ]]; then
+    if [[ "$1" == "--force-hostports" ]]; then
+        if [[ "$#" -gt 1 ]]; then
+            action="${@:2}"  # Take all arguments after --force-hostports
+        fi
+    else
+        action="$@"
+    fi
 fi
 
-eval "${action}"
+case "$action" in
+    "create"|"destroy"|"help")
+        $action
+        ;;
+    *)
+        help
+        ;;
+esac
