@@ -41,13 +41,11 @@ tasks:
       - task: start
 
   kind_create:
-    deps: [ build_image ]
     cmds:
       - '{{if eq .GOOS "windows"}}powershell -NoProfile -ExecutionPolicy Bypass -File ./k8s/kind/kind-cluster.ps1 create{{else}}./k8s/kind/kind-cluster.sh create{{end}}'
 
   kind_create_force:
     desc: "Create kind cluster and force hostPort mappings (no build/test)"
-    deps: [ build_image ]
     cmds:
       - '{{if eq .GOOS "windows"}}powershell -NoProfile -ExecutionPolicy Bypass -File ./k8s/kind/kind-cluster.ps1 --force-hostports create{{else}}./k8s/kind/kind-cluster.sh --force-hostports create{{end}}'
 
