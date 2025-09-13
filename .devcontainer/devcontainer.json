@@ -34,7 +34,7 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "go install github.com/go-task/task/v3/cmd/task@latest"
+	"postCreateCommand": "go install github.com/go-task/task/v3/cmd/task@latest && go install sigs.k8s.io/kind@v0.30.0"
 
 	// Configure tool-specific properties.
 	// "customizations": {},
