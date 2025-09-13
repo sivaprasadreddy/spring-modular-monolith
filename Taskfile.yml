@@ -11,6 +11,7 @@ tasks:
   default:
     cmds:
       - task: test
+
   test:
     deps: [ format ]
     cmds:
@@ -40,18 +41,49 @@ tasks:
       - task: sleep
       - task: start
 
+  # Parent task runs platform-specific subtasks. Non-matching subtasks are skipped.
   kind_create:
     cmds:
-      - '{{if eq .GOOS "windows"}}powershell -NoProfile -ExecutionPolicy Bypass -File ./k8s/kind/kind-cluster.ps1 create{{else}}./k8s/kind/kind-cluster.sh create{{end}}'
+      - task: kind_create_windows
+      - task: kind_create_unix
+
+  kind_create_windows:
+    platforms: [windows]
+    cmds:
+      - powershell -NoProfile -ExecutionPolicy Bypass -File ./k8s/kind/kind-cluster.ps1 create
+
+  kind_create_unix:
+    cmds:
+      - ./k8s/kind/kind-cluster.sh create
 
   kind_create_force:
     desc: "Create kind cluster and force hostPort mappings (no build/test)"
     cmds:
-      - '{{if eq .GOOS "windows"}}powershell -NoProfile -ExecutionPolicy Bypass -File ./k8s/kind/kind-cluster.ps1 --force-hostports create{{else}}./k8s/kind/kind-cluster.sh --force-hostports create{{end}}'
+      - task: kind_create_force_windows
+      - task: kind_create_force_unix
+
+  kind_create_force_windows:
+    platforms: [windows]
+    cmds:
+      - powershell -NoProfile -ExecutionPolicy Bypass -File ./k8s/kind/kind-cluster.ps1 --force-hostports create
+
+  kind_create_force_unix:
+    cmds:
+      - ./k8s/kind/kind-cluster.sh --force-hostports create
 
   kind_destroy:
     cmds:
-      - '{{if eq .GOOS "windows"}}powershell -NoProfile -ExecutionPolicy Bypass -File ./k8s/kind/kind-cluster.ps1 destroy{{else}}./k8s/kind/kind-cluster.sh destroy{{end}}'
+      - task: kind_destroy_windows
+      - task: kind_destroy_unix
+
+  kind_destroy_windows:
+    platforms: [windows]
+    cmds:
+      - powershell -NoProfile -ExecutionPolicy Bypass -File ./k8s/kind/kind-cluster.ps1 destroy
+
+  kind_destroy_unix:
+    cmds:
+      - ./k8s/kind/kind-cluster.sh destroy
 
   k8s_deploy:
     cmds:

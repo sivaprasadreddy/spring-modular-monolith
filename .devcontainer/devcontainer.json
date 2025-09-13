@@ -9,15 +9,20 @@
 		"ghcr.io/devcontainers/features/docker-in-docker:2": {
 			"version": "latest",
 			"enableNonRootDocker": "true",
-			"moby": "true"
+			"moby": "false"
 		},
 		"ghcr.io/devcontainers/features/java:1": {},
-		"ghcr.io/devcontainers-extra/features/kops:1": {}
+		"ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
+			"version": "latest"
+		}
 	},
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"vscjava.vscode-java-pack"
+				"vscjava.vscode-java-pack",
+				"ms-vscode.powershell",
+				"ms-kubernetes-tools.vscode-kubernetes-tools",
+				"mindaro.mindaro"
 			]
 		}
 	},
