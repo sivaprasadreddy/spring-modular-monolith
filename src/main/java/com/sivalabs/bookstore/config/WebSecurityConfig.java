@@ -1,4 +1,4 @@
-package com.sivalabs.bookstore.users.config;
+package com.sivalabs.bookstore.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

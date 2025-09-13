@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @ApplicationModuleTest(
         webEnvironment = RANDOM_PORT,
-        extraIncludes = {"users"})
+        extraIncludes = {"config", "users"})
 @Import(TestcontainersConfiguration.class)
 @AutoConfigureMockMvc
 @Sql("/test-products-data.sql")

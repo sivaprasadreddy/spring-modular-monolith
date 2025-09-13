@@ -29,9 +29,4 @@ public class UserService {
         user.setRole(cmd.role());
         userRepository.save(user);
     }
-
-    @Transactional(readOnly = true)
-    public Optional<UserDto> findById(Long id) {
-        return userRepository.findById(id).map(UserMapper::toUser);
-    }
 }

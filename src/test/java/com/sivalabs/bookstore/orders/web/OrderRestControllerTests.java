@@ -19,6 +19,7 @@ import com.sivalabs.bookstore.orders.domain.models.Customer;
 import com.sivalabs.bookstore.orders.domain.models.OrderCreatedEvent;
 import com.sivalabs.bookstore.orders.domain.models.OrderItem;
 import com.sivalabs.bookstore.orders.mappers.OrderMapper;
+import com.sivalabs.bookstore.users.domain.JwtTokenHelper;
 import java.math.BigDecimal;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,7 +36,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @ApplicationModuleTest(
         webEnvironment = RANDOM_PORT,
-        extraIncludes = {"users"})
+        extraIncludes = {"config", "users"})
 @Import(TestcontainersConfiguration.class)
 @AutoConfigureMockMvc
 class OrderRestControllerTests {
@@ -44,6 +45,9 @@ class OrderRestControllerTests {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private JwtTokenHelper jwtTokenHelper;
 
     @MockitoBean
     ProductApi productApi;

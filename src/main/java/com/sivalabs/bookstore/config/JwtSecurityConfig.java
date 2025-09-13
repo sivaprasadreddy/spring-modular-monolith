@@ -1,4 +1,4 @@
-package com.sivalabs.bookstore.users.config;
+package com.sivalabs.bookstore.config;
 
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
