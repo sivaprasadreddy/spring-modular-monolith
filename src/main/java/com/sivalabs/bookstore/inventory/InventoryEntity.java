@@ -15,7 +15,7 @@ import jakarta.validation.constraints.NotEmpty;
 class InventoryEntity {
     @Id
     @GeneratedValue(strategy = SEQUENCE, generator = "inventory_id_generator")
-    @SequenceGenerator(name = "inventory_id_generator", sequenceName = "inventory_id_seq", schema = "catalog")
+    @SequenceGenerator(name = "inventory_id_generator", sequenceName = "inventory_id_seq", schema = "inventory")
     private Long id;
 
     @Column(name = "product_code", nullable = false, unique = true)
