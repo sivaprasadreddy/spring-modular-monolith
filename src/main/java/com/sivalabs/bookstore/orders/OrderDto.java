@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 
 public record OrderDto(
         String orderNumber,
+        Long userId,
         OrderItem item,
         Customer customer,
         String deliveryAddress,

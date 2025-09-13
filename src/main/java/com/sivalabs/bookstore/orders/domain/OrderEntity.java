@@ -29,6 +29,9 @@ public class OrderEntity {
     @Column(nullable = false, unique = true)
     private String orderNumber;
 
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
+
     @Embedded
     @AttributeOverrides(
             value = {
@@ -65,6 +68,7 @@ public class OrderEntity {
     public OrderEntity(
             Long id,
             String orderNumber,
+            Long userId,
             Customer customer,
             String deliveryAddress,
             OrderItem orderItem,
@@ -73,6 +77,7 @@ public class OrderEntity {
             LocalDateTime updatedAt) {
         this.id = id;
         this.orderNumber = orderNumber;
+        this.userId = userId;
         this.customer = customer;
         this.deliveryAddress = deliveryAddress;
         this.orderItem = orderItem;
@@ -95,6 +100,14 @@ public class OrderEntity {
 
     public void setOrderNumber(String orderNumber) {
         this.orderNumber = orderNumber;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Customer getCustomer() {

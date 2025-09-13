@@ -18,12 +18,13 @@
                         <td>[[${cart.item.name}]]</td>
                         <td>[[${cart.item.price}]]</td>
                         <td>
-                            <form>
+                            <form th:action="@{/update-cart}" th:method="post">
                                 <input type="hidden" name="code" th:value="${cart.item.code}"/>
                                 <input type="number" min="0"
                                    name="quantity"
                                    th:value="${cart.item.quantity}"
                                     hx-post="/update-cart"
+                                    hx-params="code,quantity,_csrf"
                                     hx-swap="none"
                                 />
                             </form>

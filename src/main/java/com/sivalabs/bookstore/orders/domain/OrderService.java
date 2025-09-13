@@ -36,13 +36,13 @@ public class OrderService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<OrderEntity> findOrder(String orderNumber) {
-        return orderRepository.findByOrderNumber(orderNumber);
+    public Optional<OrderEntity> findOrder(String orderNumber, Long userId) {
+        return orderRepository.findByOrderNumberAndUserId(orderNumber, userId);
     }
 
     @Transactional(readOnly = true)
-    public List<OrderEntity> findOrders() {
+    public List<OrderEntity> findOrders(Long userId) {
         Sort sort = Sort.by("id").descending();
-        return orderRepository.findAllBy(sort);
+        return orderRepository.findAllByUserId(userId, sort);
     }
 }

@@ -29,10 +29,13 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.modulith.test.ApplicationModuleTest;
 import org.springframework.modulith.test.AssertablePublishedEvents;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-@ApplicationModuleTest(webEnvironment = RANDOM_PORT)
+@ApplicationModuleTest(
+        webEnvironment = RANDOM_PORT,
+        extraIncludes = {"users"})
 @Import(TestcontainersConfiguration.class)
 @AutoConfigureMockMvc
 class OrderRestControllerTests {
@@ -52,6 +55,7 @@ class OrderRestControllerTests {
     }
 
     @Test
+    @WithUserDetails("siva@gmail.com")
     void shouldCreateOrderSuccessfully(AssertablePublishedEvents events) throws Exception {
         mockMvc.perform(
                         post("/api/orders")
@@ -82,14 +86,16 @@ class OrderRestControllerTests {
     }
 
     @Test
+    @WithUserDetails("siva@gmail.com")
     void shouldReturnNotFoundWhenOrderIdNotExist() throws Exception {
         mockMvc.perform(get("/api/orders/{orderNumber}", "non-existing-order-id"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
+    @WithUserDetails("siva@gmail.com")
     void shouldGetOrderSuccessfully() throws Exception {
-        OrderEntity orderEntity = buildOrderEntity();
+        OrderEntity orderEntity = buildOrderEntity(2L);
         OrderEntity savedOrder = orderService.createOrder(orderEntity);
 
         mockMvc.perform(get("/api/orders/{orderNumber}", savedOrder.getOrderNumber()))
@@ -98,21 +104,25 @@ class OrderRestControllerTests {
     }
 
     @Test
+    @WithUserDetails("siva@gmail.com")
     void shouldGetOrdersSuccessfully() throws Exception {
-        OrderEntity orderEntity = buildOrderEntity();
+        OrderEntity orderEntity = buildOrderEntity(2L);
         orderService.createOrder(orderEntity);
 
         mockMvc.perform(get("/api/orders")).andExpect(status().isOk());
     }
 
-    private static OrderEntity buildOrderEntity() {
-        CreateOrderRequest request = buildCreateOrderRequest();
+    private static OrderEntity buildOrderEntity(Long userId) {
+        CreateOrderRequest request = buildCreateOrderRequest(userId);
         return OrderMapper.convertToEntity(request);
     }
 
-    private static CreateOrderRequest buildCreateOrderRequest() {
+    private static CreateOrderRequest buildCreateOrderRequest(Long userId) {
         OrderItem item = new OrderItem("P100", "The Hunger Games", new BigDecimal("34.0"), 1);
         return new CreateOrderRequest(
-                new Customer("Siva", "siva@gmail.com", "77777777"), "Siva, Hyderabad, India", item);
+                new CreateOrderRequest.UserId(userId),
+                new Customer("Siva", "siva@gmail.com", "77777777"),
+                "Siva, Hyderabad, India",
+                item);
     }
 }

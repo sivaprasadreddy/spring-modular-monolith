@@ -9,6 +9,7 @@ import com.sivalabs.bookstore.orders.domain.OrderEntity;
 import com.sivalabs.bookstore.orders.domain.OrderService;
 import com.sivalabs.bookstore.orders.domain.ProductServiceClient;
 import com.sivalabs.bookstore.orders.mappers.OrderMapper;
+import com.sivalabs.bookstore.users.UserContextUtils;
 import jakarta.validation.Valid;
 import java.util.List;
 import org.slf4j.Logger;
@@ -38,6 +39,8 @@ class OrderRestController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     CreateOrderResponse createOrder(@Valid @RequestBody CreateOrderRequest request) {
+        var userId = UserContextUtils.getCurrentUserIdOrThrow();
+        request.withUserId(userId);
         productServiceClient.validate(request.item().code(), request.item().price());
         OrderEntity newOrder = OrderMapper.convertToEntity(request);
         var savedOrder = orderService.createOrder(newOrder);
@@ -46,16 +49,19 @@ class OrderRestController {
 
     @GetMapping(value = "/{orderNumber}")
     OrderDto getOrder(@PathVariable String orderNumber) {
-        log.info("Fetching order by orderNumber: {}", orderNumber);
+        var userId = UserContextUtils.getCurrentUserIdOrThrow();
+        log.info("Fetching order by orderNumber: {} and userId: {}", orderNumber, userId);
         return orderService
-                .findOrder(orderNumber)
+                .findOrder(orderNumber, userId)
                 .map(OrderMapper::convertToDto)
                 .orElseThrow(() -> OrderNotFoundException.forOrderNumber(orderNumber));
     }
 
     @GetMapping
     List<OrderView> getOrders() {
-        List<OrderEntity> orders = orderService.findOrders();
+        Long userId = UserContextUtils.getCurrentUserIdOrThrow();
+        log.info("Fetching orders for userId: {}", userId);
+        List<OrderEntity> orders = orderService.findOrders(userId);
         return OrderMapper.convertToOrderViews(orders);
     }
 }

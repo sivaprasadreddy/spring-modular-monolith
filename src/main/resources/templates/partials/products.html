@@ -22,7 +22,7 @@
                            th:text="${'Price: $'+product.price}">product.price</p>
                     </div>
                     <div class="card-footer" style="background: transparent; border-top: 0;">
-                    <form method="post" action="/buy">
+                    <form method="post" action="/buy" th:method="post" th:action="@{/buy}">
                         <div class="d-grid gap-2">
                                 <input type="hidden" name="code" th:value="${product.code}"/>
                                 <button class="btn btn-primary" type="submit">Buy</button>

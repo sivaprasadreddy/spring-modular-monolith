@@ -15,7 +15,9 @@ import org.springframework.modulith.test.ApplicationModuleTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
-@ApplicationModuleTest(webEnvironment = RANDOM_PORT)
+@ApplicationModuleTest(
+        webEnvironment = RANDOM_PORT,
+        extraIncludes = {"users"})
 @Import(TestcontainersConfiguration.class)
 @AutoConfigureMockMvc
 @Sql("/test-products-data.sql")

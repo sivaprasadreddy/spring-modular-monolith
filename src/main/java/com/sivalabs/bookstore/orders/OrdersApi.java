@@ -21,8 +21,8 @@ public class OrdersApi {
         return new CreateOrderResponse(order.getOrderNumber());
     }
 
-    public Optional<OrderDto> findOrder(String orderNumber) {
-        Optional<OrderEntity> byOrderNumber = orderService.findOrder(orderNumber);
+    public Optional<OrderDto> findOrder(String orderNumber, Long userId) {
+        Optional<OrderEntity> byOrderNumber = orderService.findOrder(orderNumber, userId);
         if (byOrderNumber.isEmpty()) {
             return Optional.empty();
         }
@@ -31,8 +31,8 @@ public class OrdersApi {
         return Optional.of(orderDto);
     }
 
-    public List<OrderView> findOrders() {
-        List<OrderEntity> orders = orderService.findOrders();
+    public List<OrderView> findOrders(Long userId) {
+        List<OrderEntity> orders = orderService.findOrders(userId);
         return OrderMapper.convertToOrderViews(orders);
     }
 }

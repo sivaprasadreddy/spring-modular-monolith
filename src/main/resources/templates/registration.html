@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Registration</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="row justify-content-center pt-3">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <form id="registrationForm" method="post"
+                          th:action="@{/registration}" th:object="${user}">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input class="form-control" type="text"
+                                   id="name" name="name"
+                                   th:field="*{name}">
+                            <div class="form-text text-danger" th:if="${#fields.hasErrors('name')}"
+                                 th:errors="*{name}">Incorrect data
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input class="form-control" type="email"
+                                   id="email" name="email"
+                                   th:field="*{email}">
+                            <div class="form-text text-danger" th:if="${#fields.hasErrors('email')}"
+                                 th:errors="*{email}">Incorrect data
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input class="form-control" type="password"
+                                   id="password" name="password"
+                                   th:field="*{password}">
+                            <div class="form-text text-danger" th:if="${#fields.hasErrors('password')}"
+                                 th:errors="*{password}">Incorrect data
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Login</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="row justify-content-center pt-3">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <form id="loginForm" method="post" th:action="@{/login}">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Email</label>
+                            <input class="form-control" type="email" id="username" name="username"
+                                   value="admin@gmail.com">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input class="form-control" type="password" id="password" name="password"
+                                   value="admin">
+                        </div>
+
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </div>
+                        <div th:if="${param.error}"
+                             class="text-danger text-center fw-bold">
+                            <div>Invalid Email and Password</div>
+                        </div>
+                        <div th:if="${param.logout}"
+                             class="text-success text-center fw-bold">
+                            <div>You have been logged out</div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

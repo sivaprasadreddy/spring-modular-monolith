@@ -2,12 +2,18 @@
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <body>
 <div layout:fragment="content">
     <div th:insert="~{partials/cart}"> </div>
-    <div th:if="${cart.item != null }">
+
+    <div class="text-center" th:if="${cart.item != null }" sec:authorize="isAnonymous()">
+        <h3><a href="/login">Login to place order</a></h3>
+    </div>
+
+    <div th:if="${cart.item != null }" sec:authorize="isAuthenticated()">
         <div class="col-md-8 offset-md-2">
         <div th:insert="~{partials/order-form}"> </div>
         </div>
