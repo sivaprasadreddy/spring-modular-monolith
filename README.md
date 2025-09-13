@@ -154,6 +154,8 @@ These notes explain how `task kind_create` / `task k8s_deploy` behave and common
 - Quick troubleshooting commands
     - Show pods and their status:
         - `kubectl get pods -A -o wide`
+    - Show the nodes
+        - `kubectl get nodes`
     - Describe a failing pod to see events:
         - `kubectl describe pod <pod-name> -n <namespace>`
     - Show logs for a container (current + previous):
