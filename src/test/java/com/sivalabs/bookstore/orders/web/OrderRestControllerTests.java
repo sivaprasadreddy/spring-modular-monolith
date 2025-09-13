@@ -1,18 +1,14 @@
 package com.sivalabs.bookstore.orders.web;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.sivalabs.bookstore.TestcontainersConfiguration;
 import com.sivalabs.bookstore.catalog.ProductApi;
 import com.sivalabs.bookstore.catalog.ProductDto;
 import com.sivalabs.bookstore.orders.CreateOrderRequest;
+import com.sivalabs.bookstore.orders.OrderDto;
 import com.sivalabs.bookstore.orders.domain.OrderEntity;
 import com.sivalabs.bookstore.orders.domain.OrderService;
 import com.sivalabs.bookstore.orders.domain.models.Customer;
@@ -20,6 +16,8 @@ import com.sivalabs.bookstore.orders.domain.models.OrderCreatedEvent;
 import com.sivalabs.bookstore.orders.domain.models.OrderItem;
 import com.sivalabs.bookstore.orders.mappers.OrderMapper;
 import com.sivalabs.bookstore.users.domain.JwtTokenHelper;
+import com.sivalabs.bookstore.users.domain.UserDto;
+import com.sivalabs.bookstore.users.domain.UserService;
 import java.math.BigDecimal;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,12 +25,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.modulith.test.ApplicationModuleTest;
 import org.springframework.modulith.test.AssertablePublishedEvents;
-import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
-import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.assertj.MockMvcTester;
 
 @ApplicationModuleTest(
         webEnvironment = RANDOM_PORT,
@@ -41,7 +40,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 class OrderRestControllerTests {
     @Autowired
-    private MockMvc mockMvc;
+    private MockMvcTester mockMvcTester;
 
     @Autowired
     private OrderService orderService;
@@ -52,18 +51,28 @@ class OrderRestControllerTests {
     @MockitoBean
     ProductApi productApi;
 
+    @Autowired
+    private UserService userService;
+
     @BeforeEach
     void setUp() {
         ProductDto product = new ProductDto("P100", "The Hunger Games", "", null, new BigDecimal("34.0"));
         given(productApi.getByCode("P100")).willReturn(Optional.of(product));
     }
 
+    private String createJwtToken(String email) {
+        UserDto userDto = userService.findByEmail(email).orElseThrow();
+        return jwtTokenHelper.generateToken(userDto).token();
+    }
+
     @Test
-    @WithUserDetails("siva@gmail.com")
-    void shouldCreateOrderSuccessfully(AssertablePublishedEvents events) throws Exception {
-        mockMvc.perform(
-                        post("/api/orders")
+    void shouldCreateOrderSuccessfully(AssertablePublishedEvents events) {
+        assertThat(
+                        mockMvcTester
+                                .post()
+                                .uri("/api/orders")
                                 .contentType(MediaType.APPLICATION_JSON)
+                                .header(HttpHeaders.AUTHORIZATION, "Bearer " + createJwtToken("siva@gmail.com"))
                                 .content(
                                         """
                                                 {
@@ -81,7 +90,7 @@ class OrderRestControllerTests {
                                                     }
                                                 }
                                                 """))
-                .andExpect(status().isCreated());
+                .hasStatus(HttpStatus.CREATED);
 
         assertThat(events)
                 .contains(OrderCreatedEvent.class)
@@ -90,30 +99,41 @@ class OrderRestControllerTests {
     }
 
     @Test
-    @WithUserDetails("siva@gmail.com")
-    void shouldReturnNotFoundWhenOrderIdNotExist() throws Exception {
-        mockMvc.perform(get("/api/orders/{orderNumber}", "non-existing-order-id"))
-                .andExpect(status().isNotFound());
+    void shouldReturnNotFoundWhenOrderIdNotExist() {
+        assertThat(mockMvcTester
+                        .get()
+                        .uri("/api/orders/{orderNumber}", "non-existing-order-id")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + createJwtToken("siva@gmail.com")))
+                .hasStatus(HttpStatus.NOT_FOUND);
     }
 
     @Test
-    @WithUserDetails("siva@gmail.com")
-    void shouldGetOrderSuccessfully() throws Exception {
+    void shouldGetOrderSuccessfully() {
         OrderEntity orderEntity = buildOrderEntity(2L);
         OrderEntity savedOrder = orderService.createOrder(orderEntity);
 
-        mockMvc.perform(get("/api/orders/{orderNumber}", savedOrder.getOrderNumber()))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.orderNumber", is(savedOrder.getOrderNumber())));
+        assertThat(mockMvcTester
+                        .get()
+                        .uri("/api/orders/{orderNumber}", savedOrder.getOrderNumber())
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + createJwtToken("siva@gmail.com")))
+                .hasStatus(HttpStatus.OK)
+                .bodyJson()
+                .convertTo(OrderDto.class)
+                .satisfies(order -> {
+                    assertThat(order.orderNumber()).isEqualTo(savedOrder.getOrderNumber());
+                });
     }
 
     @Test
-    @WithUserDetails("siva@gmail.com")
-    void shouldGetOrdersSuccessfully() throws Exception {
+    void shouldGetOrdersSuccessfully() {
         OrderEntity orderEntity = buildOrderEntity(2L);
         orderService.createOrder(orderEntity);
 
-        mockMvc.perform(get("/api/orders")).andExpect(status().isOk());
+        assertThat(mockMvcTester
+                        .get()
+                        .uri("/api/orders")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + createJwtToken("siva@gmail.com")))
+                .hasStatus(HttpStatus.OK);
     }
 
     private static OrderEntity buildOrderEntity(Long userId) {

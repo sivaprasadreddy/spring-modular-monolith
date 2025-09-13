@@ -1,19 +1,19 @@
 package com.sivalabs.bookstore.catalog.web;
 
-import static org.hamcrest.Matchers.is;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.sivalabs.bookstore.TestcontainersConfiguration;
+import com.sivalabs.bookstore.catalog.ProductDto;
+import com.sivalabs.bookstore.common.models.PagedResult;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpStatus;
 import org.springframework.modulith.test.ApplicationModuleTest;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.assertj.MockMvcTester;
 
 @ApplicationModuleTest(
         webEnvironment = RANDOM_PORT,
@@ -23,27 +23,36 @@ import org.springframework.test.web.servlet.MockMvc;
 @Sql("/test-products-data.sql")
 class ProductRestControllerTests {
     @Autowired
-    private MockMvc mockMvc;
+    private MockMvcTester mockMvcTester;
 
     @Test
-    void shouldGetProducts() throws Exception {
-        mockMvc.perform(get("/api/products"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data").isArray())
-                .andExpect(jsonPath("$.totalElements", is(15)))
-                .andExpect(jsonPath("$.pageNumber", is(1)))
-                .andExpect(jsonPath("$.totalPages", is(2)))
-                .andExpect(jsonPath("$.isFirst", is(true)))
-                .andExpect(jsonPath("$.isLast", is(false)))
-                .andExpect(jsonPath("$.hasNext", is(true)))
-                .andExpect(jsonPath("$.hasPrevious", is(false)));
+    void shouldGetProducts() {
+        assertThat(mockMvcTester.get().uri("/api/products"))
+                .hasStatus(HttpStatus.OK)
+                .bodyJson()
+                .convertTo(PagedResult.class)
+                .satisfies(paged -> {
+                    PagedResult<?> pr = (PagedResult<?>) paged;
+                    assertThat(pr.totalElements()).isEqualTo(15);
+                    assertThat(pr.pageNumber()).isEqualTo(1);
+                    assertThat(pr.totalPages()).isEqualTo(2);
+                    assertThat(pr.isFirst()).isTrue();
+                    assertThat(pr.isLast()).isFalse();
+                    assertThat(pr.hasNext()).isTrue();
+                    assertThat(pr.hasPrevious()).isFalse();
+                    assertThat(pr.data()).isNotNull();
+                });
     }
 
     @Test
-    void shouldGetProductByCode() throws Exception {
-        mockMvc.perform(get("/api/products/{code}", "P100"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.code", is("P100")))
-                .andExpect(jsonPath("$.name", is("The Hunger Games")));
+    void shouldGetProductByCode() {
+        assertThat(mockMvcTester.get().uri("/api/products/{code}", "P100"))
+                .hasStatus(HttpStatus.OK)
+                .bodyJson()
+                .convertTo(ProductDto.class)
+                .satisfies(product -> {
+                    assertThat(product.code()).isEqualTo("P100");
+                    assertThat(product.name()).isEqualTo("The Hunger Games");
+                });
     }
 }

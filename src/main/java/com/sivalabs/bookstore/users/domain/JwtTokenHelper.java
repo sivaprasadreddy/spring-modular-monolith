@@ -26,7 +26,7 @@ public class JwtTokenHelper {
                 .expiresAt(expiresAt)
                 .subject(userDto.email())
                 .claim("user_id", userDto.id())
-                .claim("role", userDto.role().name())
+                .claim("roles", userDto.role().name())
                 .build();
         var token = this.encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
         return new JwtToken(token, expiresAt);
