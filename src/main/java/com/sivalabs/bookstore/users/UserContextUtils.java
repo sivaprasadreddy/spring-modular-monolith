@@ -1,5 +1,6 @@
 package com.sivalabs.bookstore.users;
 
+import com.sivalabs.bookstore.users.domain.SecurityUser;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,7 +13,9 @@ public class UserContextUtils {
             throw new AccessDeniedException("Access denied");
         }
         var principal = authentication.getPrincipal();
-        if (principal instanceof Jwt jwt) {
+        if (principal instanceof SecurityUser securityUser) {
+            return securityUser.getId();
+        } else if (principal instanceof Jwt jwt) {
             Long userId = jwt.getClaim("user_id");
             if (userId != null) {
                 return userId;

@@ -56,6 +56,7 @@ class CartController {
         if (refresh) {
             return new HtmxRefreshView();
         }
-        return FragmentsRendering.with("partials/cart", Map.of("cart", cart)).build();
+        return FragmentsRendering.fragment("partials/cart", Map.of("cart", cart))
+                .build();
     }
 }

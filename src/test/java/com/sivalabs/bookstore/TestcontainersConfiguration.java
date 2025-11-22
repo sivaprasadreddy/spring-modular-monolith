@@ -18,7 +18,7 @@ public class TestcontainersConfiguration {
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(DockerImageName.parse("postgres:18-alpine"));
 
     @Container
-    static RabbitMQContainer rabbitmq = new RabbitMQContainer(DockerImageName.parse("rabbitmq:4.1.4-alpine"));
+    static RabbitMQContainer rabbitmq = new RabbitMQContainer(DockerImageName.parse("rabbitmq:4.2.1-alpine"));
 
     @Container
     static GenericContainer<?> zipkin =
