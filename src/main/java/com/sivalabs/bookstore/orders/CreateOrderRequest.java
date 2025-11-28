@@ -6,7 +6,10 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 
 public record CreateOrderRequest(
-        UserId userId, @Valid Customer customer, @NotEmpty String deliveryAddress, @Valid OrderItem item) {
+        UserId userId,
+        @Valid Customer customer,
+        @NotEmpty String deliveryAddress,
+        @Valid OrderItem item) {
 
     public CreateOrderRequest {
         if (userId == null) {

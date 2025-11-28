@@ -53,6 +53,7 @@ class UserRestController {
 
     public record LoginRequest(
             @NotEmpty(message = "Email is required") @Email(message = "Invalid email address") String email,
+
             @NotEmpty(message = "Password is required") String password) {}
 
     public record LoginResponse(String token, Instant expiresAt, String name, String email, String role) {}
@@ -68,7 +69,9 @@ class UserRestController {
 
     public record RegistrationRequest(
             @NotBlank(message = "Name is required") String name,
+
             @NotBlank(message = "Email is required") @Email(message = "Invalid email address") String email,
+
             @NotBlank(message = "Password is required") String password) {}
 
     public record RegistrationResponse(String name, String email, Role role) {}

@@ -7,16 +7,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 interface OrderRepository extends JpaRepository<OrderEntity, Long> {
-    @Query(
-            """
+    @Query("""
         select distinct o
         from OrderEntity o left join fetch o.orderItem
         where o.userId = :userId
         """)
     List<OrderEntity> findAllByUserId(Long userId, Sort sort);
 
-    @Query(
-            """
+    @Query("""
         select distinct o
         from OrderEntity o left join fetch o.orderItem
         where o.orderNumber = :orderNumber and o.userId = :userId

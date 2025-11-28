@@ -29,11 +29,15 @@ public record ApplicationProperties(
 
     public record OpenAPIProperties(
             @DefaultValue("BookStore API") String title,
-            @DefaultValue("BookStore API Swagger Documentation") String description,
+
+            @DefaultValue("BookStore API Swagger Documentation")
+            String description,
+
             @DefaultValue("v1.0.0") String version,
             Contact contact) {
 
         public record Contact(
-                @DefaultValue("SivaLabs") String name, @DefaultValue("support@sivalabs.in") String email) {}
+                @DefaultValue("SivaLabs") String name,
+                @DefaultValue("support@sivalabs.in") String email) {}
     }
 }

@@ -54,6 +54,8 @@ class UserController {
 
     public record UserRegistrationForm(
             @NotBlank(message = "Name is required") String name,
+
             @NotBlank(message = "Email is required") @Email(message = "Invalid email address") String email,
+
             @NotBlank(message = "Password is required") String password) {}
 }

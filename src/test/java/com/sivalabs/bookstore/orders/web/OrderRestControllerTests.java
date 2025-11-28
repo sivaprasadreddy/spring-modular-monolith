@@ -67,14 +67,12 @@ class OrderRestControllerTests {
 
     @Test
     void shouldCreateOrderSuccessfully(AssertablePublishedEvents events) {
-        assertThat(
-                        mockMvcTester
-                                .post()
-                                .uri("/api/orders")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .header(HttpHeaders.AUTHORIZATION, "Bearer " + createJwtToken("siva@gmail.com"))
-                                .content(
-                                        """
+        assertThat(mockMvcTester
+                        .post()
+                        .uri("/api/orders")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + createJwtToken("siva@gmail.com"))
+                        .content("""
                                                 {
                                                     "customer": {
                                                         "name": "Siva",

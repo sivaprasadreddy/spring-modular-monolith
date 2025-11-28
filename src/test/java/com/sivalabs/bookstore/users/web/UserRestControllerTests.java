@@ -28,8 +28,7 @@ class UserRestControllerTests {
     @Test
     @DisplayName("Given valid credentials, user should be able to login successfully")
     void shouldLoginSuccessfully() {
-        String requestBody =
-                """
+        String requestBody = """
            {
                "email": "siva@gmail.com",
                "password": "siva"
@@ -54,8 +53,7 @@ class UserRestControllerTests {
     @Test
     @DisplayName("Given valid user details, user should be created successfully")
     void shouldCreateUserSuccessfully() {
-        String requestBody =
-                """
+        String requestBody = """
            {
                 "name":"User123",
                 "email":"user123@gmail.com",

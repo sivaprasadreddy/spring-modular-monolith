@@ -28,7 +28,7 @@ This application follows modular monolith architecture with the following module
 * **Notifications** module consumes "OrderCreatedEvent" and sends an order confirmation email to the customer.
 
 ## Prerequisites
-* JDK 24
+* JDK 25
 * Docker and Docker Compose
 * Your favourite IDE (Recommended: [IntelliJ IDEA](https://www.jetbrains.com/idea/))
 
@@ -37,7 +37,7 @@ Install JDK, Maven, Gradle, etc using [SDKMAN](https://sdkman.io/)
 ```shell
 $ curl -s "https://get.sdkman.io" | bash
 $ source "$HOME/.sdkman/bin/sdkman-init.sh"
-$ sdk install java 24.0.1-tem
+$ sdk install java 25-tem
 $ sdk install maven
 ```
 
