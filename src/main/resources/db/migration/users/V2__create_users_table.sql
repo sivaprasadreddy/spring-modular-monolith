@@ -1,4 +1,3 @@
-CREATE SCHEMA users;
 SET search_path TO users;
 
 create sequence user_id_seq start with 100 increment by 50;
