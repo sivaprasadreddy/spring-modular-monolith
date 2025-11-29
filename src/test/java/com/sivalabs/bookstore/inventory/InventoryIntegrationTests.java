@@ -1,5 +1,6 @@
 package com.sivalabs.bookstore.inventory;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 import com.sivalabs.bookstore.TestcontainersConfiguration;
@@ -24,6 +25,8 @@ class InventoryIntegrationTests {
         var customer = new Customer("Siva", "siva@gmail.com", "9987654");
         String productCode = "P114";
         var event = new OrderCreatedEvent(UUID.randomUUID().toString(), productCode, 2, customer);
-        scenario.publish(event).andWaitForStateChange(() -> inventoryService.getStockLevel(productCode) == 598);
+        var stockLevelChange =
+                scenario.publish(event).andWaitForStateChange(() -> inventoryService.getStockLevel(productCode) == 598);
+        stockLevelChange.andVerify(result -> assertThat(result).isTrue());
     }
 }

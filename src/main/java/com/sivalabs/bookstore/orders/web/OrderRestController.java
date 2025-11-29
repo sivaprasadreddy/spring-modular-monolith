@@ -40,7 +40,7 @@ class OrderRestController {
     @ResponseStatus(HttpStatus.CREATED)
     CreateOrderResponse createOrder(@Valid @RequestBody CreateOrderRequest request) {
         var userId = UserContextUtils.getCurrentUserIdOrThrow();
-        request.withUserId(userId);
+        request = request.withUserId(userId);
         productServiceClient.validate(request.item().code(), request.item().price());
         OrderEntity newOrder = OrderMapper.convertToEntity(request);
         var savedOrder = orderService.createOrder(newOrder);

@@ -9,9 +9,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
+import org.jspecify.annotations.NullUnmarked;
 
 @Entity
 @Table(name = "inventory", schema = "inventory")
+@NullUnmarked
 class InventoryEntity {
     @Id
     @GeneratedValue(strategy = SEQUENCE, generator = "inventory_id_generator")
