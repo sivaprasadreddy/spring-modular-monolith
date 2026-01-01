@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.0</version>
+        <version>4.0.1</version>
         <relativePath/>
     </parent>
     <groupId>com.sivalabs</groupId>
@@ -20,13 +20,15 @@
         <java.version>25</java.version>
         <dockerImageName>sivaprasadreddy/${project.artifactId}</dockerImageName>
         <springdoc-openapi.version>3.0.0</springdoc-openapi.version>
-        <spring-modulith.version>2.0.0</spring-modulith.version>
+        <spring-modulith.version>2.0.1</spring-modulith.version>
         <htmx-spring-boot-thymeleaf.version>5.0.0</htmx-spring-boot-thymeleaf.version>
-        <datasource-micrometer-spring-boot.version>2.0.0</datasource-micrometer-spring-boot.version>
+        <datasource-micrometer-spring-boot.version>2.0.1</datasource-micrometer-spring-boot.version>
         <bootstrap.version>5.3.8</bootstrap.version>
         <htmx.version>2.0.8</htmx.version>
         <spotless.version>3.1.0</spotless.version>
         <palantir-java-format.version>2.83.0</palantir-java-format.version>
+        <error_prone.version>2.45.0</error_prone.version>
+        <nullaway.version>0.12.15</nullaway.version>
     </properties>
 
     <dependencyManagement>
@@ -309,12 +311,12 @@
                         <path>
                             <groupId>com.google.errorprone</groupId>
                             <artifactId>error_prone_core</artifactId>
-                            <version>2.45.0</version>
+                            <version>${error_prone.version}</version>
                         </path>
                         <path>
                             <groupId>com.uber.nullaway</groupId>
                             <artifactId>nullaway</artifactId>
-                            <version>0.12.12</version>
+                            <version>${nullaway.version}</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
