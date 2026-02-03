@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.1</version>
+        <version>4.0.2</version>
         <relativePath/>
     </parent>
     <groupId>com.sivalabs</groupId>
@@ -19,14 +19,14 @@
     <properties>
         <java.version>25</java.version>
         <dockerImageName>sivaprasadreddy/${project.artifactId}</dockerImageName>
-        <springdoc-openapi.version>3.0.0</springdoc-openapi.version>
-        <spring-modulith.version>2.0.1</spring-modulith.version>
+        <springdoc-openapi.version>3.0.1</springdoc-openapi.version>
+        <spring-modulith.version>2.0.2</spring-modulith.version>
         <htmx-spring-boot-thymeleaf.version>5.0.0</htmx-spring-boot-thymeleaf.version>
-        <datasource-micrometer-spring-boot.version>2.0.1</datasource-micrometer-spring-boot.version>
+        <datasource-micrometer-spring-boot.version>2.1.0</datasource-micrometer-spring-boot.version>
         <bootstrap.version>5.3.8</bootstrap.version>
         <htmx.version>2.0.8</htmx.version>
-        <spotless.version>3.1.0</spotless.version>
-        <palantir-java-format.version>2.83.0</palantir-java-format.version>
+        <spotless.version>3.2.0</spotless.version>
+        <palantir-java-format.version>2.85.0</palantir-java-format.version>
         <error_prone.version>2.45.0</error_prone.version>
         <nullaway.version>0.12.15</nullaway.version>
     </properties>
@@ -57,21 +57,13 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-registry-prometheus</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-micrometer-tracing</artifactId>
+            <artifactId>spring-boot-starter-opentelemetry</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-zipkin</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-tracing-bridge-brave</artifactId>
+            <groupId>io.opentelemetry.instrumentation</groupId>
+            <artifactId>opentelemetry-logback-appender-1.0</artifactId>
+            <version>2.21.0-alpha</version>
         </dependency>
         <dependency>
             <groupId>net.ttddyy.observation</groupId>
@@ -229,16 +221,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-micrometer-tracing-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-zipkin-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>testcontainers-junit-jupiter</artifactId>
             <scope>test</scope>
@@ -251,6 +233,11 @@
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>testcontainers-rabbitmq</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers-grafana</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

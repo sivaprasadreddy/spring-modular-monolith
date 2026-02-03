@@ -3,7 +3,7 @@ package com.sivalabs.bookstore;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.context.annotation.Bean;
-import org.testcontainers.containers.GenericContainer;
+import org.testcontainers.grafana.LgtmStackContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.postgresql.PostgreSQLContainer;
@@ -21,12 +21,11 @@ public class TestcontainersConfiguration {
     static RabbitMQContainer rabbitmq = new RabbitMQContainer(DockerImageName.parse("rabbitmq:4.2.2-alpine"));
 
     @Container
-    static GenericContainer<?> zipkin =
-            new GenericContainer<>(DockerImageName.parse("openzipkin/zipkin:3.5.1")).withExposedPorts(9411);
+    static LgtmStackContainer lgtm = new LgtmStackContainer(DockerImageName.parse("grafana/otel-lgtm:0.17.0"));
 
     @Bean
     @ServiceConnection
-    PostgreSQLContainer postgresContainer() {
+    PostgreSQLContainer postgres() {
         return postgres;
     }
 
@@ -37,8 +36,8 @@ public class TestcontainersConfiguration {
     }
 
     @Bean
-    @ServiceConnection(name = "openzipkin/zipkin")
-    GenericContainer<?> zipkinContainer() {
-        return zipkin;
+    @ServiceConnection
+    LgtmStackContainer lgtm() {
+        return lgtm;
     }
 }

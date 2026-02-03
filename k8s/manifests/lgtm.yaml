@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-modular-monolith-lgtm-svc
+spec:
+  type: NodePort
+  selector:
+    app: spring-modular-monolith-lgtm-pod
+  ports:
+    - name: lgtm-port-mapping
+      port: 3000
+      targetPort: 3000
+      protocol: TCP
+      nodePort: 30092
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-modular-monolith-lgtm-deployment
+spec:
+  selector:
+    matchLabels:
+      app: spring-modular-monolith-lgtm-pod
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: spring-modular-monolith-lgtm-pod
+    spec:
+      containers:
+        - name: lgtm
+          image: "grafana/otel-lgtm:0.17.0"
+          ports:
+            - name: lgtm
+              containerPort: 3000

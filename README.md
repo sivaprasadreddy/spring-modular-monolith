@@ -41,7 +41,7 @@ $ sdk install java 25-tem
 $ sdk install maven
 ```
 
-Task is a task runner that we can use to run any arbitrary commands in easier way.
+Task is a task runner that we can use to run any arbitrary commands in an easier way.
 
 ```shell
 $ brew install go-task
@@ -106,7 +106,7 @@ $ task restart
 * Actuator URL: http://localhost:8080/actuator
 * Actuator URL for modulith: http://localhost:8080/actuator/modulith
 * RabbitMQ Admin URL: http://localhost:15672 (Credentials: guest/guest)
-* Zipkin URL: http://localhost:9411
+* Grafana URL: http://localhost:3000
 
 ## Deploying on k8s cluster
 * [Install kubectl](https://kubernetes.io/docs/tasks/tools/)
@@ -135,7 +135,7 @@ $ task kind_destroy
 
 * Application URL: http://localhost:30090
 * RabbitMQ Admin URL: http://localhost:30091 (Credentials: guest/guest)
-* Zipkin URL: http://localhost:30092
+* Grafana URL: http://localhost:30092
 
 ### Kubernetes Deployment Notes and Troubleshooting
 

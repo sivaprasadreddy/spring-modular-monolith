@@ -50,8 +50,12 @@ spec:
               value: guest
             - name: SPRING_RABBITMQ_PASSWORD
               value: guest
-            - name: MANAGEMENT_ZIPKIN_TRACING_ENDPOINT
-              value: http://spring-modular-monolith-zipkin-svc:9411/api/v2/spans
+            - name: METRICS_EXPORT_URL
+              value: http://spring-modular-monolith-lgtm-svc:4318/v1/metrics
+            - name: TRACES_EXPORT_URL
+              value: http://spring-modular-monolith-lgtm-svc:4318/v1/traces
+            - name: LOGS_EXPORT_URL
+              value: http://spring-modular-monolith-lgtm-svc:4318/v1/logs
 
           livenessProbe:
             httpGet:

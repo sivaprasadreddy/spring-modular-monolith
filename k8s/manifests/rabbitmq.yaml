@@ -11,7 +11,7 @@ spec:
       port: 5672
       targetPort: 5672
       protocol: TCP
-    - name: rabbitmq--gui-port-mapping
+    - name: rabbitmq-gui-port-mapping
       port: 15672
       targetPort: 15672
       protocol: TCP

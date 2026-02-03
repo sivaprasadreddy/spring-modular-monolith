@@ -16,12 +16,13 @@ services:
     ports:
       - '5672:5672'
       - '15672:15672'
-  zipkin:
-    image: 'openzipkin/zipkin:3.5.1'
-    environment:
-      - STORAGE_TYPE=mem
+
+  grafana-lgtm:
+    image: 'grafana/otel-lgtm:0.17.0'
     ports:
-      - '9411:9411'
+      - '3000:3000'
+      - '4317:4317'
+      - '4318:4318'
 
   spring-modular-monolith:
     image: sivaprasadreddy/spring-modular-monolith
@@ -36,13 +37,15 @@ services:
       SPRING_RABBITMQ_PORT: 5672
       SPRING_RABBITMQ_USERNAME: guest
       SPRING_RABBITMQ_PASSWORD: guest
-      MANAGEMENT_ZIPKIN_TRACING_ENDPOINT: http://zipkin:9411/api/v2/spans
+      METRICS_EXPORT_URL: http://grafana-lgtm:4318/v1/metrics
+      TRACES_EXPORT_URL: http://grafana-lgtm:4318/v1/traces
+      LOGS_EXPORT_URL: http://grafana-lgtm:4318/v1/logs
     ports:
       - "8080:8080"
     depends_on:
       - postgres
       - rabbitmq
-      - zipkin
+      - grafana-lgtm
     restart: unless-stopped
     profiles:
       - app
