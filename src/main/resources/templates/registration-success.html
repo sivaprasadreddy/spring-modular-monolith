@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
@@ -8,8 +8,10 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <h2 class="display-4">Registration is successful</h2>
-    <h3 class="display-5">Click <a href="/login">here</a> to Login</h3>
+    <div class="alert alert-primary" role="alert">
+        <h4 class="alert-heading">Registration Successful!</h4>
+        <p>Your account has been successfully created. You can now log in.</p>
+    </div>
 </div>
 
 </body>
