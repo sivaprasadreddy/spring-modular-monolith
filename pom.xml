@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.2</version>
+        <version>4.0.6</version>
         <relativePath/>
     </parent>
     <groupId>com.sivalabs</groupId>
@@ -19,7 +19,7 @@
     <properties>
         <java.version>25</java.version>
         <dockerImageName>sivaprasadreddy/${project.artifactId}</dockerImageName>
-        <springdoc-openapi.version>3.0.1</springdoc-openapi.version>
+        <springdoc-openapi.version>3.0.3</springdoc-openapi.version>
         <spring-modulith.version>2.0.2</spring-modulith.version>
         <htmx-spring-boot-thymeleaf.version>5.0.0</htmx-spring-boot-thymeleaf.version>
         <datasource-micrometer-spring-boot.version>2.1.0</datasource-micrometer-spring-boot.version>
@@ -98,7 +98,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+            <artifactId>spring-boot-starter-security-oauth2-resource-server</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -269,8 +269,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
                     <release>${java.version}</release>
                     <encoding>UTF-8</encoding>
                     <fork>true</fork>
@@ -375,6 +373,24 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.openrewrite.maven</groupId>
+                <artifactId>rewrite-maven-plugin</artifactId>
+                <version>6.38.0</version>
+                <configuration>
+                    <exportDatatables>true</exportDatatables>
+                    <activeRecipes>
+                        <recipe>org.openrewrite.java.spring.boot4.UpgradeSpringBoot_4_0</recipe>
+                    </activeRecipes>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.openrewrite.recipe</groupId>
+                        <artifactId>rewrite-spring</artifactId>
+                        <version>6.30.3</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
