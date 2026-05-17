@@ -18,10 +18,10 @@ public class TestcontainersConfiguration {
     static PostgreSQLContainer postgres = new PostgreSQLContainer(DockerImageName.parse("postgres:18-alpine"));
 
     @Container
-    static RabbitMQContainer rabbitmq = new RabbitMQContainer(DockerImageName.parse("rabbitmq:4.2.2-alpine"));
+    static RabbitMQContainer rabbitmq = new RabbitMQContainer(DockerImageName.parse("rabbitmq:4.3.0-alpine"));
 
     @Container
-    static LgtmStackContainer lgtm = new LgtmStackContainer(DockerImageName.parse("grafana/otel-lgtm:0.17.0"));
+    static LgtmStackContainer lgtm = new LgtmStackContainer(DockerImageName.parse("grafana/otel-lgtm:0.28.0"));
 
     @Bean
     @ServiceConnection
