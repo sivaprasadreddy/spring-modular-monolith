@@ -27,8 +27,8 @@
         <htmx.version>2.0.10</htmx.version>
         <spotless.version>3.5.1</spotless.version>
         <palantir-java-format.version>2.85.0</palantir-java-format.version>
-        <error_prone.version>2.45.0</error_prone.version>
-        <nullaway.version>0.12.15</nullaway.version>
+        <error_prone.version>2.49.0</error_prone.version>
+        <nullaway.version>0.13.4</nullaway.version>
     </properties>
 
     <dependencyManagement>
@@ -377,7 +377,7 @@
             <plugin>
                 <groupId>org.openrewrite.maven</groupId>
                 <artifactId>rewrite-maven-plugin</artifactId>
-                <version>6.38.0</version>
+                <version>6.39.0</version>
                 <configuration>
                     <exportDatatables>true</exportDatatables>
                     <activeRecipes>
