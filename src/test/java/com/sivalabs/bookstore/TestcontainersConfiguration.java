@@ -15,9 +15,6 @@ import org.testcontainers.utility.DockerImageName;
 public class TestcontainersConfiguration {
 
     @Container
-    static PostgreSQLContainer postgres = new PostgreSQLContainer(DockerImageName.parse("postgres:18-alpine"));
-
-    @Container
     static RabbitMQContainer rabbitmq = new RabbitMQContainer(DockerImageName.parse("rabbitmq:4.3.0-alpine"));
 
     @Container
@@ -26,7 +23,7 @@ public class TestcontainersConfiguration {
     @Bean
     @ServiceConnection
     PostgreSQLContainer postgres() {
-        return postgres;
+        return new PostgreSQLContainer(DockerImageName.parse("postgres:18-alpine"));
     }
 
     @Bean
