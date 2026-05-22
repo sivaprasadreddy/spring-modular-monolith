@@ -1,19 +1,17 @@
-package com.sivalabs.bookstore.orders;
+package com.sivalabs.bookstore.orders.domain.models;
 
-import com.sivalabs.bookstore.orders.domain.models.Customer;
-import com.sivalabs.bookstore.orders.domain.models.OrderItem;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import org.jspecify.annotations.Nullable;
 
-public record CreateOrderRequest(
+public record CreateOrderCmd(
         @Nullable UserId userId,
         @Valid Customer customer,
         @NotEmpty String deliveryAddress,
         @Valid OrderItem item) {
 
-    public CreateOrderRequest withUserId(Long userId) {
-        return new CreateOrderRequest(new UserId(userId), customer, deliveryAddress, item);
+    public CreateOrderCmd withUserId(Long userId) {
+        return new CreateOrderCmd(new UserId(userId), customer, deliveryAddress, item);
     }
 
     public static class UserId {

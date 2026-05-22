@@ -1,6 +1,6 @@
 package com.sivalabs.bookstore.config;
 
-import com.sivalabs.bookstore.users.domain.Role;
+import com.sivalabs.bookstore.users.domain.models.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;

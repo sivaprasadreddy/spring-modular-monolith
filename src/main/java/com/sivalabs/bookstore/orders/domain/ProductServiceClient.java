@@ -1,7 +1,6 @@
 package com.sivalabs.bookstore.orders.domain;
 
 import com.sivalabs.bookstore.catalog.ProductApi;
-import com.sivalabs.bookstore.orders.InvalidOrderException;
 import java.math.BigDecimal;
 import org.springframework.stereotype.Component;
 

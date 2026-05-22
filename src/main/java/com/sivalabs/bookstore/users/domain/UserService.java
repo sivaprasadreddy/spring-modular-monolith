@@ -1,5 +1,7 @@
 package com.sivalabs.bookstore.users.domain;
 
+import com.sivalabs.bookstore.users.domain.models.CreateUserCmd;
+import com.sivalabs.bookstore.users.domain.models.UserDto;
 import java.util.Optional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

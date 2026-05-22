@@ -1,5 +1,6 @@
 package com.sivalabs.bookstore.catalog.domain;
 
+import com.sivalabs.bookstore.catalog.ProductDto;
 import com.sivalabs.bookstore.common.models.PagedResult;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -13,22 +14,24 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductService {
     private static final int PRODUCT_PAGE_SIZE = 10;
     private final ProductRepository repo;
+    private final ProductMapper productMapper;
 
-    ProductService(ProductRepository repo) {
+    ProductService(ProductRepository repo, ProductMapper productMapper) {
         this.repo = repo;
+        this.productMapper = productMapper;
     }
 
     @Transactional(readOnly = true)
-    public PagedResult<ProductEntity> getProducts(int pageNo) {
+    public PagedResult<ProductDto> getProducts(int pageNo) {
         Sort sort = Sort.by("name").ascending();
         int page = pageNo <= 1 ? 0 : pageNo - 1;
         Pageable pageable = PageRequest.of(page, PRODUCT_PAGE_SIZE, sort);
-        Page<ProductEntity> productsPage = repo.findAll(pageable);
+        Page<ProductDto> productsPage = repo.findAll(pageable).map(productMapper::mapToDto);
         return new PagedResult<>(productsPage);
     }
 
     @Transactional(readOnly = true)
-    public Optional<ProductEntity> getByCode(String code) {
-        return repo.findByCode(code);
+    public Optional<ProductDto> getByCode(String code) {
+        return repo.findByCode(code).map(productMapper::mapToDto);
     }
 }

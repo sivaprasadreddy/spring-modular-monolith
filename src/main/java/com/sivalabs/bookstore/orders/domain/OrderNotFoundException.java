@@ -1,4 +1,4 @@
-package com.sivalabs.bookstore.orders;
+package com.sivalabs.bookstore.orders.domain;
 
 public class OrderNotFoundException extends RuntimeException {
     public OrderNotFoundException(String message) {

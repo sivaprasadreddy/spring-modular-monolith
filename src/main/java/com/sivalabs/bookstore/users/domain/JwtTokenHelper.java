@@ -1,6 +1,8 @@
 package com.sivalabs.bookstore.users.domain;
 
 import com.sivalabs.bookstore.ApplicationProperties;
+import com.sivalabs.bookstore.users.domain.models.JwtToken;
+import com.sivalabs.bookstore.users.domain.models.UserDto;
 import java.time.Instant;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;

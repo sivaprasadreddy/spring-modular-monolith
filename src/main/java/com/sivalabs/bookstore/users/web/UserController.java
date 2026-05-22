@@ -1,8 +1,8 @@
 package com.sivalabs.bookstore.users.web;
 
-import com.sivalabs.bookstore.users.domain.CreateUserCmd;
-import com.sivalabs.bookstore.users.domain.Role;
 import com.sivalabs.bookstore.users.domain.UserService;
+import com.sivalabs.bookstore.users.domain.models.CreateUserCmd;
+import com.sivalabs.bookstore.users.domain.models.Role;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

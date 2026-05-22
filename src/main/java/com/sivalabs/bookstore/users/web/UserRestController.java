@@ -2,10 +2,10 @@ package com.sivalabs.bookstore.users.web;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
-import com.sivalabs.bookstore.users.domain.CreateUserCmd;
 import com.sivalabs.bookstore.users.domain.JwtTokenHelper;
-import com.sivalabs.bookstore.users.domain.Role;
 import com.sivalabs.bookstore.users.domain.UserService;
+import com.sivalabs.bookstore.users.domain.models.CreateUserCmd;
+import com.sivalabs.bookstore.users.domain.models.Role;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

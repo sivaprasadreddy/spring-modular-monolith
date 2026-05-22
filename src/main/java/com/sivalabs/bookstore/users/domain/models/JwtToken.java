@@ -1,4 +1,4 @@
-package com.sivalabs.bookstore.users.domain;
+package com.sivalabs.bookstore.users.domain.models;
 
 import java.time.Instant;
 

@@ -1,14 +1,14 @@
 package com.sivalabs.bookstore.orders.web;
 
-import com.sivalabs.bookstore.orders.CreateOrderRequest;
-import com.sivalabs.bookstore.orders.CreateOrderResponse;
-import com.sivalabs.bookstore.orders.OrderDto;
-import com.sivalabs.bookstore.orders.OrderNotFoundException;
-import com.sivalabs.bookstore.orders.OrderView;
 import com.sivalabs.bookstore.orders.domain.OrderEntity;
+import com.sivalabs.bookstore.orders.domain.OrderMapper;
+import com.sivalabs.bookstore.orders.domain.OrderNotFoundException;
 import com.sivalabs.bookstore.orders.domain.OrderService;
 import com.sivalabs.bookstore.orders.domain.ProductServiceClient;
-import com.sivalabs.bookstore.orders.mappers.OrderMapper;
+import com.sivalabs.bookstore.orders.domain.models.CreateOrderCmd;
+import com.sivalabs.bookstore.orders.domain.models.CreateOrderResult;
+import com.sivalabs.bookstore.orders.domain.models.OrderDto;
+import com.sivalabs.bookstore.orders.domain.models.OrderView;
 import com.sivalabs.bookstore.users.UserContextUtils;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -38,13 +38,13 @@ class OrderRestController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    CreateOrderResponse createOrder(@Valid @RequestBody CreateOrderRequest request) {
+    CreateOrderResult createOrder(@Valid @RequestBody CreateOrderCmd cmd) {
         var userId = UserContextUtils.getCurrentUserIdOrThrow();
-        request = request.withUserId(userId);
-        productServiceClient.validate(request.item().code(), request.item().price());
-        OrderEntity newOrder = OrderMapper.convertToEntity(request);
+        cmd = cmd.withUserId(userId);
+        productServiceClient.validate(cmd.item().code(), cmd.item().price());
+        OrderEntity newOrder = OrderMapper.convertToEntity(cmd);
         var savedOrder = orderService.createOrder(newOrder);
-        return new CreateOrderResponse(savedOrder.getOrderNumber());
+        return new CreateOrderResult(savedOrder.getOrderNumber());
     }
 
     @GetMapping(value = "/{orderNumber}")
@@ -53,7 +53,6 @@ class OrderRestController {
         log.info("Fetching order by orderNumber: {} and userId: {}", orderNumber, userId);
         return orderService
                 .findOrder(orderNumber, userId)
-                .map(OrderMapper::convertToDto)
                 .orElseThrow(() -> OrderNotFoundException.forOrderNumber(orderNumber));
     }
 
@@ -61,7 +60,6 @@ class OrderRestController {
     List<OrderView> getOrders() {
         Long userId = UserContextUtils.getCurrentUserIdOrThrow();
         log.info("Fetching orders for userId: {}", userId);
-        List<OrderEntity> orders = orderService.findOrders(userId);
-        return OrderMapper.convertToOrderViews(orders);
+        return orderService.findOrders(userId);
     }
 }

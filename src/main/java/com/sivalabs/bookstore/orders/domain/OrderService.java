@@ -1,6 +1,8 @@
 package com.sivalabs.bookstore.orders.domain;
 
 import com.sivalabs.bookstore.orders.domain.models.OrderCreatedEvent;
+import com.sivalabs.bookstore.orders.domain.models.OrderDto;
+import com.sivalabs.bookstore.orders.domain.models.OrderView;
 import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -36,13 +38,14 @@ public class OrderService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<OrderEntity> findOrder(String orderNumber, Long userId) {
-        return orderRepository.findByOrderNumberAndUserId(orderNumber, userId);
+    public Optional<OrderDto> findOrder(String orderNumber, Long userId) {
+        return orderRepository.findByOrderNumberAndUserId(orderNumber, userId).map(OrderMapper::convertToDto);
     }
 
     @Transactional(readOnly = true)
-    public List<OrderEntity> findOrders(Long userId) {
+    public List<OrderView> findOrders(Long userId) {
         Sort sort = Sort.by("id").descending();
-        return orderRepository.findAllByUserId(userId, sort);
+        var orderEntities = orderRepository.findAllByUserId(userId, sort);
+        return OrderMapper.convertToOrderViews(orderEntities);
     }
 }

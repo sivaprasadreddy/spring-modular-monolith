@@ -7,17 +7,13 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 import com.sivalabs.bookstore.TestcontainersConfiguration;
 import com.sivalabs.bookstore.catalog.ProductApi;
 import com.sivalabs.bookstore.catalog.ProductDto;
-import com.sivalabs.bookstore.orders.CreateOrderRequest;
-import com.sivalabs.bookstore.orders.OrderDto;
 import com.sivalabs.bookstore.orders.domain.OrderEntity;
+import com.sivalabs.bookstore.orders.domain.OrderMapper;
 import com.sivalabs.bookstore.orders.domain.OrderService;
-import com.sivalabs.bookstore.orders.domain.models.Customer;
-import com.sivalabs.bookstore.orders.domain.models.OrderCreatedEvent;
-import com.sivalabs.bookstore.orders.domain.models.OrderItem;
-import com.sivalabs.bookstore.orders.mappers.OrderMapper;
+import com.sivalabs.bookstore.orders.domain.models.*;
 import com.sivalabs.bookstore.users.domain.JwtTokenHelper;
-import com.sivalabs.bookstore.users.domain.UserDto;
 import com.sivalabs.bookstore.users.domain.UserService;
+import com.sivalabs.bookstore.users.domain.models.UserDto;
 import java.math.BigDecimal;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -135,14 +131,14 @@ class OrderRestControllerTests {
     }
 
     private static OrderEntity buildOrderEntity(Long userId) {
-        CreateOrderRequest request = buildCreateOrderRequest(userId);
+        CreateOrderCmd request = buildCreateOrderCmd(userId);
         return OrderMapper.convertToEntity(request);
     }
 
-    private static CreateOrderRequest buildCreateOrderRequest(Long userId) {
+    private static CreateOrderCmd buildCreateOrderCmd(Long userId) {
         OrderItem item = new OrderItem("P100", "The Hunger Games", new BigDecimal("34.0"), 1);
-        return new CreateOrderRequest(
-                new CreateOrderRequest.UserId(userId),
+        return new CreateOrderCmd(
+                new CreateOrderCmd.UserId(userId),
                 new Customer("Siva", "siva@gmail.com", "77777777"),
                 "Siva, Hyderabad, India",
                 item);

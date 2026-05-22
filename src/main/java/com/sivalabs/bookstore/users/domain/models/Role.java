@@ -1,8 +1,5 @@
-package com.sivalabs.bookstore.users.domain;
+package com.sivalabs.bookstore.users.domain.models;
 
-import org.springframework.modulith.NamedInterface;
-
-@NamedInterface
 public enum Role {
     ROLE_USER,
     ROLE_ADMIN;

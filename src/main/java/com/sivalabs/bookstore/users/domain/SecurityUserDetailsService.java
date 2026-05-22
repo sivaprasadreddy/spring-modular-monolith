@@ -1,5 +1,6 @@
 package com.sivalabs.bookstore.users.domain;
 
+import org.jspecify.annotations.NonNull;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,7 +15,7 @@ class SecurityUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String userName) {
+    @NonNull public UserDetails loadUserByUsername(@NonNull String userName) {
         return userRepository
                 .findByEmailIgnoreCase(userName)
                 .map(this::toSecurityUser)

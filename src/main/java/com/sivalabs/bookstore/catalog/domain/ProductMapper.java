@@ -1,11 +1,10 @@
-package com.sivalabs.bookstore.catalog.mappers;
+package com.sivalabs.bookstore.catalog.domain;
 
 import com.sivalabs.bookstore.catalog.ProductDto;
-import com.sivalabs.bookstore.catalog.domain.ProductEntity;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ProductMapper {
+class ProductMapper {
 
     public ProductDto mapToDto(ProductEntity entity) {
         return new ProductDto(

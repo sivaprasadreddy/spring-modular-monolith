@@ -1,10 +1,9 @@
-package com.sivalabs.bookstore.orders.mappers;
+package com.sivalabs.bookstore.orders.domain;
 
-import com.sivalabs.bookstore.orders.CreateOrderRequest;
-import com.sivalabs.bookstore.orders.OrderDto;
-import com.sivalabs.bookstore.orders.OrderView;
-import com.sivalabs.bookstore.orders.domain.OrderEntity;
+import com.sivalabs.bookstore.orders.domain.models.CreateOrderCmd;
+import com.sivalabs.bookstore.orders.domain.models.OrderDto;
 import com.sivalabs.bookstore.orders.domain.models.OrderStatus;
+import com.sivalabs.bookstore.orders.domain.models.OrderView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -12,16 +11,16 @@ import java.util.UUID;
 public final class OrderMapper {
     private OrderMapper() {}
 
-    public static OrderEntity convertToEntity(CreateOrderRequest request) {
+    public static OrderEntity convertToEntity(CreateOrderCmd cmd) {
         OrderEntity entity = new OrderEntity();
         entity.setOrderNumber(UUID.randomUUID().toString());
-        if (request.userId() != null) {
-            entity.setUserId(request.userId().getUserId());
+        if (cmd.userId() != null) {
+            entity.setUserId(cmd.userId().getUserId());
         }
         entity.setStatus(OrderStatus.NEW);
-        entity.setCustomer(request.customer());
-        entity.setDeliveryAddress(request.deliveryAddress());
-        entity.setOrderItem(request.item());
+        entity.setCustomer(cmd.customer());
+        entity.setDeliveryAddress(cmd.deliveryAddress());
+        entity.setOrderItem(cmd.item());
         return entity;
     }
 

@@ -1,14 +1,13 @@
 package com.sivalabs.bookstore.orders.web;
 
-import com.sivalabs.bookstore.orders.CreateOrderRequest;
-import com.sivalabs.bookstore.orders.OrderDto;
-import com.sivalabs.bookstore.orders.OrderNotFoundException;
-import com.sivalabs.bookstore.orders.OrderView;
 import com.sivalabs.bookstore.orders.domain.OrderEntity;
+import com.sivalabs.bookstore.orders.domain.OrderMapper;
+import com.sivalabs.bookstore.orders.domain.OrderNotFoundException;
 import com.sivalabs.bookstore.orders.domain.OrderService;
 import com.sivalabs.bookstore.orders.domain.ProductServiceClient;
 import com.sivalabs.bookstore.orders.domain.models.*;
-import com.sivalabs.bookstore.orders.mappers.OrderMapper;
+import com.sivalabs.bookstore.orders.domain.models.OrderDto;
+import com.sivalabs.bookstore.orders.domain.models.OrderView;
 import com.sivalabs.bookstore.users.UserContextUtils;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxRequest;
 import jakarta.servlet.http.HttpSession;
@@ -48,8 +47,8 @@ class OrderWebController {
         OrderItem orderItem = new OrderItem(
                 lineItem.getCode(), lineItem.getName(),
                 lineItem.getPrice(), lineItem.getQuantity());
-        var userId = new CreateOrderRequest.UserId(UserContextUtils.getCurrentUserIdOrThrow());
-        var request = new CreateOrderRequest(userId, orderForm.customer(), orderForm.deliveryAddress(), orderItem);
+        var userId = new CreateOrderCmd.UserId(UserContextUtils.getCurrentUserIdOrThrow());
+        var request = new CreateOrderCmd(userId, orderForm.customer(), orderForm.deliveryAddress(), orderItem);
         productServiceClient.validate(request.item().code(), request.item().price());
         OrderEntity newOrder = OrderMapper.convertToEntity(request);
         var savedOrder = orderService.createOrder(newOrder);
@@ -68,7 +67,7 @@ class OrderWebController {
 
     private void fetchOrders(Model model) {
         var userId = UserContextUtils.getCurrentUserIdOrThrow();
-        List<OrderView> orders = OrderMapper.convertToOrderViews(orderService.findOrders(userId));
+        List<OrderView> orders = orderService.findOrders(userId);
         model.addAttribute("orders", orders);
     }
 
@@ -76,10 +75,8 @@ class OrderWebController {
     String getOrder(@PathVariable String orderNumber, Model model) {
         var userId = UserContextUtils.getCurrentUserIdOrThrow();
         log.info("Fetching order by orderNumber: {} and userId: {}", orderNumber, userId);
-        OrderDto orderDto = orderService
-                .findOrder(orderNumber, userId)
-                .map(OrderMapper::convertToDto)
-                .orElseThrow(() -> new OrderNotFoundException(orderNumber));
+        OrderDto orderDto =
+                orderService.findOrder(orderNumber, userId).orElseThrow(() -> new OrderNotFoundException(orderNumber));
         model.addAttribute("order", orderDto);
         return "order_details";
     }

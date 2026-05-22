@@ -1,8 +1,12 @@
 package com.sivalabs.bookstore.orders;
 
 import com.sivalabs.bookstore.orders.domain.OrderEntity;
+import com.sivalabs.bookstore.orders.domain.OrderMapper;
 import com.sivalabs.bookstore.orders.domain.OrderService;
-import com.sivalabs.bookstore.orders.mappers.OrderMapper;
+import com.sivalabs.bookstore.orders.domain.models.CreateOrderCmd;
+import com.sivalabs.bookstore.orders.domain.models.CreateOrderResult;
+import com.sivalabs.bookstore.orders.domain.models.OrderDto;
+import com.sivalabs.bookstore.orders.domain.models.OrderView;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Component;
@@ -15,24 +19,17 @@ public class OrdersApi {
         this.orderService = orderService;
     }
 
-    public CreateOrderResponse createOrder(CreateOrderRequest request) {
-        OrderEntity orderEntity = OrderMapper.convertToEntity(request);
+    public CreateOrderResult createOrder(CreateOrderCmd cmd) {
+        OrderEntity orderEntity = OrderMapper.convertToEntity(cmd);
         var order = orderService.createOrder(orderEntity);
-        return new CreateOrderResponse(order.getOrderNumber());
+        return new CreateOrderResult(order.getOrderNumber());
     }
 
     public Optional<OrderDto> findOrder(String orderNumber, Long userId) {
-        Optional<OrderEntity> byOrderNumber = orderService.findOrder(orderNumber, userId);
-        if (byOrderNumber.isEmpty()) {
-            return Optional.empty();
-        }
-        OrderEntity orderEntity = byOrderNumber.get();
-        var orderDto = OrderMapper.convertToDto(orderEntity);
-        return Optional.of(orderDto);
+        return orderService.findOrder(orderNumber, userId);
     }
 
     public List<OrderView> findOrders(Long userId) {
-        List<OrderEntity> orders = orderService.findOrders(userId);
-        return OrderMapper.convertToOrderViews(orders);
+        return orderService.findOrders(userId);
     }
 }

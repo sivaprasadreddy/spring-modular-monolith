@@ -1,10 +1,11 @@
 package com.sivalabs.bookstore.users.domain;
 
+import com.sivalabs.bookstore.users.domain.models.Role;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "users", schema = "users")
-public class UserEntity {
+class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_generator")
