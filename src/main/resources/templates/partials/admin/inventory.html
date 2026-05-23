@@ -1,0 +1,54 @@
+<div id="admin-inventory" th:fragment="inventory" xmlns:th="http://www.thymeleaf.org">
+
+    <nav aria-label="Page navigation" th:if="${inventoryPage.totalPages() > 1}">
+        <ul class="pagination justify-content-end my-3">
+            <li class="page-item" th:classappend="${!inventoryPage.hasPrevious()} ? disabled : ''">
+                <a class="page-link rounded-start-pill" th:href="@{/admin/inventory(page=1)}">&laquo;</a>
+            </li>
+            <li class="page-item" th:classappend="${!inventoryPage.hasPrevious()} ? disabled : ''">
+                <a class="page-link" th:href="@{/admin/inventory(page=${inventoryPage.pageNumber() - 1})}">Previous</a>
+            </li>
+            <li class="page-item active" aria-current="page">
+                <span class="page-link" th:text="${inventoryPage.pageNumber()}">1</span>
+            </li>
+            <li class="page-item" th:classappend="${!inventoryPage.hasNext()} ? disabled : ''">
+                <a class="page-link" th:href="@{/admin/inventory(page=${inventoryPage.pageNumber() + 1})}">Next</a>
+            </li>
+            <li class="page-item" th:classappend="${!inventoryPage.hasNext()} ? disabled : ''">
+                <a class="page-link rounded-end-pill" th:href="@{/admin/inventory(page=${inventoryPage.totalPages()})}">&raquo;</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="orders-card">
+        <table class="table orders-table mb-0">
+            <thead>
+            <tr>
+                <th>Product Code</th>
+                <th class="text-end">Quantity</th>
+                <th class="text-end">Update Stock</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${inventoryPage.data}">
+                <td class="order-id" th:text="${item.productCode}">code</td>
+                <td class="text-end fw-semibold" th:text="${item.quantity}">qty</td>
+                <td class="text-end">
+                    <form th:action="@{/admin/inventory/{code}(code=${item.productCode})}"
+                          method="post" class="d-flex justify-content-end gap-2 align-items-center">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        <input type="number" name="quantity" min="0"
+                               th:value="${item.quantity}"
+                               class="form-control form-control-sm" style="width:100px"/>
+                        <button type="submit" class="btn btn-sm btn-primary">Save</button>
+                    </form>
+                </td>
+            </tr>
+            <tr th:if="${inventoryPage.data.isEmpty()}">
+                <td colspan="3" class="text-center text-muted py-4">No inventory records found.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

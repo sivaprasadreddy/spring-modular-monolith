@@ -137,25 +137,10 @@ All admin actions require the user to be authenticated with `ROLE_ADMIN`.
 
 ---
 
-### UC-009 — Cancel Order
-**Status:** Pending  
-**Actor:** Admin  
-**Description:** Admin can cancel an order that has not yet been delivered. This is a convenience shortcut for the `CANCELLED` status transition defined in UC-008.  
-**Pre-conditions:** User is authenticated as ADMIN. Order is in `NEW` or `IN_PROCESS` status.  
-**Main flow:**
-1. Admin submits a `DELETE /admin/orders/{orderNumber}` request.
-2. System sets order status to `CANCELLED` and returns HTTP 204.
-
-**Alternate flows:**
-- If order does not exist, system returns 404.
-- If order is already `DELIVERED` or `CANCELLED`, system returns 400.
-
----
-
 ## Inventory Management
 
-### UC-010 — List Inventory
-**Status:** Pending  
+### UC-009 — List Inventory
+**Status:** Completed  
 **Actor:** Admin  
 **Description:** Admin can view the current stock level for all products.  
 **Pre-conditions:** User is authenticated as ADMIN.  
@@ -165,8 +150,8 @@ All admin actions require the user to be authenticated with `ROLE_ADMIN`.
 
 ---
 
-### UC-011 — Update Stock Level
-**Status:** Pending  
+### UC-010 — Update Stock Level
+**Status:** Completed  
 **Actor:** Admin  
 **Description:** Admin can set or adjust the stock quantity for a specific product.  
 **Pre-conditions:** User is authenticated as ADMIN. A product with the given code exists in the catalog.  
