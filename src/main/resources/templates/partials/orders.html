@@ -1,4 +1,12 @@
 <tr th:each="order : ${orders}">
-    <td><a th:href="${'/orders/'+order.orderNumber}" th:text="${order.orderNumber}">OrderNumber</a></td>
-    <td th:text="${order.status}">status</td>
+    <td class="order-id" th:text="${order.orderNumber}">OrderNumber</td>
+    <td>
+        <span class="order-status-badge"
+              th:attr="data-status=${order.status}"
+              th:text="${order.status}">status</span>
+    </td>
+    <td class="text-end">
+        <a class="btn btn-sm btn-outline-primary orders-view-btn"
+           th:href="${'/orders/'+order.orderNumber}">View</a>
+    </td>
 </tr>

@@ -12,64 +12,60 @@
     <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="/css/styles.css">
 </head>
-<body>
-<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/admin}">
-            <img src="/images/books.png" alt="Books Logo" width="40" height="40"> BookStore Admin
+<body class="admin-body">
+
+<nav class="admin-topbar">
+    <a class="admin-topbar-brand" th:href="@{/admin}">
+        <img src="/images/books.png" alt="BookStore" width="30" height="30"/>
+        BookStore <span class="admin-badge">Admin</span>
+    </a>
+    <div class="admin-topbar-actions">
+        <a class="admin-topbar-link" th:href="@{/}">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            Storefront
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#adminNavbar"
-                aria-controls="adminNavbar" aria-expanded="false"
-                aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="adminNavbar">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/}">Storefront</a>
-                </li>
-                <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a class="nav-link" th:href="@{/logout}">Logout</a>
-                </li>
-            </ul>
-        </div>
+        <a class="admin-topbar-link" th:href="@{/logout}" sec:authorize="isAuthenticated()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            Logout
+        </a>
     </div>
 </nav>
 
-<div class="container-fluid" style="margin-top: 70px;">
-    <div class="row">
-        <nav class="col-md-2 d-md-block bg-light sidebar" style="min-height: calc(100vh - 70px);">
-            <div class="position-sticky pt-3">
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <span class="nav-link text-muted text-uppercase fw-bold" style="font-size: 0.75rem;">Catalog</span>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link ps-3" th:href="@{/admin/catalog/products}">Products</a>
-                    </li>
-                    <li class="nav-item mt-2">
-                        <span class="nav-link text-muted text-uppercase fw-bold" style="font-size: 0.75rem;">Orders</span>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link ps-3" th:href="@{/admin/orders}">Orders</a>
-                    </li>
-                    <li class="nav-item mt-2">
-                        <span class="nav-link text-muted text-uppercase fw-bold" style="font-size: 0.75rem;">Inventory</span>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link ps-3" th:href="@{/admin/inventory}">Stock Levels</a>
-                    </li>
-                </ul>
+<div class="admin-shell">
+    <aside class="admin-sidebar">
+        <nav>
+            <div class="admin-nav-section">
+                <span class="admin-nav-section-label">Catalog</span>
+                <a class="admin-nav-link"
+                   th:href="@{/admin/catalog/products}">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                    Products
+                </a>
+            </div>
+            <div class="admin-nav-section">
+                <span class="admin-nav-section-label">Sales</span>
+                <a class="admin-nav-link"
+                   th:href="@{/admin/orders}">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                    Orders
+                </a>
+            </div>
+            <div class="admin-nav-section">
+                <span class="admin-nav-section-label">Warehouse</span>
+                <a class="admin-nav-link"
+                   th:href="@{/admin/inventory}">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                    Stock Levels
+                </a>
             </div>
         </nav>
+    </aside>
 
-        <main class="col-md-10 ms-sm-auto px-md-4">
-            <div layout:fragment="content">
-                <!-- Admin Page Content Here -->
-            </div>
-        </main>
-    </div>
+    <main class="admin-content">
+        <div layout:fragment="content">
+            <!-- Admin Page Content Here -->
+        </div>
+    </main>
 </div>
 
 <script src="/webjars/bootstrap/js/bootstrap.bundle.js"></script>

@@ -1,17 +1,21 @@
 <div id="admin-products" th:fragment="products" xmlns:hx="http://www.w3.org/1999/xhtml">
+
     <nav aria-label="Page navigation" th:if="${productsPage.totalPages() > 1}">
-        <ul class="pagination pagination justify-content-center">
+        <ul class="pagination justify-content-end my-3">
             <li class="page-item" th:classappend="${!productsPage.hasPrevious()} ? disabled : ''">
-                <a class="page-link" href="#"
+                <a class="page-link rounded-start-pill" href="#"
                    th:hx-get="${'/admin/catalog/products?page=1'}"
                    th:hx-push-url="${'/admin/catalog/products?page=1'}"
-                   hx-target="#admin-products" hx-swap="outerHTML">First</a>
+                   hx-target="#admin-products" hx-swap="outerHTML">&laquo;</a>
             </li>
             <li class="page-item" th:classappend="${!productsPage.hasPrevious()} ? disabled : ''">
                 <a class="page-link" href="#"
                    th:hx-get="${'/admin/catalog/products?page='+(productsPage.pageNumber() - 1)}"
                    th:hx-push-url="${'/admin/catalog/products?page='+(productsPage.pageNumber() - 1)}"
                    hx-target="#admin-products" hx-swap="outerHTML">Previous</a>
+            </li>
+            <li class="page-item active" aria-current="page">
+                <span class="page-link" th:text="${productsPage.pageNumber()}">1</span>
             </li>
             <li class="page-item" th:classappend="${!productsPage.hasNext()} ? disabled : ''">
                 <a class="page-link" href="#"
@@ -20,37 +24,43 @@
                    hx-target="#admin-products" hx-swap="outerHTML">Next</a>
             </li>
             <li class="page-item" th:classappend="${!productsPage.hasNext()} ? disabled : ''">
-                <a class="page-link" href="#"
+                <a class="page-link rounded-end-pill" href="#"
                    th:hx-get="${'/admin/catalog/products?page='+(productsPage.totalPages())}"
                    th:hx-push-url="${'/admin/catalog/products?page='+(productsPage.totalPages())}"
-                   hx-target="#admin-products" hx-swap="outerHTML">Last</a>
+                   hx-target="#admin-products" hx-swap="outerHTML">&raquo;</a>
             </li>
         </ul>
     </nav>
-    <table class="table table-striped table-hover mt-3">
-        <thead class="table-dark">
+
+    <div class="orders-card">
+        <table class="table orders-table mb-0">
+            <thead>
             <tr>
+                <th>Image</th>
                 <th>Code</th>
                 <th>Name</th>
                 <th>Price</th>
-                <th>Image</th>
                 <th>Description</th>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
             <tr th:each="product : ${productsPage.data}">
-                <td th:text="${product.code}">code</td>
-                <td th:text="${product.name}">name</td>
-                <td th:text="${'$' + product.price}">price</td>
                 <td>
                     <img th:if="${product.imageUrl != null}"
                          th:src="${product.imageUrl}"
                          alt="Product image"
-                         height="40" width="30"/>
-                    <span th:if="${product.imageUrl == null}" class="text-muted">—</span>
+                         class="admin-product-thumb"/>
+                    <div th:if="${product.imageUrl == null}" class="admin-product-thumb-placeholder">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    </div>
                 </td>
-                <td th:text="${product.description}">description</td>
+                <td class="order-id" th:text="${product.code}">code</td>
+                <td class="fw-semibold" th:text="${product.name}">name</td>
+                <td class="fw-semibold" style="color:#0d6efd" th:text="${'$' + product.price}">price</td>
+                <td class="admin-product-desc text-muted" th:text="${product.description}">description</td>
             </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
+
 </div>

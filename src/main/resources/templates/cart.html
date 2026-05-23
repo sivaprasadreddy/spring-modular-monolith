@@ -7,15 +7,18 @@
       layout:decorate="~{layout}">
 <body>
 <div layout:fragment="content">
-    <div th:insert="~{partials/cart}"> </div>
+    <div class="cart-page">
+        <h2 class="cart-page-heading">Shopping Cart</h2>
 
-    <div class="text-center" th:if="${cart.item != null }" sec:authorize="isAnonymous()">
-        <h3><a href="/login">Login to place order</a></h3>
-    </div>
+        <div th:insert="~{partials/cart}"></div>
 
-    <div th:if="${cart.item != null }" sec:authorize="isAuthenticated()">
-        <div class="col-md-8 offset-md-2">
-        <div th:insert="~{partials/order-form}"> </div>
+        <div class="text-center cart-login-prompt" th:if="${cart.item != null}" sec:authorize="isAnonymous()">
+            <p class="text-muted mb-3">You need to be logged in to place an order.</p>
+            <a href="/login" class="btn btn-buy px-4">Login to Place Order</a>
+        </div>
+
+        <div th:if="${cart.item != null}" sec:authorize="isAuthenticated()">
+            <div th:insert="~{partials/order-form}"></div>
         </div>
     </div>
 </div>

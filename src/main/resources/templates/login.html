@@ -4,43 +4,48 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
-    <title>Login</title>
+    <title>Login – BookStore</title>
 </head>
 <body>
 <div layout:fragment="content">
-    <div class="row justify-content-center pt-3">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <form id="loginForm" method="post" th:action="@{/login}">
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Email</label>
-                            <input class="form-control" type="email" id="username" name="username"
-                                   value="admin@gmail.com">
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input class="form-control" type="password" id="password" name="password"
-                                   value="admin">
-                        </div>
+    <div class="auth-wrapper">
+        <div class="auth-card">
 
-                        <div class="mb-3">
-                            <button type="submit" class="btn btn-primary">Login</button>
-                        </div>
-                        <div th:if="${param.error}"
-                             class="text-danger text-center fw-bold">
-                            <div>Invalid Email and Password</div>
-                        </div>
-                        <div th:if="${param.logout}"
-                             class="text-success text-center fw-bold">
-                            <div>You have been logged out</div>
-                        </div>
-                    </form>
-                </div>
+            <div class="auth-card-header">
+                <img src="/images/books.png" alt="BookStore" class="auth-logo"/>
+                <h4 class="auth-title">Welcome back</h4>
+                <p class="auth-subtitle">Sign in to your BookStore account</p>
             </div>
+
+            <div th:if="${param.error}" class="auth-alert auth-alert-error">
+                Invalid email or password. Please try again.
+            </div>
+            <div th:if="${param.logout}" class="auth-alert auth-alert-success">
+                You have been successfully logged out.
+            </div>
+
+            <form id="loginForm" method="post" th:action="@{/login}">
+                <div class="auth-field">
+                    <label for="username" class="auth-label">Email address</label>
+                    <input class="auth-input" type="email" id="username" name="username"
+                           placeholder="you@example.com" value="admin@gmail.com"
+                           autocomplete="email"/>
+                </div>
+                <div class="auth-field">
+                    <label for="password" class="auth-label">Password</label>
+                    <input class="auth-input" type="password" id="password" name="password"
+                           placeholder="••••••••" value="admin"
+                           autocomplete="current-password"/>
+                </div>
+                <button type="submit" class="btn btn-buy w-100 mt-1">Sign In</button>
+            </form>
+
+            <div class="auth-footer">
+                Don't have an account? <a th:href="@{/registration}">Create one</a>
+            </div>
+
         </div>
     </div>
 </div>
-
 </body>
 </html>

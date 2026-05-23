@@ -6,76 +6,81 @@
       layout:decorate="~{layout}">
 <body>
 <div layout:fragment="content">
-    <div>
-        <h2>Your Order placed successfully</h2>
-        <h4>Order Number: <span th:text="${order.orderNumber}">orderNumber</span></h4>
-        <h4>Order Status: <span th:text="${order.status}">status</span></h4>
-        <hr/>
-        <div class="pb-3">
-            <table class="table">
+    <div class="order-details-page">
+
+        <!-- Header -->
+        <div class="order-details-header">
+            <div>
+                <a th:href="@{/orders}" class="order-back-link">
+                    &larr; Back to Orders
+                </a>
+                <h2 class="order-details-heading mt-1">Order Details</h2>
+            </div>
+            <span class="order-status-badge order-status-badge-lg"
+                  th:attr="data-status=${order.status}"
+                  th:text="${order.status}">status</span>
+        </div>
+
+        <!-- Order meta -->
+        <div class="order-meta-row">
+            <div class="order-meta-item">
+                <span class="order-meta-label">Order Number</span>
+                <span class="order-meta-value" th:text="${order.orderNumber}">orderNumber</span>
+            </div>
+        </div>
+
+        <!-- Items table -->
+        <div class="orders-card mb-4">
+            <div class="orders-card-title">Items</div>
+            <table class="table orders-table mb-0">
                 <thead>
                 <tr>
-                    <th scope="col">Product Name</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Sub Total</th>
+                    <th>Product</th>
+                    <th class="text-end">Price</th>
+                    <th class="text-center">Qty</th>
+                    <th class="text-end">Subtotal</th>
                 </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td th:text="${order.item.name}">name</td>
-                        <td th:text="${order.item.price}">price</td>
-                        <td th:text="${order.item.quantity}">quantity</td>
-                        <td th:text="${order.item.quantity * order.item.price}">SubTotal</td>
-                    </tr>
+                <tr>
+                    <td class="fw-semibold" th:text="${order.item.name}">name</td>
+                    <td class="text-end text-muted" th:text="${'$' + order.item.price}">price</td>
+                    <td class="text-center" th:text="${order.item.quantity}">quantity</td>
+                    <td class="text-end fw-semibold" th:text="${'$' + order.item.quantity * order.item.price}">subtotal</td>
+                </tr>
                 </tbody>
                 <tfoot>
-                <tr>
-                    <th colspan="3"></th>
-                    <th colspan="1" style="text-align: left">
-                        Total Amount: <span th:text="${order.totalAmount}">totalAmount</span>
-                    </th>
+                <tr class="cart-total-row">
+                    <td colspan="3" class="text-end text-muted">Order Total</td>
+                    <td class="text-end cart-total-amount" th:text="${'$' + order.totalAmount}">totalAmount</td>
                 </tr>
                 </tfoot>
             </table>
-
-            <form class="row g-3" method="post">
-                <div class="col-md-6">
-                    <label for="customerName" class="form-label">Customer Name</label>
-                    <input type="text" class="form-control"
-                           id="customerName"
-                           name="customerName"
-                           readonly
-                           th:value="${order.customer.name}"
-                    />
-                </div>
-                <div class="col-md-6">
-                    <label for="customerEmail" class="form-label">Customer Email</label>
-                    <input type="email" class="form-control"
-                           id="customerEmail"
-                           name="customerEmail"
-                           readonly
-                           th:value="${order.customer.email}">
-                </div>
-                <div class="col-md-6">
-                    <label for="customerPhone" class="form-label">Customer Phone</label>
-                    <input type="text" class="form-control"
-                           id="customerPhone"
-                           name="customerPhone"
-                           readonly
-                           th:value="${order.customer.phone}">
-                </div>
-                <div class="col-6">
-                    <label for="deliveryAddress" class="form-label">Delivery Address</label>
-                    <input class="form-control"
-                           id="deliveryAddress"
-                           name="deliveryAddress"
-                           readonly
-                           th:value="${order.deliveryAddress}"/>
-                </div>
-
-            </form>
         </div>
+
+        <!-- Customer & delivery info -->
+        <div class="orders-card">
+            <div class="orders-card-title">Customer &amp; Delivery</div>
+            <div class="row g-3 p-1">
+                <div class="col-md-6">
+                    <label class="order-detail-label">Customer Name</label>
+                    <div class="order-detail-value" th:text="${order.customer.name}">name</div>
+                </div>
+                <div class="col-md-6">
+                    <label class="order-detail-label">Email Address</label>
+                    <div class="order-detail-value" th:text="${order.customer.email}">email</div>
+                </div>
+                <div class="col-md-6">
+                    <label class="order-detail-label">Phone Number</label>
+                    <div class="order-detail-value" th:text="${order.customer.phone}">phone</div>
+                </div>
+                <div class="col-md-6">
+                    <label class="order-detail-label">Delivery Address</label>
+                    <div class="order-detail-value" th:text="${order.deliveryAddress}">address</div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 </body>

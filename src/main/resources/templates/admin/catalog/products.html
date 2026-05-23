@@ -6,10 +6,13 @@
       layout:decorate="~{admin/layout}">
 <body>
 <div layout:fragment="content">
-    <div class="container mt-4">
-        <h2>Products</h2>
-        <div th:replace="~{partials/admin/catalog/products :: products}"></div>
+    <div class="admin-page-header">
+        <div>
+            <h2 class="admin-page-title">Products</h2>
+            <p class="admin-page-subtitle">Browse and manage the product catalogue.</p>
+        </div>
     </div>
+    <div th:replace="~{partials/admin/catalog/products :: products}"></div>
 </div>
 </body>
 </html>

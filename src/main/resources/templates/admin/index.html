@@ -6,36 +6,42 @@
       layout:decorate="~{admin/layout}">
 <body>
 <div layout:fragment="content">
-    <div class="py-4">
-        <h2>Admin Dashboard</h2>
-        <p class="text-muted">Welcome to the BookStore administration area.</p>
-        <div class="row g-4 mt-2">
-            <div class="col-md-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">Catalog</h5>
-                        <p class="card-text">Manage products in the bookstore catalogue.</p>
-                        <a th:href="@{/admin/catalog/products}" class="btn btn-primary">Manage Products</a>
-                    </div>
+    <div class="admin-page-header">
+        <div>
+            <h2 class="admin-page-title">Dashboard</h2>
+            <p class="admin-page-subtitle">Welcome to the BookStore administration area.</p>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="admin-stat-card">
+                <div class="admin-stat-icon admin-stat-icon-blue">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
                 </div>
+                <h5 class="admin-stat-title">Catalog</h5>
+                <p class="admin-stat-desc">Manage products in the bookstore catalogue.</p>
+                <a th:href="@{/admin/catalog/products}" class="admin-stat-link">Manage Products &rarr;</a>
             </div>
-            <div class="col-md-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">Orders</h5>
-                        <p class="card-text">View and manage customer orders.</p>
-                        <a th:href="@{/admin/orders}" class="btn btn-primary">Manage Orders</a>
-                    </div>
+        </div>
+        <div class="col-md-4">
+            <div class="admin-stat-card">
+                <div class="admin-stat-icon admin-stat-icon-green">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
                 </div>
+                <h5 class="admin-stat-title">Orders</h5>
+                <p class="admin-stat-desc">View and manage customer orders.</p>
+                <a th:href="@{/admin/orders}" class="admin-stat-link">Manage Orders &rarr;</a>
             </div>
-            <div class="col-md-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">Inventory</h5>
-                        <p class="card-text">Monitor and update product stock levels.</p>
-                        <a th:href="@{/admin/inventory}" class="btn btn-primary">Manage Inventory</a>
-                    </div>
+        </div>
+        <div class="col-md-4">
+            <div class="admin-stat-card">
+                <div class="admin-stat-icon admin-stat-icon-purple">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
                 </div>
+                <h5 class="admin-stat-title">Inventory</h5>
+                <p class="admin-stat-desc">Monitor and update product stock levels.</p>
+                <a th:href="@{/admin/inventory}" class="admin-stat-link">Manage Inventory &rarr;</a>
             </div>
         </div>
     </div>

@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
-    <title>Registration Successful</title>
+    <title>Registration Successful – BookStore</title>
 </head>
 <body>
 <div layout:fragment="content">
-    <div class="alert alert-primary" role="alert">
-        <h4 class="alert-heading">Registration Successful!</h4>
-        <p>Your account has been successfully created. You can now log in.</p>
+    <div class="auth-wrapper">
+        <div class="auth-card text-center">
+            <div class="auth-success-icon">&#10003;</div>
+            <h4 class="auth-title">You're all set!</h4>
+            <p class="auth-subtitle mb-0">Your account has been created successfully.</p>
+            <a th:href="@{/login}" class="btn btn-buy w-100 mt-4">Sign In</a>
+        </div>
     </div>
 </div>
-
 </body>
 </html>

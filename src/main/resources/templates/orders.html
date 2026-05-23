@@ -7,15 +7,19 @@
 
 <body>
 <div layout:fragment="content">
-    <div>
-        <h2>All Orders</h2>
-        <hr/>
-        <div class="pb-3">
-            <table class="table">
+    <div class="orders-page">
+        <div class="orders-page-header">
+            <h2 class="orders-page-heading">My Orders</h2>
+            <a th:href="@{/}" class="btn btn-outline-primary btn-sm">Continue Shopping</a>
+        </div>
+
+        <div class="orders-card">
+            <table class="table orders-table mb-0">
                 <thead>
                 <tr>
-                    <th scope="col">Order ID</th>
-                    <th scope="col">Status</th>
+                    <th>Order ID</th>
+                    <th>Status</th>
+                    <th class="text-end">Details</th>
                 </tr>
                 </thead>
                 <tbody>

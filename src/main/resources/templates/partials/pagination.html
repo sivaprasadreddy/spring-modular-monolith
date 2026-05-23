@@ -1,25 +1,36 @@
 <div th:fragment="pagination">
-    <nav aria-label="Page navigation" th:if="${productsPage.totalPages() > 1 }">
-        <ul class="pagination pagination justify-content-center">
+    <nav aria-label="Page navigation" th:if="${productsPage.totalPages() > 1}">
+        <ul class="pagination justify-content-center my-3">
             <li class="page-item" th:classappend="${!productsPage.hasPrevious()} ? disabled : ''">
-                <a class="page-link" href="#" th:hx-get="${'/products?page=1'}"
+                <a class="page-link rounded-start-pill" href="#"
+                   th:hx-get="${'/products?page=1'}"
                    th:hx-push-url="${'/products?page=1'}"
-                   hx-target="#products" hx-swap="outerHTML">First</a>
+                   hx-target="#products" hx-swap="outerHTML">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
             </li>
             <li class="page-item" th:classappend="${!productsPage.hasPrevious()} ? disabled : ''">
-                <a class="page-link" href="#" th:hx-get="${'/products?page='+(productsPage.pageNumber() - 1)}"
+                <a class="page-link" href="#"
+                   th:hx-get="${'/products?page='+(productsPage.pageNumber() - 1)}"
                    th:hx-push-url="${'/products?page='+(productsPage.pageNumber() - 1)}"
                    hx-target="#products" hx-swap="outerHTML">Previous</a>
             </li>
+            <li class="page-item active" aria-current="page">
+                <span class="page-link" th:text="${productsPage.pageNumber()}">1</span>
+            </li>
             <li class="page-item" th:classappend="${!productsPage.hasNext()} ? disabled : ''">
-                <a class="page-link" href="#" th:hx-get="${'/products?page='+(productsPage.pageNumber() + 1)}"
+                <a class="page-link" href="#"
+                   th:hx-get="${'/products?page='+(productsPage.pageNumber() + 1)}"
                    th:hx-push-url="${'/products?page='+(productsPage.pageNumber() + 1)}"
                    hx-target="#products" hx-swap="outerHTML">Next</a>
             </li>
             <li class="page-item" th:classappend="${!productsPage.hasNext()} ? disabled : ''">
-                <a class="page-link" href="#" th:hx-get="${'/products?page='+(productsPage.totalPages())}"
+                <a class="page-link rounded-end-pill" href="#"
+                   th:hx-get="${'/products?page='+(productsPage.totalPages())}"
                    th:hx-push-url="${'/products?page='+(productsPage.totalPages())}"
-                   hx-target="#products" hx-swap="outerHTML">Last</a>
+                   hx-target="#products" hx-swap="outerHTML">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
             </li>
         </ul>
     </nav>

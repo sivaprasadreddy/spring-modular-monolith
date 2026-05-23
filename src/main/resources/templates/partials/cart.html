@@ -1,46 +1,55 @@
 <div id="cart" hx-swap-oob="true">
-    <div class="col-md-8 offset-md-2">
-        <div th:if="${cart.item == null }">
-            <h3>Your cart is empty. <a href="/">Continue shopping</a></h3>
-        </div>
-        <div th:if="${cart.item != null }" class="pb-3">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">Product Name</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Sub Total</th>
-                </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>[[${cart.item.name}]]</td>
-                        <td>[[${cart.item.price}]]</td>
-                        <td>
-                            <form th:action="@{/update-cart}" th:method="post">
-                                <input type="hidden" name="code" th:value="${cart.item.code}"/>
-                                <input type="number" min="0"
-                                   name="quantity"
-                                   th:value="${cart.item.quantity}"
-                                    hx-post="/update-cart"
-                                    hx-params="code,quantity,_csrf"
-                                    hx-swap="none"
-                                />
-                            </form>
-                        </td>
-                        <td>[[${cart.item.quantity * cart.item.price}]]</td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                <tr>
-                    <th colspan="3"></th>
-                    <th colspan="1" style="text-align: left">
-                        Total Amount: [[${cart.totalAmount}]]
-                    </th>
-                </tr>
-                </tfoot>
-            </table>
-        </div>
+
+    <!-- Empty state -->
+    <div th:if="${cart.item == null}" class="cart-empty">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+        <h4>Your cart is empty</h4>
+        <p class="text-muted">Looks like you haven't added anything yet.</p>
+        <a href="/" class="btn btn-buy px-4 mt-1">Continue Shopping</a>
     </div>
+
+    <!-- Cart with item -->
+    <div th:if="${cart.item != null}" class="cart-card">
+        <table class="table cart-table mb-0">
+            <thead>
+            <tr>
+                <th>Product</th>
+                <th class="text-end">Price</th>
+                <th class="text-center">Quantity</th>
+                <th class="text-end">Subtotal</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="cart-product-name fw-semibold">[[${cart.item.name}]]</td>
+                <td class="text-end text-muted">$[[${cart.item.price}]]</td>
+                <td class="text-center">
+                    <form th:action="@{/update-cart}" th:method="post">
+                        <input type="hidden" name="code" th:value="${cart.item.code}"/>
+                        <input type="number" min="0"
+                               class="cart-qty-input"
+                               name="quantity"
+                               th:value="${cart.item.quantity}"
+                               hx-post="/update-cart"
+                               hx-params="code,quantity,_csrf"
+                               hx-swap="none"
+                        />
+                    </form>
+                </td>
+                <td class="text-end fw-semibold">$[[${cart.item.quantity * cart.item.price}]]</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr class="cart-total-row">
+                <td colspan="3" class="text-end text-muted">Order Total</td>
+                <td class="text-end cart-total-amount">$[[${cart.totalAmount}]]</td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+
 </div>

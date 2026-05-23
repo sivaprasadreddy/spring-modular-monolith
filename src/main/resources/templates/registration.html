@@ -4,53 +4,57 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
-    <title>Registration</title>
+    <title>Register – BookStore</title>
 </head>
 <body>
 <div layout:fragment="content">
-    <div class="row justify-content-center pt-3">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <form id="registrationForm" method="post"
-                          th:action="@{/registration}" th:object="${user}">
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
-                            <input class="form-control" type="text"
-                                   id="name" name="name"
-                                   th:field="*{name}">
-                            <div class="form-text text-danger" th:if="${#fields.hasErrors('name')}"
-                                 th:errors="*{name}">Incorrect data
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input class="form-control" type="email"
-                                   id="email" name="email"
-                                   th:field="*{email}">
-                            <div class="form-text text-danger" th:if="${#fields.hasErrors('email')}"
-                                 th:errors="*{email}">Incorrect data
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input class="form-control" type="password"
-                                   id="password" name="password"
-                                   th:field="*{password}">
-                            <div class="form-text text-danger" th:if="${#fields.hasErrors('password')}"
-                                 th:errors="*{password}">Incorrect data
-                            </div>
-                        </div>
+    <div class="auth-wrapper">
+        <div class="auth-card">
 
-                        <div class="mb-3">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-                    </form>
-                </div>
+            <div class="auth-card-header">
+                <img src="/images/books.png" alt="BookStore" class="auth-logo"/>
+                <h4 class="auth-title">Create an account</h4>
+                <p class="auth-subtitle">Join BookStore today</p>
             </div>
+
+            <form id="registrationForm" method="post"
+                  th:action="@{/registration}" th:object="${user}">
+                <div class="auth-field">
+                    <label for="name" class="auth-label">Full name</label>
+                    <input class="auth-input" type="text" id="name" name="name"
+                           th:field="*{name}" placeholder="Jane Doe"
+                           th:classappend="${#fields.hasErrors('name')} ? 'auth-input-error' : ''"/>
+                    <div class="auth-error-text"
+                         th:if="${#fields.hasErrors('name')}"
+                         th:errors="*{name}">Error</div>
+                </div>
+                <div class="auth-field">
+                    <label for="email" class="auth-label">Email address</label>
+                    <input class="auth-input" type="email" id="email" name="email"
+                           th:field="*{email}" placeholder="you@example.com"
+                           th:classappend="${#fields.hasErrors('email')} ? 'auth-input-error' : ''"/>
+                    <div class="auth-error-text"
+                         th:if="${#fields.hasErrors('email')}"
+                         th:errors="*{email}">Error</div>
+                </div>
+                <div class="auth-field">
+                    <label for="password" class="auth-label">Password</label>
+                    <input class="auth-input" type="password" id="password" name="password"
+                           th:field="*{password}" placeholder="••••••••"
+                           th:classappend="${#fields.hasErrors('password')} ? 'auth-input-error' : ''"/>
+                    <div class="auth-error-text"
+                         th:if="${#fields.hasErrors('password')}"
+                         th:errors="*{password}">Error</div>
+                </div>
+                <button type="submit" class="btn btn-buy w-100 mt-1">Create Account</button>
+            </form>
+
+            <div class="auth-footer">
+                Already have an account? <a th:href="@{/login}">Sign in</a>
+            </div>
+
         </div>
     </div>
 </div>
-
 </body>
 </html>

@@ -1,36 +1,27 @@
 <div id="products" th:fragment="products" xmlns:hx="http://www.w3.org/1999/xhtml">
     <div th:replace="~{partials/pagination :: pagination}"></div>
-    <div class="row row-cols-1 row-cols-md-5">
-        <div th:each="product : ${ productsPage.data}">
-            <div class="col mb-3">
-                <div class="card h-100 product">
+    <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-xl-5 g-4 my-2">
+        <div class="col" th:each="product : ${productsPage.data}">
+            <div class="card product-card h-100">
+                <div class="product-img-wrapper">
                     <img th:src="${product.imageUrl}"
                          src="/images/books.png"
                          alt="Product Image"
-                         class="card-img-top"
-                         height="300" width="200"
+                         class="product-img"
                     />
-
-                    <div class="card-body">
-                        <h6 class="card-title"
-                            data-toggle="tooltip"
-                            data-placement="top"
-                            th:text="${product.getDisplayName()}">product.name</h6>
-                        <p class="card-text"
-                           data-toggle="tooltip"
-                           data-placement="top"
-                           th:text="${'Price: $'+product.price}">product.price</p>
-                    </div>
-                    <div class="card-footer" style="background: transparent; border-top: 0;">
-                    <form method="post" action="/buy" th:method="post" th:action="@{/buy}">
-                        <div class="d-grid gap-2">
-                                <input type="hidden" name="code" th:value="${product.code}"/>
-                                <button class="btn btn-primary" type="submit">Buy</button>
-                        </div>
+                </div>
+                <div class="card-body d-flex flex-column">
+                    <h6 class="card-title product-title"
+                        th:text="${product.getDisplayName()}">product.name</h6>
+                    <p class="product-price mt-auto mb-3"
+                       th:text="${'$' + product.price}">product.price</p>
+                    <form method="post" th:action="@{/buy}">
+                        <input type="hidden" name="code" th:value="${product.code}"/>
+                        <button class="btn btn-buy w-100" type="submit">Add to Cart</button>
                     </form>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <div th:replace="~{partials/pagination :: pagination}"></div>
 </div>
