@@ -65,4 +65,11 @@ class AdminProductRestController {
         productService.deleteByCode(code);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/{code}/restore")
+    ResponseEntity<ProductDto> restoreProduct(@PathVariable String code) {
+        log.info("Admin restoring product with code: {}", code);
+        ProductDto restored = productService.restoreByCode(code);
+        return ResponseEntity.ok(restored);
+    }
 }

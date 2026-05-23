@@ -124,4 +124,11 @@ class AdminProductWebController {
         productService.deleteByCode(code);
         return "redirect:/admin/catalog/products";
     }
+
+    @PostMapping("/{code}/restore")
+    String restoreProduct(@PathVariable String code) {
+        log.info("Admin restoring product with code: {}", code);
+        productService.restoreByCode(code);
+        return "redirect:/admin/catalog/products/" + code;
+    }
 }

@@ -297,4 +297,82 @@ class AdminProductWebControllerTests {
                 .bodyText()
                 .contains("Deleted");
     }
+
+    @Test
+    void shouldRestoreProductAndRedirectToDetailPage() {
+        mockMvcTester
+                .post()
+                .uri("/admin/catalog/products/P100/delete")
+                .with(user("admin").roles("ADMIN"))
+                .with(csrf())
+                .exchange();
+
+        assertThat(mockMvcTester
+                        .post()
+                        .uri("/admin/catalog/products/P100/restore")
+                        .with(user("admin").roles("ADMIN"))
+                        .with(csrf()))
+                .hasStatus(HttpStatus.FOUND)
+                .hasHeader("Location", "/admin/catalog/products/P100");
+    }
+
+    @Test
+    void shouldRemoveDeletedIndicatorAfterRestore() {
+        mockMvcTester
+                .post()
+                .uri("/admin/catalog/products/P100/delete")
+                .with(user("admin").roles("ADMIN"))
+                .with(csrf())
+                .exchange();
+        mockMvcTester
+                .post()
+                .uri("/admin/catalog/products/P100/restore")
+                .with(user("admin").roles("ADMIN"))
+                .with(csrf())
+                .exchange();
+
+        assertThat(mockMvcTester
+                        .get()
+                        .uri("/admin/catalog/products/P100")
+                        .with(user("admin").roles("ADMIN")))
+                .hasStatus(HttpStatus.OK)
+                .bodyText()
+                .doesNotContain("badge bg-danger");
+    }
+
+    @Test
+    void shouldShowRestoreButtonOnDeletedProductDetailPage() {
+        mockMvcTester
+                .post()
+                .uri("/admin/catalog/products/P100/delete")
+                .with(user("admin").roles("ADMIN"))
+                .with(csrf())
+                .exchange();
+
+        assertThat(mockMvcTester
+                        .get()
+                        .uri("/admin/catalog/products/P100")
+                        .with(user("admin").roles("ADMIN")))
+                .hasStatus(HttpStatus.OK)
+                .bodyText()
+                .contains("/admin/catalog/products/P100/restore");
+    }
+
+    @Test
+    void shouldShowRestoreLinkForDeletedRowInProductList() {
+        mockMvcTester
+                .post()
+                .uri("/admin/catalog/products/P111/delete")
+                .with(user("admin").roles("ADMIN"))
+                .with(csrf())
+                .exchange();
+
+        assertThat(mockMvcTester
+                        .get()
+                        .uri("/admin/catalog/products")
+                        .with(user("admin").roles("ADMIN")))
+                .hasStatus(HttpStatus.OK)
+                .bodyText()
+                .contains("/admin/catalog/products/P111/restore");
+    }
 }

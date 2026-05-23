@@ -74,4 +74,11 @@ public class ProductService {
         entity.setDeletedAt(Instant.now());
         repo.save(entity);
     }
+
+    @Transactional
+    public ProductDto restoreByCode(String code) {
+        ProductEntity entity = repo.findByCode(code).orElseThrow(() -> ProductNotFoundException.forCode(code));
+        entity.setDeletedAt(null);
+        return productMapper.mapToDto(repo.save(entity));
+    }
 }

@@ -71,6 +71,12 @@
                     <a th:if="${product.deletedAt() == null}"
                        th:href="@{/admin/catalog/products/{code}/delete(code=${product.code})}"
                        class="btn btn-sm btn-danger">Delete</a>
+                    <form th:if="${product.deletedAt() != null}"
+                          th:action="@{/admin/catalog/products/{code}/restore(code=${product.code})}"
+                          method="post" class="d-inline">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        <button type="submit" class="btn btn-sm btn-success">Restore</button>
+                    </form>
                 </td>
             </tr>
             </tbody>

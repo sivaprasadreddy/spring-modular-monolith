@@ -289,6 +289,53 @@ class AdminProductRestControllerTests {
     }
 
     @Test
+    void shouldRestoreProductSuccessfully() {
+        mockMvcTester
+                .delete()
+                .uri("/api/admin/catalog/products/P100")
+                .with(jwt().authorities(new SimpleGrantedAuthority("ROLE_ADMIN")))
+                .exchange();
+
+        assertThat(mockMvcTester
+                        .post()
+                        .uri("/api/admin/catalog/products/P100/restore")
+                        .with(jwt().authorities(new SimpleGrantedAuthority("ROLE_ADMIN"))))
+                .hasStatus(HttpStatus.OK)
+                .bodyJson()
+                .convertTo(ProductDto.class)
+                .satisfies(product -> {
+                    assertThat(product.code()).isEqualTo("P100");
+                    assertThat(product.deletedAt()).isNull();
+                });
+
+        assertThat(mockMvcTester.get().uri("/api/products/P100")).hasStatus(HttpStatus.OK);
+    }
+
+    @Test
+    void shouldReturn404ForNonExistentProductOnRestore() {
+        assertThat(mockMvcTester
+                        .post()
+                        .uri("/api/admin/catalog/products/INVALID/restore")
+                        .with(jwt().authorities(new SimpleGrantedAuthority("ROLE_ADMIN"))))
+                .hasStatus(HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    void shouldReturn401WhenNoTokenProvidedOnRestore() {
+        assertThat(mockMvcTester.post().uri("/api/admin/catalog/products/P100/restore"))
+                .hasStatus(HttpStatus.UNAUTHORIZED);
+    }
+
+    @Test
+    void shouldReturn403ForNonAdminUserOnRestore() {
+        assertThat(mockMvcTester
+                        .post()
+                        .uri("/api/admin/catalog/products/P100/restore")
+                        .with(jwt().authorities(new SimpleGrantedAuthority("ROLE_USER"))))
+                .hasStatus(HttpStatus.FORBIDDEN);
+    }
+
+    @Test
     void shouldReturnCorrectPage2Results() {
         assertThat(mockMvcTester
                         .get()
