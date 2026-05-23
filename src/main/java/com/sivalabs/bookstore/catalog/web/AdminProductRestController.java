@@ -2,6 +2,7 @@ package com.sivalabs.bookstore.catalog.web;
 
 import com.sivalabs.bookstore.catalog.CreateProductRequest;
 import com.sivalabs.bookstore.catalog.ProductDto;
+import com.sivalabs.bookstore.catalog.UpdateProductRequest;
 import com.sivalabs.bookstore.catalog.domain.ProductNotFoundException;
 import com.sivalabs.bookstore.catalog.domain.ProductService;
 import com.sivalabs.bookstore.common.models.PagedResult;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,5 +48,13 @@ class AdminProductRestController {
         log.info("Admin creating product with code: {}", request.code());
         ProductDto created = productService.createProduct(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    }
+
+    @PutMapping("/{code}")
+    ResponseEntity<ProductDto> updateProduct(
+            @PathVariable String code, @Valid @RequestBody UpdateProductRequest request) {
+        log.info("Admin updating product with code: {}", code);
+        ProductDto updated = productService.updateProduct(code, request);
+        return ResponseEntity.ok(updated);
     }
 }

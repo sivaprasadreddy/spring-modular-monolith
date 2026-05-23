@@ -174,6 +174,77 @@ class AdminProductRestControllerTests {
     }
 
     @Test
+    void shouldUpdateProductSuccessfully() {
+        assertThat(mockMvcTester
+                        .put()
+                        .uri("/api/admin/catalog/products/P100")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"name":"Updated Hunger Games","description":"Updated desc","imageUrl":null,"price":34.99}
+                                """)
+                        .with(jwt().authorities(new SimpleGrantedAuthority("ROLE_ADMIN"))))
+                .hasStatus(HttpStatus.OK)
+                .bodyJson()
+                .convertTo(ProductDto.class)
+                .satisfies(product -> {
+                    assertThat(product.code()).isEqualTo("P100");
+                    assertThat(product.name()).isEqualTo("Updated Hunger Games");
+                    assertThat(product.price()).isNotNull();
+                });
+    }
+
+    @Test
+    void shouldReturn404ForNonExistentProductOnUpdate() {
+        assertThat(mockMvcTester
+                        .put()
+                        .uri("/api/admin/catalog/products/INVALID")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"name":"Some Name","price":10.00}
+                                """)
+                        .with(jwt().authorities(new SimpleGrantedAuthority("ROLE_ADMIN"))))
+                .hasStatus(HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    void shouldReturn400ForBlankNameOnUpdate() {
+        assertThat(mockMvcTester
+                        .put()
+                        .uri("/api/admin/catalog/products/P100")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"name":"","price":10.00}
+                                """)
+                        .with(jwt().authorities(new SimpleGrantedAuthority("ROLE_ADMIN"))))
+                .hasStatus(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    void shouldReturn401WhenNoTokenProvidedOnUpdate() {
+        assertThat(mockMvcTester
+                        .put()
+                        .uri("/api/admin/catalog/products/P100")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"name":"Some Name","price":10.00}
+                                """))
+                .hasStatus(HttpStatus.UNAUTHORIZED);
+    }
+
+    @Test
+    void shouldReturn403ForNonAdminUserOnUpdate() {
+        assertThat(mockMvcTester
+                        .put()
+                        .uri("/api/admin/catalog/products/P100")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"name":"Some Name","price":10.00}
+                                """)
+                        .with(jwt().authorities(new SimpleGrantedAuthority("ROLE_USER"))))
+                .hasStatus(HttpStatus.FORBIDDEN);
+    }
+
+    @Test
     void shouldReturnCorrectPage2Results() {
         assertThat(mockMvcTester
                         .get()

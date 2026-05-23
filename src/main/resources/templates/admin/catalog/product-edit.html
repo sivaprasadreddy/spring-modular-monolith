@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout}">
+<body>
+<div layout:fragment="content">
+    <div class="admin-page-header">
+        <div>
+            <h2 class="admin-page-title">Edit Product</h2>
+            <p class="admin-page-subtitle">Update the product details.</p>
+        </div>
+    </div>
+    <div th:replace="~{partials/admin/catalog/product-edit :: product-edit}"></div>
+</div>
+</body>
+</html>

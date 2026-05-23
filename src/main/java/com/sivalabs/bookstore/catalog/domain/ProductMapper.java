@@ -2,6 +2,7 @@ package com.sivalabs.bookstore.catalog.domain;
 
 import com.sivalabs.bookstore.catalog.CreateProductRequest;
 import com.sivalabs.bookstore.catalog.ProductDto;
+import com.sivalabs.bookstore.catalog.UpdateProductRequest;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -20,5 +21,12 @@ class ProductMapper {
         entity.setImageUrl(request.imageUrl());
         entity.setPrice(request.price());
         return entity;
+    }
+
+    public void updateEntity(ProductEntity entity, UpdateProductRequest request) {
+        entity.setName(request.name());
+        entity.setDescription(request.description());
+        entity.setImageUrl(request.imageUrl());
+        entity.setPrice(request.price());
     }
 }

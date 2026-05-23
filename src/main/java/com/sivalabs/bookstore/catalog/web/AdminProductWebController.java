@@ -1,6 +1,8 @@
 package com.sivalabs.bookstore.catalog.web;
 
 import com.sivalabs.bookstore.catalog.CreateProductRequest;
+import com.sivalabs.bookstore.catalog.ProductDto;
+import com.sivalabs.bookstore.catalog.UpdateProductRequest;
 import com.sivalabs.bookstore.catalog.domain.DuplicateProductCodeException;
 import com.sivalabs.bookstore.catalog.domain.ProductNotFoundException;
 import com.sivalabs.bookstore.catalog.domain.ProductService;
@@ -71,5 +73,34 @@ class AdminProductWebController {
             return "partials/admin/catalog/product";
         }
         return "admin/catalog/product";
+    }
+
+    @GetMapping("/{code}/edit")
+    String showEditForm(@PathVariable String code, Model model, HtmxRequest hxRequest) {
+        log.info("Admin showing edit form for product: {}", code);
+        ProductDto product = productService.getByCode(code).orElseThrow(() -> ProductNotFoundException.forCode(code));
+        model.addAttribute("code", code);
+        model.addAttribute(
+                "product",
+                new UpdateProductRequest(product.name(), product.description(), product.imageUrl(), product.price()));
+        if (hxRequest.isHtmxRequest()) {
+            return "partials/admin/catalog/product-edit";
+        }
+        return "admin/catalog/product-edit";
+    }
+
+    @PostMapping("/{code}/edit")
+    String updateProduct(
+            @PathVariable String code,
+            @Valid @ModelAttribute("product") UpdateProductRequest request,
+            BindingResult result,
+            Model model) {
+        log.info("Admin updating product with code: {}", code);
+        if (result.hasErrors()) {
+            model.addAttribute("code", code);
+            return "admin/catalog/product-edit";
+        }
+        productService.updateProduct(code, request);
+        return "redirect:/admin/catalog/products/" + code;
     }
 }

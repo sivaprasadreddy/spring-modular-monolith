@@ -2,6 +2,7 @@ package com.sivalabs.bookstore.catalog.domain;
 
 import com.sivalabs.bookstore.catalog.CreateProductRequest;
 import com.sivalabs.bookstore.catalog.ProductDto;
+import com.sivalabs.bookstore.catalog.UpdateProductRequest;
 import com.sivalabs.bookstore.common.models.PagedResult;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -42,6 +43,13 @@ public class ProductService {
             throw DuplicateProductCodeException.forCode(request.code());
         }
         ProductEntity entity = productMapper.mapToEntity(request);
+        return productMapper.mapToDto(repo.save(entity));
+    }
+
+    @Transactional
+    public ProductDto updateProduct(String code, UpdateProductRequest request) {
+        ProductEntity entity = repo.findByCode(code).orElseThrow(() -> ProductNotFoundException.forCode(code));
+        productMapper.updateEntity(entity, request);
         return productMapper.mapToDto(repo.save(entity));
     }
 }

@@ -1,8 +1,11 @@
 <div id="admin-product" th:fragment="product" xmlns:th="http://www.thymeleaf.org">
 
-    <div class="mb-3">
+    <div class="mb-3 d-flex gap-2">
         <a th:href="@{/admin/catalog/products}" class="btn btn-sm btn-outline-secondary">
             &larr; Back to Products
+        </a>
+        <a th:href="@{/admin/catalog/products/{code}/edit(code=${product.code})}" class="btn btn-sm btn-warning">
+            Edit
         </a>
     </div>
 

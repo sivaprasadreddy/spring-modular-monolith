@@ -146,4 +146,65 @@ class AdminProductWebControllerTests {
                 .bodyText()
                 .contains("/admin/catalog/products/new");
     }
+
+    @Test
+    void shouldRenderEditFormPrePopulated() {
+        assertThat(mockMvcTester
+                        .get()
+                        .uri("/admin/catalog/products/P100/edit")
+                        .with(user("admin").roles("ADMIN")))
+                .hasStatus(HttpStatus.OK)
+                .bodyText()
+                .contains("The Hunger Games");
+    }
+
+    @Test
+    void shouldUpdateProductAndRedirectToDetailPage() {
+        assertThat(mockMvcTester
+                        .post()
+                        .uri("/admin/catalog/products/P100/edit")
+                        .param("name", "Updated Hunger Games")
+                        .param("price", "34.99")
+                        .with(user("admin").roles("ADMIN"))
+                        .with(csrf()))
+                .hasStatus(HttpStatus.FOUND)
+                .hasHeader("Location", "/admin/catalog/products/P100");
+    }
+
+    @Test
+    void shouldReRenderEditFormOnValidationError() {
+        assertThat(mockMvcTester
+                        .post()
+                        .uri("/admin/catalog/products/P100/edit")
+                        .param("name", "")
+                        .param("price", "10.00")
+                        .with(user("admin").roles("ADMIN"))
+                        .with(csrf()))
+                .hasStatus(HttpStatus.OK)
+                .bodyText()
+                .contains("Product name is required");
+    }
+
+    @Test
+    void shouldShowEditButtonOnDetailPage() {
+        assertThat(mockMvcTester
+                        .get()
+                        .uri("/admin/catalog/products/P100")
+                        .with(user("admin").roles("ADMIN")))
+                .hasStatus(HttpStatus.OK)
+                .bodyText()
+                .contains("/admin/catalog/products/P100/edit");
+    }
+
+    @Test
+    void shouldShowEditLinkInProductList() {
+        // P111 (A Game of Thrones) sorts first alphabetically and appears on page 1
+        assertThat(mockMvcTester
+                        .get()
+                        .uri("/admin/catalog/products")
+                        .with(user("admin").roles("ADMIN")))
+                .hasStatus(HttpStatus.OK)
+                .bodyText()
+                .contains("/admin/catalog/products/P111/edit");
+    }
 }
