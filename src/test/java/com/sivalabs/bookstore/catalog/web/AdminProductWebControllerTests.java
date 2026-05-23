@@ -207,4 +207,94 @@ class AdminProductWebControllerTests {
                 .bodyText()
                 .contains("/admin/catalog/products/P111/edit");
     }
+
+    @Test
+    void shouldRenderDeleteConfirmPage() {
+        assertThat(mockMvcTester
+                        .get()
+                        .uri("/admin/catalog/products/P100/delete")
+                        .with(user("admin").roles("ADMIN")))
+                .hasStatus(HttpStatus.OK)
+                .bodyText()
+                .contains("The Hunger Games");
+    }
+
+    @Test
+    void shouldDeleteProductAndRedirectToList() {
+        assertThat(mockMvcTester
+                        .post()
+                        .uri("/admin/catalog/products/P100/delete")
+                        .with(user("admin").roles("ADMIN"))
+                        .with(csrf()))
+                .hasStatus(HttpStatus.FOUND)
+                .hasHeader("Location", "/admin/catalog/products");
+    }
+
+    @Test
+    void shouldStillShowDeletedProductInAdminDetail() {
+        mockMvcTester
+                .post()
+                .uri("/admin/catalog/products/P100/delete")
+                .with(user("admin").roles("ADMIN"))
+                .with(csrf())
+                .exchange();
+
+        assertThat(mockMvcTester
+                        .get()
+                        .uri("/admin/catalog/products/P100")
+                        .with(user("admin").roles("ADMIN")))
+                .hasStatus(HttpStatus.OK)
+                .bodyText()
+                .contains("Deleted");
+    }
+
+    @Test
+    void shouldReturn404ForDeleteConfirmOfNonExistentProduct() {
+        assertThat(mockMvcTester
+                        .get()
+                        .uri("/admin/catalog/products/INVALID/delete")
+                        .with(user("admin").roles("ADMIN")))
+                .hasStatus(HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    void shouldShowDeleteButtonOnDetailPage() {
+        assertThat(mockMvcTester
+                        .get()
+                        .uri("/admin/catalog/products/P100")
+                        .with(user("admin").roles("ADMIN")))
+                .hasStatus(HttpStatus.OK)
+                .bodyText()
+                .contains("/admin/catalog/products/P100/delete");
+    }
+
+    @Test
+    void shouldShowDeleteLinkInProductList() {
+        // P111 (A Game of Thrones) sorts first alphabetically and appears on page 1
+        assertThat(mockMvcTester
+                        .get()
+                        .uri("/admin/catalog/products")
+                        .with(user("admin").roles("ADMIN")))
+                .hasStatus(HttpStatus.OK)
+                .bodyText()
+                .contains("/admin/catalog/products/P111/delete");
+    }
+
+    @Test
+    void shouldShowDeletedIndicatorInAdminList() {
+        mockMvcTester
+                .post()
+                .uri("/admin/catalog/products/P111/delete")
+                .with(user("admin").roles("ADMIN"))
+                .with(csrf())
+                .exchange();
+
+        assertThat(mockMvcTester
+                        .get()
+                        .uri("/admin/catalog/products")
+                        .with(user("admin").roles("ADMIN")))
+                .hasStatus(HttpStatus.OK)
+                .bodyText()
+                .contains("Deleted");
+    }
 }

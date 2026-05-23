@@ -12,6 +12,8 @@ import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.time.Instant;
+import org.jspecify.annotations.Nullable;
 
 @Entity
 @Table(name = "products", schema = "catalog")
@@ -33,6 +35,9 @@ public class ProductEntity {
 
     @NotNull(message = "Product price is required") @DecimalMin("0.1") @Column(nullable = false)
     private BigDecimal price;
+
+    @Nullable @Column(name = "deleted_at")
+    private Instant deletedAt;
 
     public Long getId() {
         return id;
@@ -80,5 +85,13 @@ public class ProductEntity {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public @Nullable Instant getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(@Nullable Instant deletedAt) {
+        this.deletedAt = deletedAt;
     }
 }

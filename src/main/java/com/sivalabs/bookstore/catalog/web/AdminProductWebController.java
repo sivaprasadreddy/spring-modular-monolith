@@ -34,7 +34,7 @@ class AdminProductWebController {
     @GetMapping
     String showProducts(@RequestParam(defaultValue = "1") int page, Model model, HtmxRequest hxRequest) {
         log.info("Admin fetching products for page: {}", page);
-        model.addAttribute("productsPage", productService.getProducts(page));
+        model.addAttribute("productsPage", productService.getProductsAdmin(page));
         if (hxRequest.isHtmxRequest()) {
             return "partials/admin/catalog/products";
         }
@@ -67,7 +67,7 @@ class AdminProductWebController {
     @GetMapping("/{code}")
     String getProductByCode(@PathVariable String code, Model model, HtmxRequest hxRequest) {
         log.info("Admin fetching product by code: {}", code);
-        var product = productService.getByCode(code).orElseThrow(() -> ProductNotFoundException.forCode(code));
+        var product = productService.getByCodeAdmin(code).orElseThrow(() -> ProductNotFoundException.forCode(code));
         model.addAttribute("product", product);
         if (hxRequest.isHtmxRequest()) {
             return "partials/admin/catalog/product";
@@ -78,7 +78,8 @@ class AdminProductWebController {
     @GetMapping("/{code}/edit")
     String showEditForm(@PathVariable String code, Model model, HtmxRequest hxRequest) {
         log.info("Admin showing edit form for product: {}", code);
-        ProductDto product = productService.getByCode(code).orElseThrow(() -> ProductNotFoundException.forCode(code));
+        ProductDto product =
+                productService.getByCodeAdmin(code).orElseThrow(() -> ProductNotFoundException.forCode(code));
         model.addAttribute("code", code);
         model.addAttribute(
                 "product",
@@ -102,5 +103,25 @@ class AdminProductWebController {
         }
         productService.updateProduct(code, request);
         return "redirect:/admin/catalog/products/" + code;
+    }
+
+    @GetMapping("/{code}/delete")
+    String showDeleteConfirm(@PathVariable String code, Model model, HtmxRequest hxRequest) {
+        log.info("Admin showing delete confirmation for product: {}", code);
+        ProductDto product =
+                productService.getByCodeAdmin(code).orElseThrow(() -> ProductNotFoundException.forCode(code));
+        model.addAttribute("product", product);
+        model.addAttribute("code", code);
+        if (hxRequest.isHtmxRequest()) {
+            return "partials/admin/catalog/product-delete-confirm";
+        }
+        return "admin/catalog/product-delete-confirm";
+    }
+
+    @PostMapping("/{code}/delete")
+    String deleteProduct(@PathVariable String code) {
+        log.info("Admin soft-deleting product with code: {}", code);
+        productService.deleteByCode(code);
+        return "redirect:/admin/catalog/products";
     }
 }

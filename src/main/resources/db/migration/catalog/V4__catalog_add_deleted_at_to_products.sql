@@ -1,0 +1,1 @@
+ALTER TABLE catalog.products ADD COLUMN deleted_at TIMESTAMP NULL DEFAULT NULL;

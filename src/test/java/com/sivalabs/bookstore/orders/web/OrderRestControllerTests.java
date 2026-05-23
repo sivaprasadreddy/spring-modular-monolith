@@ -52,7 +52,7 @@ class OrderRestControllerTests {
 
     @BeforeEach
     void setUp() {
-        ProductDto product = new ProductDto("P100", "The Hunger Games", "", null, new BigDecimal("34.0"));
+        ProductDto product = new ProductDto("P100", "The Hunger Games", "", null, new BigDecimal("34.0"), null);
         given(productApi.getByCode("P100")).willReturn(Optional.of(product));
     }
 

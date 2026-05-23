@@ -245,6 +245,50 @@ class AdminProductRestControllerTests {
     }
 
     @Test
+    void shouldDeleteProductSuccessfully() {
+        assertThat(mockMvcTester
+                        .delete()
+                        .uri("/api/admin/catalog/products/P100")
+                        .with(jwt().authorities(new SimpleGrantedAuthority("ROLE_ADMIN"))))
+                .hasStatus(HttpStatus.NO_CONTENT);
+    }
+
+    @Test
+    void shouldReturn404ForNonExistentProductOnDelete() {
+        assertThat(mockMvcTester
+                        .delete()
+                        .uri("/api/admin/catalog/products/INVALID")
+                        .with(jwt().authorities(new SimpleGrantedAuthority("ROLE_ADMIN"))))
+                .hasStatus(HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    void shouldReturn401WhenNoTokenProvidedOnDelete() {
+        assertThat(mockMvcTester.delete().uri("/api/admin/catalog/products/P100"))
+                .hasStatus(HttpStatus.UNAUTHORIZED);
+    }
+
+    @Test
+    void shouldReturn403ForNonAdminUserOnDelete() {
+        assertThat(mockMvcTester
+                        .delete()
+                        .uri("/api/admin/catalog/products/P100")
+                        .with(jwt().authorities(new SimpleGrantedAuthority("ROLE_USER"))))
+                .hasStatus(HttpStatus.FORBIDDEN);
+    }
+
+    @Test
+    void shouldHideDeletedProductFromCustomerEndpoint() {
+        mockMvcTester
+                .delete()
+                .uri("/api/admin/catalog/products/P100")
+                .with(jwt().authorities(new SimpleGrantedAuthority("ROLE_ADMIN")))
+                .exchange();
+
+        assertThat(mockMvcTester.get().uri("/api/products/P100")).hasStatus(HttpStatus.NOT_FOUND);
+    }
+
+    @Test
     void shouldReturnCorrectPage2Results() {
         assertThat(mockMvcTester
                         .get()

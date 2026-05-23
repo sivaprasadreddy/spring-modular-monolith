@@ -1,12 +1,16 @@
 <div id="admin-product" th:fragment="product" xmlns:th="http://www.thymeleaf.org">
 
-    <div class="mb-3 d-flex gap-2">
+    <div class="mb-3 d-flex gap-2 align-items-center">
         <a th:href="@{/admin/catalog/products}" class="btn btn-sm btn-outline-secondary">
             &larr; Back to Products
         </a>
-        <a th:href="@{/admin/catalog/products/{code}/edit(code=${product.code})}" class="btn btn-sm btn-warning">
-            Edit
-        </a>
+        <a th:if="${product.deletedAt() == null}"
+           th:href="@{/admin/catalog/products/{code}/edit(code=${product.code})}"
+           class="btn btn-sm btn-warning">Edit</a>
+        <a th:if="${product.deletedAt() == null}"
+           th:href="@{/admin/catalog/products/{code}/delete(code=${product.code})}"
+           class="btn btn-sm btn-danger">Delete</a>
+        <span th:if="${product.deletedAt() != null}" class="badge bg-danger">Deleted</span>
     </div>
 
     <div class="orders-card p-4">

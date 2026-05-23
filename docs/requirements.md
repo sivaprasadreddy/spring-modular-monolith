@@ -60,7 +60,7 @@ All admin actions require the user to be authenticated with `ROLE_ADMIN`.
 ---
 
 ### UC-004 — Update Product
-**Status:** Pending  
+**Status:** Complete  
 **Actor:** Admin  
 **Description:** Admin can update the details of an existing product.  
 **Pre-conditions:** User is authenticated as ADMIN. Product with the given code exists.  
@@ -76,7 +76,7 @@ All admin actions require the user to be authenticated with `ROLE_ADMIN`.
 ---
 
 ### UC-005 — Delete Product
-**Status:** Pending  
+**Status:** Complete  
 **Actor:** Admin  
 **Description:** Admin can remove a product from the catalog.  
 **Pre-conditions:** User is authenticated as ADMIN. Product with the given code exists.  

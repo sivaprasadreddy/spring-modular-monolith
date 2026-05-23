@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,13 +35,13 @@ class AdminProductRestController {
     @GetMapping
     PagedResult<ProductDto> getProducts(@RequestParam(defaultValue = "1") int page) {
         log.info("Admin fetching products for page: {}", page);
-        return productService.getProducts(page);
+        return productService.getProductsAdmin(page);
     }
 
     @GetMapping("/{code}")
     ProductDto getProductByCode(@PathVariable String code) {
         log.info("Admin fetching product by code: {}", code);
-        return productService.getByCode(code).orElseThrow(() -> ProductNotFoundException.forCode(code));
+        return productService.getByCodeAdmin(code).orElseThrow(() -> ProductNotFoundException.forCode(code));
     }
 
     @PostMapping
@@ -56,5 +57,12 @@ class AdminProductRestController {
         log.info("Admin updating product with code: {}", code);
         ProductDto updated = productService.updateProduct(code, request);
         return ResponseEntity.ok(updated);
+    }
+
+    @DeleteMapping("/{code}")
+    ResponseEntity<Void> deleteProduct(@PathVariable String code) {
+        log.info("Admin soft-deleting product with code: {}", code);
+        productService.deleteByCode(code);
+        return ResponseEntity.noContent().build();
     }
 }

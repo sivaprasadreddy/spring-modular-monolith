@@ -45,7 +45,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="product : ${productsPage.data}">
+            <tr th:each="product : ${productsPage.data}"
+                th:classappend="${product.deletedAt() != null} ? 'table-secondary text-muted' : ''">
                 <td>
                     <img th:if="${product.imageUrl != null}"
                          th:src="${product.imageUrl}"
@@ -59,12 +60,17 @@
                 <td class="fw-semibold">
                     <a th:href="@{/admin/catalog/products/{code}(code=${product.code})}"
                        th:text="${product.name}">name</a>
+                    <span th:if="${product.deletedAt() != null}" class="badge bg-danger ms-1">Deleted</span>
                 </td>
                 <td class="fw-semibold" style="color:#0d6efd" th:text="${'$' + product.price}">price</td>
                 <td class="admin-product-desc text-muted" th:text="${product.description}">description</td>
                 <td>
-                    <a th:href="@{/admin/catalog/products/{code}/edit(code=${product.code})}"
+                    <a th:if="${product.deletedAt() == null}"
+                       th:href="@{/admin/catalog/products/{code}/edit(code=${product.code})}"
                        class="btn btn-sm btn-warning">Edit</a>
+                    <a th:if="${product.deletedAt() == null}"
+                       th:href="@{/admin/catalog/products/{code}/delete(code=${product.code})}"
+                       class="btn btn-sm btn-danger">Delete</a>
                 </td>
             </tr>
             </tbody>
