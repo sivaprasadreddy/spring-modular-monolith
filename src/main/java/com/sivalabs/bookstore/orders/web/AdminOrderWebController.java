@@ -1,5 +1,6 @@
 package com.sivalabs.bookstore.orders.web;
 
+import com.sivalabs.bookstore.orders.domain.OrderNotFoundException;
 import com.sivalabs.bookstore.orders.domain.OrderService;
 import com.sivalabs.bookstore.orders.domain.models.OrderStatus;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxRequest;
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -37,5 +39,18 @@ class AdminOrderWebController {
             return "partials/admin/orders";
         }
         return "admin/orders";
+    }
+
+    @GetMapping("/{orderNumber}")
+    String showOrder(@PathVariable String orderNumber, Model model, HtmxRequest hxRequest) {
+        log.info("Admin fetching order by orderNumber: {}", orderNumber);
+        var order = orderService
+                .findOrderAdmin(orderNumber)
+                .orElseThrow(() -> OrderNotFoundException.forOrderNumber(orderNumber));
+        model.addAttribute("order", order);
+        if (hxRequest.isHtmxRequest()) {
+            return "partials/admin/order";
+        }
+        return "admin/order";
     }
 }

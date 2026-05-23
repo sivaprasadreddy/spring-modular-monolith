@@ -44,7 +44,10 @@
             </thead>
             <tbody>
             <tr th:each="order : ${ordersPage.data}">
-                <td class="order-id" th:text="${order.orderNumber}">order-number</td>
+                <td class="order-id">
+                    <a th:href="@{/admin/orders/{n}(n=${order.orderNumber})}"
+                       th:text="${order.orderNumber}">order-number</a>
+                </td>
                 <td th:text="${order.customerName}">customer</td>
                 <td>
                     <span class="order-status-badge"

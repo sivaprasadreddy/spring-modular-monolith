@@ -25,4 +25,11 @@ interface OrderRepository extends JpaRepository<OrderEntity, Long> {
     Optional<OrderEntity> findByOrderNumberAndUserId(String orderNumber, Long userId);
 
     Page<OrderEntity> findAllByStatus(OrderStatus status, Pageable pageable);
+
+    @Query("""
+        select distinct o
+        from OrderEntity o left join fetch o.orderItem
+        where o.orderNumber = :orderNumber
+        """)
+    Optional<OrderEntity> findByOrderNumber(String orderNumber);
 }

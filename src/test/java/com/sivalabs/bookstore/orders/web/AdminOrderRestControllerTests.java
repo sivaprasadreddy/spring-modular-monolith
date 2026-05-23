@@ -12,6 +12,7 @@ import com.sivalabs.bookstore.orders.domain.OrderMapper;
 import com.sivalabs.bookstore.orders.domain.OrderService;
 import com.sivalabs.bookstore.orders.domain.models.CreateOrderCmd;
 import com.sivalabs.bookstore.orders.domain.models.Customer;
+import com.sivalabs.bookstore.orders.domain.models.OrderDto;
 import com.sivalabs.bookstore.orders.domain.models.OrderItem;
 import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
@@ -103,6 +104,47 @@ class AdminOrderRestControllerTests {
         assertThat(mockMvcTester
                         .get()
                         .uri("/api/admin/orders")
+                        .with(jwt().authorities(new SimpleGrantedAuthority("ROLE_USER"))))
+                .hasStatus(HttpStatus.FORBIDDEN);
+    }
+
+    @Test
+    void shouldReturnOrderDetailsForValidOrderNumber() {
+        OrderEntity saved = orderService.createOrder(buildOrderEntity(1L));
+
+        assertThat(mockMvcTester
+                        .get()
+                        .uri("/api/admin/orders/{orderNumber}", saved.getOrderNumber())
+                        .with(jwt().authorities(new SimpleGrantedAuthority("ROLE_ADMIN"))))
+                .hasStatus(HttpStatus.OK)
+                .bodyJson()
+                .convertTo(OrderDto.class)
+                .satisfies(order -> {
+                    assertThat(order.orderNumber()).isEqualTo(saved.getOrderNumber());
+                    assertThat(order.status()).isNotNull();
+                    assertThat(order.customer()).isNotNull();
+                });
+    }
+
+    @Test
+    void shouldReturn404ForNonExistentOrderNumber() {
+        assertThat(mockMvcTester
+                        .get()
+                        .uri("/api/admin/orders/non-existent-order")
+                        .with(jwt().authorities(new SimpleGrantedAuthority("ROLE_ADMIN"))))
+                .hasStatus(HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    void shouldReturn401WhenNoTokenProvidedOnOrderDetail() {
+        assertThat(mockMvcTester.get().uri("/api/admin/orders/some-order")).hasStatus(HttpStatus.UNAUTHORIZED);
+    }
+
+    @Test
+    void shouldReturn403ForNonAdminUserOnOrderDetail() {
+        assertThat(mockMvcTester
+                        .get()
+                        .uri("/api/admin/orders/some-order")
                         .with(jwt().authorities(new SimpleGrantedAuthority("ROLE_USER"))))
                 .hasStatus(HttpStatus.FORBIDDEN);
     }

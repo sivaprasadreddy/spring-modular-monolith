@@ -111,6 +111,65 @@ class AdminOrderWebControllerTests {
                 .doesNotContain("admin-topbar");
     }
 
+    @Test
+    void shouldRenderOrderDetailPage() {
+        OrderEntity saved = orderService.createOrder(buildOrderEntity(1L, "Alice Smith", "alice@example.com"));
+
+        assertThat(mockMvcTester
+                        .get()
+                        .uri("/admin/orders/{orderNumber}", saved.getOrderNumber())
+                        .with(user("admin").roles("ADMIN")))
+                .hasStatus(HttpStatus.OK)
+                .bodyText()
+                .contains("Alice Smith");
+    }
+
+    @Test
+    void shouldShowOrderStatusOnDetailPage() {
+        OrderEntity saved = orderService.createOrder(buildOrderEntity(1L, "Alice Smith", "alice@example.com"));
+
+        assertThat(mockMvcTester
+                        .get()
+                        .uri("/admin/orders/{orderNumber}", saved.getOrderNumber())
+                        .with(user("admin").roles("ADMIN")))
+                .hasStatus(HttpStatus.OK)
+                .bodyText()
+                .contains("NEW");
+    }
+
+    @Test
+    void shouldReturn404ForNonExistentOrderNumber() {
+        assertThat(mockMvcTester
+                        .get()
+                        .uri("/admin/orders/non-existent-order")
+                        .with(user("admin").roles("ADMIN")))
+                .hasStatus(HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    void shouldReturnPartialFragmentForHtmxRequestOnDetail() {
+        OrderEntity saved = orderService.createOrder(buildOrderEntity(1L, "Alice Smith", "alice@example.com"));
+
+        assertThat(mockMvcTester
+                        .get()
+                        .uri("/admin/orders/{orderNumber}", saved.getOrderNumber())
+                        .header("HX-Request", "true")
+                        .with(user("admin").roles("ADMIN")))
+                .hasStatus(HttpStatus.OK)
+                .bodyText()
+                .doesNotContain("admin-topbar");
+    }
+
+    @Test
+    void shouldLinkOrderNumberInListToDetailPage() {
+        OrderEntity saved = orderService.createOrder(buildOrderEntity(1L, "Alice Smith", "alice@example.com"));
+
+        assertThat(mockMvcTester.get().uri("/admin/orders").with(user("admin").roles("ADMIN")))
+                .hasStatus(HttpStatus.OK)
+                .bodyText()
+                .contains("/admin/orders/" + saved.getOrderNumber());
+    }
+
     private static OrderEntity buildOrderEntity(Long userId, String customerName, String email) {
         OrderItem item = new OrderItem("P100", "The Hunger Games", new BigDecimal("34.0"), 1);
         CreateOrderCmd cmd = new CreateOrderCmd(

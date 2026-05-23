@@ -1,0 +1,75 @@
+<div id="admin-order" th:fragment="order" xmlns:th="http://www.thymeleaf.org">
+
+    <div class="mb-3 d-flex gap-2 align-items-center">
+        <a th:href="@{/admin/orders}" class="btn btn-sm btn-outline-secondary">&larr; Back to Orders</a>
+        <span class="order-status-badge order-status-badge-lg ms-2"
+              th:attr="data-status=${order.status}"
+              th:text="${order.status}">status</span>
+    </div>
+
+    <div class="orders-card mb-4">
+        <div class="orders-card-title">Order Summary</div>
+        <div class="row g-3 p-3">
+            <div class="col-md-6">
+                <label class="order-detail-label">Order Number</label>
+                <div class="order-detail-value order-id" th:text="${order.orderNumber}">number</div>
+            </div>
+            <div class="col-md-6">
+                <label class="order-detail-label">Created At</label>
+                <div class="order-detail-value"
+                     th:text="${#temporals.format(order.createdAt, 'dd MMM yyyy HH:mm')}">date</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="orders-card mb-4">
+        <div class="orders-card-title">Items</div>
+        <table class="table orders-table mb-0">
+            <thead>
+            <tr>
+                <th>Product</th>
+                <th class="text-end">Price</th>
+                <th class="text-center">Qty</th>
+                <th class="text-end">Subtotal</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="fw-semibold" th:text="${order.item.name}">name</td>
+                <td class="text-end text-muted" th:text="${'$' + order.item.price}">price</td>
+                <td class="text-center" th:text="${order.item.quantity}">qty</td>
+                <td class="text-end fw-semibold" th:text="${'$' + order.item.quantity * order.item.price}">subtotal</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr class="cart-total-row">
+                <td colspan="3" class="text-end text-muted">Order Total</td>
+                <td class="text-end cart-total-amount" th:text="${'$' + order.totalAmount}">total</td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div class="orders-card">
+        <div class="orders-card-title">Customer &amp; Delivery</div>
+        <div class="row g-3 p-3">
+            <div class="col-md-6">
+                <label class="order-detail-label">Customer Name</label>
+                <div class="order-detail-value" th:text="${order.customer.name}">name</div>
+            </div>
+            <div class="col-md-6">
+                <label class="order-detail-label">Email Address</label>
+                <div class="order-detail-value" th:text="${order.customer.email}">email</div>
+            </div>
+            <div class="col-md-6">
+                <label class="order-detail-label">Phone Number</label>
+                <div class="order-detail-value" th:text="${order.customer.phone}">phone</div>
+            </div>
+            <div class="col-md-6">
+                <label class="order-detail-label">Delivery Address</label>
+                <div class="order-detail-value" th:text="${order.deliveryAddress}">address</div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -58,6 +58,11 @@ public class OrderService {
     }
 
     @Transactional(readOnly = true)
+    public Optional<OrderDto> findOrderAdmin(String orderNumber) {
+        return orderRepository.findByOrderNumber(orderNumber).map(OrderMapper::convertToDto);
+    }
+
+    @Transactional(readOnly = true)
     public PagedResult<AdminOrderView> getOrdersAdmin(int pageNo, @Nullable OrderStatus status) {
         Sort sort = Sort.by("createdAt").descending();
         int page = pageNo <= 1 ? 0 : pageNo - 1;
