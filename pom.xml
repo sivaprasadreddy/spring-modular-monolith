@@ -19,7 +19,6 @@
     <properties>
         <java.version>25</java.version>
         <dockerImageName>sivaprasadreddy/${project.artifactId}</dockerImageName>
-        <springdoc-openapi.version>3.0.3</springdoc-openapi.version>
         <spring-modulith.version>2.0.6</spring-modulith.version>
         <htmx-spring-boot-thymeleaf.version>5.1.0</htmx-spring-boot-thymeleaf.version>
         <datasource-micrometer-spring-boot.version>2.2.1</datasource-micrometer-spring-boot.version>
@@ -71,11 +70,6 @@
             <version>${datasource-micrometer-spring-boot.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>${springdoc-openapi.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
@@ -95,10 +89,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security-oauth2-resource-server</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -1,6 +1,6 @@
-package com.sivalabs.bookstore.inventory;
+package com.sivalabs.bookstore.inventory.domain;
 
-class InvalidInventoryException extends RuntimeException {
+public class InvalidInventoryException extends RuntimeException {
     InvalidInventoryException(String message) {
         super(message);
     }

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<body>
+<div layout:fragment="content">
+    <div class="d-flex flex-column align-items-center justify-content-center text-center py-5">
+        <h1 class="display-1 fw-bold text-secondary">400</h1>
+        <h2 class="mb-3">Bad Request</h2>
+        <p class="text-muted mb-4" th:text="${errorMessage}">The request could not be processed.</p>
+        <a th:href="@{javascript:history.back()}" class="btn btn-primary">Go Back</a>
+    </div>
+</div>
+</body>
+</html>

@@ -1,4 +1,4 @@
-package com.sivalabs.bookstore.inventory;
+package com.sivalabs.bookstore.inventory.domain;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
 

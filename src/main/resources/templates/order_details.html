@@ -61,22 +61,24 @@
         <!-- Customer & delivery info -->
         <div class="orders-card">
             <div class="orders-card-title">Customer &amp; Delivery</div>
-            <div class="row g-3 p-1">
-                <div class="col-md-6">
-                    <label class="order-detail-label">Customer Name</label>
-                    <div class="order-detail-value" th:text="${order.customer.name}">name</div>
-                </div>
-                <div class="col-md-6">
-                    <label class="order-detail-label">Email Address</label>
-                    <div class="order-detail-value" th:text="${order.customer.email}">email</div>
-                </div>
-                <div class="col-md-6">
-                    <label class="order-detail-label">Phone Number</label>
-                    <div class="order-detail-value" th:text="${order.customer.phone}">phone</div>
-                </div>
-                <div class="col-md-6">
-                    <label class="order-detail-label">Delivery Address</label>
-                    <div class="order-detail-value" th:text="${order.deliveryAddress}">address</div>
+            <div class="orders-card-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="order-detail-label">Customer Name</label>
+                        <div class="order-detail-value" th:text="${order.customer.name}">name</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="order-detail-label">Email Address</label>
+                        <div class="order-detail-value" th:text="${order.customer.email}">email</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="order-detail-label">Phone Number</label>
+                        <div class="order-detail-value" th:text="${order.customer.phone}">phone</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="order-detail-label">Delivery Address</label>
+                        <div class="order-detail-value" th:text="${order.deliveryAddress}">address</div>
+                    </div>
                 </div>
             </div>
         </div>

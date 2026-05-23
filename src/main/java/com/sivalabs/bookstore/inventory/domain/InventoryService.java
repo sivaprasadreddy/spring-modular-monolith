@@ -1,4 +1,4 @@
-package com.sivalabs.bookstore.inventory;
+package com.sivalabs.bookstore.inventory.domain;
 
 import com.sivalabs.bookstore.common.models.PagedResult;
 import org.slf4j.Logger;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-class InventoryService {
+public class InventoryService {
     private static final Logger log = LoggerFactory.getLogger(InventoryService.class);
     private static final int PAGE_SIZE = 10;
 
@@ -36,11 +36,11 @@ class InventoryService {
 
     @Transactional(readOnly = true)
     public PagedResult<InventoryView> getAllInventory(int pageNo) {
-        var pageable =
-                PageRequest.of(pageNo - 1, PAGE_SIZE, Sort.by("productCode").ascending());
-        Page<InventoryView> page =
+        int page = pageNo <= 1 ? 0 : pageNo - 1;
+        var pageable = PageRequest.of(page, PAGE_SIZE, Sort.by("productCode").ascending());
+        Page<InventoryView> inventoryPage =
                 inventoryRepository.findAll(pageable).map(e -> new InventoryView(e.getProductCode(), e.getQuantity()));
-        return new PagedResult<>(page);
+        return new PagedResult<>(inventoryPage);
     }
 
     @Transactional

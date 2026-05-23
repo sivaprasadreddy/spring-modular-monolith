@@ -1,25 +1,16 @@
-package com.sivalabs.bookstore.orders.web;
+package com.sivalabs.bookstore.inventory.web;
 
-import com.sivalabs.bookstore.orders.domain.InvalidOrderException;
-import com.sivalabs.bookstore.orders.domain.OrderNotFoundException;
+import com.sivalabs.bookstore.inventory.domain.InvalidInventoryException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
 @ControllerAdvice
-class OrdersExceptionHandler {
+class InventoryExceptionHandler {
 
-    @ExceptionHandler(OrderNotFoundException.class)
-    ModelAndView handle(OrderNotFoundException e) {
-        ModelAndView mav = new ModelAndView("error/404");
-        mav.addObject("errorMessage", e.getMessage());
-        mav.setStatus(HttpStatus.NOT_FOUND);
-        return mav;
-    }
-
-    @ExceptionHandler(InvalidOrderException.class)
-    ModelAndView handle(InvalidOrderException e) {
+    @ExceptionHandler(InvalidInventoryException.class)
+    ModelAndView handle(InvalidInventoryException e) {
         ModelAndView mav = new ModelAndView("error/400");
         mav.addObject("errorMessage", e.getMessage());
         mav.setStatus(HttpStatus.BAD_REQUEST);

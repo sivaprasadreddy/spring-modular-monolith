@@ -31,7 +31,6 @@ ext {
     set("htmxSpringBootVersion", "5.1.0")
     set("bootstrapVersion", "5.3.8")
     set("htmxVersion", "2.0.10")
-    set("springdocVersion", "3.0.3")
 }
 
 dependencies {
@@ -40,10 +39,7 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-actuator"
     runtimeOnly "io.micrometer:micrometer-registry-prometheus"
 
-    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${springdocVersion}"
-
     implementation "org.springframework.boot:spring-boot-starter-security"
-    implementation "org.springframework.boot:spring-boot-starter-security-oauth2-resource-server"
     
     implementation "org.springframework.boot:spring-boot-starter-opentelemetry"
     implementation "io.opentelemetry.instrumentation:opentelemetry-logback-appender-1.0:2.21.0-alpha"

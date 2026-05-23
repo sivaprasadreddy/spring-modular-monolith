@@ -1,5 +1,6 @@
-package com.sivalabs.bookstore.inventory;
+package com.sivalabs.bookstore.inventory.web;
 
+import com.sivalabs.bookstore.inventory.domain.InventoryService;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
