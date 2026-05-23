@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:hx="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>BookStore Admin</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
+    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/admin}">
+            <img src="/images/books.png" alt="Books Logo" width="40" height="40"> BookStore Admin
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#adminNavbar"
+                aria-controls="adminNavbar" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="adminNavbar">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}">Storefront</a>
+                </li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" th:href="@{/logout}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid" style="margin-top: 70px;">
+    <div class="row">
+        <nav class="col-md-2 d-md-block bg-light sidebar" style="min-height: calc(100vh - 70px);">
+            <div class="position-sticky pt-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <span class="nav-link text-muted text-uppercase fw-bold" style="font-size: 0.75rem;">Catalog</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link ps-3" th:href="@{/admin/catalog/products}">Products</a>
+                    </li>
+                    <li class="nav-item mt-2">
+                        <span class="nav-link text-muted text-uppercase fw-bold" style="font-size: 0.75rem;">Orders</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link ps-3" th:href="@{/admin/orders}">Orders</a>
+                    </li>
+                    <li class="nav-item mt-2">
+                        <span class="nav-link text-muted text-uppercase fw-bold" style="font-size: 0.75rem;">Inventory</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link ps-3" th:href="@{/admin/inventory}">Stock Levels</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <main class="col-md-10 ms-sm-auto px-md-4">
+            <div layout:fragment="content">
+                <!-- Admin Page Content Here -->
+            </div>
+        </main>
+    </div>
+</div>
+
+<script src="/webjars/bootstrap/js/bootstrap.bundle.js"></script>
+<script src="/webjars/htmx.org/dist/htmx.min.js"></script>
+<div layout:fragment="pageScripts">
+</div>
+</body>
+</html>

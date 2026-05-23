@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout}">
+<body>
+<div layout:fragment="content">
+    <div class="py-4">
+        <h2>Admin Dashboard</h2>
+        <p class="text-muted">Welcome to the BookStore administration area.</p>
+        <div class="row g-4 mt-2">
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Catalog</h5>
+                        <p class="card-text">Manage products in the bookstore catalogue.</p>
+                        <a th:href="@{/admin/catalog/products}" class="btn btn-primary">Manage Products</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Orders</h5>
+                        <p class="card-text">View and manage customer orders.</p>
+                        <a th:href="@{/admin/orders}" class="btn btn-primary">Manage Orders</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Inventory</h5>
+                        <p class="card-text">Monitor and update product stock levels.</p>
+                        <a th:href="@{/admin/inventory}" class="btn btn-primary">Manage Inventory</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

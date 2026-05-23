@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout}">
+<body>
+<div layout:fragment="content">
+    <div class="container mt-4">
+        <h2>Products</h2>
+        <div th:replace="~{partials/admin/catalog/products :: products}"></div>
+    </div>
+</div>
+</body>
+</html>

@@ -3,6 +3,7 @@ package com.sivalabs.bookstore.config;
 import com.sivalabs.bookstore.ApplicationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
@@ -11,6 +12,11 @@ class WebMvcConfig implements WebMvcConfigurer {
 
     WebMvcConfig(ApplicationProperties properties) {
         this.properties = properties;
+    }
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/admin").setViewName("admin/index");
     }
 
     @Override
