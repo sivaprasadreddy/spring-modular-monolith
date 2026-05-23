@@ -5,5 +5,13 @@ public enum OrderStatus {
     IN_PROCESS,
     DELIVERED,
     CANCELLED,
-    ERROR
+    ERROR;
+
+    public boolean canTransitionTo(OrderStatus next) {
+        return switch (this) {
+            case NEW -> next == IN_PROCESS || next == CANCELLED;
+            case IN_PROCESS -> next == DELIVERED || next == CANCELLED;
+            default -> false;
+        };
+    }
 }

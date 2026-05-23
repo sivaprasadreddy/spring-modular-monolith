@@ -21,6 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.modulith.test.ApplicationModuleTest;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -39,11 +41,15 @@ class AdminOrderRestControllerTests {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
     @MockitoBean
     ProductApi productApi;
 
     @BeforeEach
     void setUp() {
+        jdbcTemplate.execute("DELETE FROM orders.orders");
         orderService.createOrder(buildOrderEntity(1L));
         orderService.createOrder(buildOrderEntity(2L));
     }
@@ -145,6 +151,97 @@ class AdminOrderRestControllerTests {
         assertThat(mockMvcTester
                         .get()
                         .uri("/api/admin/orders/some-order")
+                        .with(jwt().authorities(new SimpleGrantedAuthority("ROLE_USER"))))
+                .hasStatus(HttpStatus.FORBIDDEN);
+    }
+
+    @Test
+    void shouldUpdateOrderStatusFromNewToInProcess() {
+        OrderEntity saved = orderService.createOrder(buildOrderEntity(1L));
+
+        assertThat(mockMvcTester
+                        .put()
+                        .uri("/api/admin/orders/{orderNumber}/status", saved.getOrderNumber())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"status":"IN_PROCESS"}
+                                """)
+                        .with(jwt().authorities(new SimpleGrantedAuthority("ROLE_ADMIN"))))
+                .hasStatus(HttpStatus.OK)
+                .bodyJson()
+                .convertTo(OrderDto.class)
+                .satisfies(order -> assertThat(order.status().name()).isEqualTo("IN_PROCESS"));
+    }
+
+    @Test
+    void shouldUpdateOrderStatusFromInProcessToDelivered() {
+        OrderEntity saved = orderService.createOrder(buildOrderEntity(1L));
+        orderService.updateOrderStatus(
+                saved.getOrderNumber(), com.sivalabs.bookstore.orders.domain.models.OrderStatus.IN_PROCESS);
+
+        assertThat(mockMvcTester
+                        .put()
+                        .uri("/api/admin/orders/{orderNumber}/status", saved.getOrderNumber())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"status":"DELIVERED"}
+                                """)
+                        .with(jwt().authorities(new SimpleGrantedAuthority("ROLE_ADMIN"))))
+                .hasStatus(HttpStatus.OK)
+                .bodyJson()
+                .convertTo(OrderDto.class)
+                .satisfies(order -> assertThat(order.status().name()).isEqualTo("DELIVERED"));
+    }
+
+    @Test
+    void shouldReturn400ForInvalidStatusTransition() {
+        OrderEntity saved = orderService.createOrder(buildOrderEntity(1L));
+
+        assertThat(mockMvcTester
+                        .put()
+                        .uri("/api/admin/orders/{orderNumber}/status", saved.getOrderNumber())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"status":"DELIVERED"}
+                                """)
+                        .with(jwt().authorities(new SimpleGrantedAuthority("ROLE_ADMIN"))))
+                .hasStatus(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    void shouldReturn404ForNonExistentOrderOnStatusUpdate() {
+        assertThat(mockMvcTester
+                        .put()
+                        .uri("/api/admin/orders/non-existent/status")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"status":"IN_PROCESS"}
+                                """)
+                        .with(jwt().authorities(new SimpleGrantedAuthority("ROLE_ADMIN"))))
+                .hasStatus(HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    void shouldReturn401WhenNoTokenProvidedOnStatusUpdate() {
+        assertThat(mockMvcTester
+                        .put()
+                        .uri("/api/admin/orders/some-order/status")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"status":"IN_PROCESS"}
+                                """))
+                .hasStatus(HttpStatus.UNAUTHORIZED);
+    }
+
+    @Test
+    void shouldReturn403ForNonAdminUserOnStatusUpdate() {
+        assertThat(mockMvcTester
+                        .put()
+                        .uri("/api/admin/orders/some-order/status")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"status":"IN_PROCESS"}
+                                """)
                         .with(jwt().authorities(new SimpleGrantedAuthority("ROLE_USER"))))
                 .hasStatus(HttpStatus.FORBIDDEN);
     }

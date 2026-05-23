@@ -103,7 +103,7 @@ All admin actions require the user to be authenticated with `ROLE_ADMIN`.
 ---
 
 ### UC-007 — View Order Details (Admin)
-**Status:** Pending  
+**Status:** Completed  
 **Actor:** Admin  
 **Description:** Admin can view the full details of any order regardless of which customer placed it.  
 **Pre-conditions:** User is authenticated as ADMIN. Order with the given order number exists.  
@@ -117,7 +117,7 @@ All admin actions require the user to be authenticated with `ROLE_ADMIN`.
 ---
 
 ### UC-008 — Update Order Status
-**Status:** Pending  
+**Status:** Completed  
 **Actor:** Admin  
 **Description:** Admin can update the status of an order (e.g., mark it as IN_PROCESS, DELIVERED, or CANCELLED).  
 **Pre-conditions:** User is authenticated as ADMIN. Order exists. The requested status transition is valid (see rules below).  

@@ -6,6 +6,8 @@ import com.sivalabs.bookstore.orders.domain.models.OrderCreatedEvent;
 import com.sivalabs.bookstore.orders.domain.models.OrderDto;
 import com.sivalabs.bookstore.orders.domain.models.OrderStatus;
 import com.sivalabs.bookstore.orders.domain.models.OrderView;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 import org.jspecify.annotations.Nullable;
@@ -60,6 +62,19 @@ public class OrderService {
     @Transactional(readOnly = true)
     public Optional<OrderDto> findOrderAdmin(String orderNumber) {
         return orderRepository.findByOrderNumber(orderNumber).map(OrderMapper::convertToDto);
+    }
+
+    @Transactional
+    public OrderDto updateOrderStatus(String orderNumber, OrderStatus newStatus) {
+        OrderEntity entity = orderRepository
+                .findByOrderNumber(orderNumber)
+                .orElseThrow(() -> OrderNotFoundException.forOrderNumber(orderNumber));
+        if (!entity.getStatus().canTransitionTo(newStatus)) {
+            throw InvalidOrderException.invalidTransition(entity.getStatus(), newStatus);
+        }
+        entity.setStatus(newStatus);
+        entity.setUpdatedAt(LocalDateTime.now(ZoneId.systemDefault()));
+        return OrderMapper.convertToDto(orderRepository.save(entity));
     }
 
     @Transactional(readOnly = true)

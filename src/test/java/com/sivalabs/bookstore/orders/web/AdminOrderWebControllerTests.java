@@ -2,6 +2,7 @@ package com.sivalabs.bookstore.orders.web;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 
 import com.sivalabs.bookstore.TestcontainersConfiguration;
@@ -12,6 +13,7 @@ import com.sivalabs.bookstore.orders.domain.OrderService;
 import com.sivalabs.bookstore.orders.domain.models.CreateOrderCmd;
 import com.sivalabs.bookstore.orders.domain.models.Customer;
 import com.sivalabs.bookstore.orders.domain.models.OrderItem;
+import com.sivalabs.bookstore.orders.domain.models.OrderStatus;
 import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.modulith.test.ApplicationModuleTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.assertj.MockMvcTester;
@@ -36,11 +39,15 @@ class AdminOrderWebControllerTests {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
     @MockitoBean
     ProductApi productApi;
 
     @BeforeEach
     void setUp() {
+        jdbcTemplate.execute("DELETE FROM orders.orders");
         orderService.createOrder(buildOrderEntity(1L, "Alice Smith", "alice@example.com"));
         orderService.createOrder(buildOrderEntity(2L, "Bob Jones", "bob@example.com"));
     }
@@ -168,6 +175,63 @@ class AdminOrderWebControllerTests {
                 .hasStatus(HttpStatus.OK)
                 .bodyText()
                 .contains("/admin/orders/" + saved.getOrderNumber());
+    }
+
+    @Test
+    void shouldUpdateOrderStatusAndRedirectToDetailPage() {
+        OrderEntity saved = orderService.createOrder(buildOrderEntity(1L, "Alice Smith", "alice@example.com"));
+
+        assertThat(mockMvcTester
+                        .post()
+                        .uri("/admin/orders/{orderNumber}/status", saved.getOrderNumber())
+                        .param("status", "IN_PROCESS")
+                        .with(csrf())
+                        .with(user("admin").roles("ADMIN")))
+                .hasStatus(HttpStatus.FOUND)
+                .hasHeader("Location", "/admin/orders/" + saved.getOrderNumber());
+    }
+
+    @Test
+    void shouldShowMarkAsInProcessButtonForNewOrder() {
+        OrderEntity saved = orderService.createOrder(buildOrderEntity(1L, "Alice Smith", "alice@example.com"));
+
+        assertThat(mockMvcTester
+                        .get()
+                        .uri("/admin/orders/{orderNumber}", saved.getOrderNumber())
+                        .with(user("admin").roles("ADMIN")))
+                .hasStatus(HttpStatus.OK)
+                .bodyText()
+                .contains("Mark as In Process");
+    }
+
+    @Test
+    void shouldShowCancelButtonForNewOrder() {
+        OrderEntity saved = orderService.createOrder(buildOrderEntity(1L, "Alice Smith", "alice@example.com"));
+
+        assertThat(mockMvcTester
+                        .get()
+                        .uri("/admin/orders/{orderNumber}", saved.getOrderNumber())
+                        .with(user("admin").roles("ADMIN")))
+                .hasStatus(HttpStatus.OK)
+                .bodyText()
+                .contains("Cancel Order");
+    }
+
+    @Test
+    void shouldNotShowTransitionButtonsForDeliveredOrder() {
+        OrderEntity saved = orderService.createOrder(buildOrderEntity(1L, "Alice Smith", "alice@example.com"));
+        orderService.updateOrderStatus(saved.getOrderNumber(), OrderStatus.IN_PROCESS);
+        orderService.updateOrderStatus(saved.getOrderNumber(), OrderStatus.DELIVERED);
+
+        assertThat(mockMvcTester
+                        .get()
+                        .uri("/admin/orders/{orderNumber}", saved.getOrderNumber())
+                        .with(user("admin").roles("ADMIN")))
+                .hasStatus(HttpStatus.OK)
+                .bodyText()
+                .doesNotContain("Mark as In Process")
+                .doesNotContain("Mark as Delivered")
+                .doesNotContain("Cancel Order");
     }
 
     private static OrderEntity buildOrderEntity(Long userId, String customerName, String email) {

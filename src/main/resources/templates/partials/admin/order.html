@@ -1,10 +1,36 @@
 <div id="admin-order" th:fragment="order" xmlns:th="http://www.thymeleaf.org">
 
-    <div class="mb-3 d-flex gap-2 align-items-center">
+    <div class="mb-3 d-flex gap-2 align-items-center flex-wrap">
         <a th:href="@{/admin/orders}" class="btn btn-sm btn-outline-secondary">&larr; Back to Orders</a>
-        <span class="order-status-badge order-status-badge-lg ms-2"
+        <span class="order-status-badge order-status-badge-lg ms-1"
               th:attr="data-status=${order.status}"
               th:text="${order.status}">status</span>
+
+        <th:block th:if="${order.status.name() == 'NEW'}">
+            <form th:action="@{/admin/orders/{n}/status(n=${order.orderNumber})}" method="post" class="d-inline">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <input type="hidden" name="status" value="IN_PROCESS"/>
+                <button type="submit" class="btn btn-sm btn-primary">Mark as In Process</button>
+            </form>
+            <form th:action="@{/admin/orders/{n}/status(n=${order.orderNumber})}" method="post" class="d-inline">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <input type="hidden" name="status" value="CANCELLED"/>
+                <button type="submit" class="btn btn-sm btn-danger">Cancel Order</button>
+            </form>
+        </th:block>
+
+        <th:block th:if="${order.status.name() == 'IN_PROCESS'}">
+            <form th:action="@{/admin/orders/{n}/status(n=${order.orderNumber})}" method="post" class="d-inline">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <input type="hidden" name="status" value="DELIVERED"/>
+                <button type="submit" class="btn btn-sm btn-success">Mark as Delivered</button>
+            </form>
+            <form th:action="@{/admin/orders/{n}/status(n=${order.orderNumber})}" method="post" class="d-inline">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <input type="hidden" name="status" value="CANCELLED"/>
+                <button type="submit" class="btn btn-sm btn-danger">Cancel Order</button>
+            </form>
+        </th:block>
     </div>
 
     <div class="orders-card mb-4">

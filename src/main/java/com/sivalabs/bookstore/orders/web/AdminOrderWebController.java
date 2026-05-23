@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -52,5 +53,12 @@ class AdminOrderWebController {
             return "partials/admin/order";
         }
         return "admin/order";
+    }
+
+    @PostMapping("/{orderNumber}/status")
+    String updateOrderStatus(@PathVariable String orderNumber, @RequestParam OrderStatus status) {
+        log.info("Admin updating order status: orderNumber={}, newStatus={}", orderNumber, status);
+        orderService.updateOrderStatus(orderNumber, status);
+        return "redirect:/admin/orders/" + orderNumber;
     }
 }
