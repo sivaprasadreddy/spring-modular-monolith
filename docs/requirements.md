@@ -92,7 +92,7 @@ All admin actions require the user to be authenticated with `ROLE_ADMIN`.
 ## Order Management
 
 ### UC-006 — List All Orders (Admin)
-**Status:** Pending  
+**Status:** Complete  
 **Actor:** Admin  
 **Description:** Admin can view a paginated list of all orders across all customers, with optional filtering by status.  
 **Pre-conditions:** User is authenticated as ADMIN.  

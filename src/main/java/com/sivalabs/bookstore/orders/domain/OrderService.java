@@ -1,13 +1,20 @@
 package com.sivalabs.bookstore.orders.domain;
 
+import com.sivalabs.bookstore.common.models.PagedResult;
+import com.sivalabs.bookstore.orders.domain.models.AdminOrderView;
 import com.sivalabs.bookstore.orders.domain.models.OrderCreatedEvent;
 import com.sivalabs.bookstore.orders.domain.models.OrderDto;
+import com.sivalabs.bookstore.orders.domain.models.OrderStatus;
 import com.sivalabs.bookstore.orders.domain.models.OrderView;
 import java.util.List;
 import java.util.Optional;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class OrderService {
     private static final Logger log = LoggerFactory.getLogger(OrderService.class);
+    private static final int ORDER_PAGE_SIZE = 10;
 
     private final OrderRepository orderRepository;
     private final ApplicationEventPublisher eventPublisher;
@@ -47,5 +55,19 @@ public class OrderService {
         Sort sort = Sort.by("id").descending();
         var orderEntities = orderRepository.findAllByUserId(userId, sort);
         return OrderMapper.convertToOrderViews(orderEntities);
+    }
+
+    @Transactional(readOnly = true)
+    public PagedResult<AdminOrderView> getOrdersAdmin(int pageNo, @Nullable OrderStatus status) {
+        Sort sort = Sort.by("createdAt").descending();
+        int page = pageNo <= 1 ? 0 : pageNo - 1;
+        Pageable pageable = PageRequest.of(page, ORDER_PAGE_SIZE, sort);
+        Page<AdminOrderView> ordersPage;
+        if (status != null) {
+            ordersPage = orderRepository.findAllByStatus(status, pageable).map(OrderMapper::toAdminOrderView);
+        } else {
+            ordersPage = orderRepository.findAll(pageable).map(OrderMapper::toAdminOrderView);
+        }
+        return new PagedResult<>(ordersPage);
     }
 }

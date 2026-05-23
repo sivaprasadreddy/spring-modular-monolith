@@ -1,0 +1,63 @@
+<div id="admin-orders" th:fragment="orders" xmlns:th="http://www.thymeleaf.org">
+
+    <form method="get" th:action="@{/admin/orders}" class="d-flex gap-2 align-items-center mb-3">
+        <select name="status" class="form-select form-select-sm" style="width:auto">
+            <option value="" th:selected="${selectedStatus == null}">All Statuses</option>
+            <option th:each="s : ${statuses}"
+                    th:value="${s}"
+                    th:text="${s}"
+                    th:selected="${s == selectedStatus}">STATUS</option>
+        </select>
+        <button type="submit" class="btn btn-sm btn-outline-primary">Filter</button>
+        <a th:if="${selectedStatus != null}" th:href="@{/admin/orders}" class="btn btn-sm btn-outline-secondary">Clear</a>
+    </form>
+
+    <nav aria-label="Page navigation" th:if="${ordersPage.totalPages() > 1}">
+        <ul class="pagination justify-content-end my-3">
+            <li class="page-item" th:classappend="${!ordersPage.hasPrevious()} ? disabled : ''">
+                <a class="page-link rounded-start-pill" th:href="@{/admin/orders(page=1,status=${selectedStatus})}">&laquo;</a>
+            </li>
+            <li class="page-item" th:classappend="${!ordersPage.hasPrevious()} ? disabled : ''">
+                <a class="page-link" th:href="@{/admin/orders(page=${ordersPage.pageNumber() - 1},status=${selectedStatus})}">Previous</a>
+            </li>
+            <li class="page-item active" aria-current="page">
+                <span class="page-link" th:text="${ordersPage.pageNumber()}">1</span>
+            </li>
+            <li class="page-item" th:classappend="${!ordersPage.hasNext()} ? disabled : ''">
+                <a class="page-link" th:href="@{/admin/orders(page=${ordersPage.pageNumber() + 1},status=${selectedStatus})}">Next</a>
+            </li>
+            <li class="page-item" th:classappend="${!ordersPage.hasNext()} ? disabled : ''">
+                <a class="page-link rounded-end-pill" th:href="@{/admin/orders(page=${ordersPage.totalPages()},status=${selectedStatus})}">&raquo;</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="orders-card">
+        <table class="table orders-table mb-0">
+            <thead>
+            <tr>
+                <th>Order #</th>
+                <th>Customer</th>
+                <th>Status</th>
+                <th>Created</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order : ${ordersPage.data}">
+                <td class="order-id" th:text="${order.orderNumber}">order-number</td>
+                <td th:text="${order.customerName}">customer</td>
+                <td>
+                    <span class="order-status-badge"
+                          th:attr="data-status=${order.status}"
+                          th:text="${order.status}">status</span>
+                </td>
+                <td th:text="${#temporals.format(order.createdAt, 'dd MMM yyyy HH:mm')}">date</td>
+            </tr>
+            <tr th:if="${ordersPage.data.isEmpty()}">
+                <td colspan="4" class="text-center text-muted py-4">No orders found.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

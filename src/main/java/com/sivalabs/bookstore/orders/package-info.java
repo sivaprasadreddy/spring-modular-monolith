@@ -1,4 +1,4 @@
-@ApplicationModule(allowedDependencies = {"catalog", "users"})
+@ApplicationModule(allowedDependencies = {"catalog", "users", "common"})
 @NullMarked
 package com.sivalabs.bookstore.orders;
 

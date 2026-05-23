@@ -1,5 +1,6 @@
 package com.sivalabs.bookstore.orders.domain;
 
+import com.sivalabs.bookstore.orders.domain.models.AdminOrderView;
 import com.sivalabs.bookstore.orders.domain.models.CreateOrderCmd;
 import com.sivalabs.bookstore.orders.domain.models.OrderDto;
 import com.sivalabs.bookstore.orders.domain.models.OrderStatus;
@@ -42,5 +43,10 @@ public final class OrderMapper {
             orderViews.add(orderView);
         }
         return orderViews;
+    }
+
+    public static AdminOrderView toAdminOrderView(OrderEntity order) {
+        return new AdminOrderView(
+                order.getOrderNumber(), order.getStatus(), order.getCustomer().name(), order.getCreatedAt());
     }
 }
