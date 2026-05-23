@@ -1,5 +1,6 @@
 package com.sivalabs.bookstore.catalog.web;
 
+import com.sivalabs.bookstore.catalog.domain.ProductNotFoundException;
 import com.sivalabs.bookstore.catalog.domain.ProductService;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxRequest;
 import org.slf4j.Logger;
@@ -7,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -29,5 +31,16 @@ class AdminProductWebController {
             return "partials/admin/catalog/products";
         }
         return "admin/catalog/products";
+    }
+
+    @GetMapping("/{code}")
+    String getProductByCode(@PathVariable String code, Model model, HtmxRequest hxRequest) {
+        log.info("Admin fetching product by code: {}", code);
+        var product = productService.getByCode(code).orElseThrow(() -> ProductNotFoundException.forCode(code));
+        model.addAttribute("product", product);
+        if (hxRequest.isHtmxRequest()) {
+            return "partials/admin/catalog/product";
+        }
+        return "admin/catalog/product";
     }
 }

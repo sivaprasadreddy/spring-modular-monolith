@@ -18,7 +18,7 @@ All admin actions require the user to be authenticated with `ROLE_ADMIN`.
 ## Catalog Management
 
 ### UC-001 — List Products (Admin)
-**Status:** Pending  
+**Status:** Completed  
 **Actor:** Admin  
 **Description:** Admin can view a paginated list of all products including internal fields not shown to customers (e.g., creation metadata).  
 **Pre-conditions:** User is authenticated as ADMIN.  
@@ -30,7 +30,7 @@ All admin actions require the user to be authenticated with `ROLE_ADMIN`.
 ---
 
 ### UC-002 — View Product Details (Admin)
-**Status:** Pending  
+**Status:** Completed  
 **Actor:** Admin  
 **Description:** Admin can view all details of a specific product.  
 **Pre-conditions:** User is authenticated as ADMIN. Product with the given code exists.  

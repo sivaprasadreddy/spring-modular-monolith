@@ -5,6 +5,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 
 import com.sivalabs.bookstore.TestcontainersConfiguration;
+import com.sivalabs.bookstore.catalog.ProductDto;
 import com.sivalabs.bookstore.common.models.PagedResult;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +60,45 @@ class AdminProductRestControllerTests {
     @Test
     void shouldReturn401WhenNoTokenProvided() {
         assertThat(mockMvcTester.get().uri("/api/admin/catalog/products")).hasStatus(HttpStatus.UNAUTHORIZED);
+    }
+
+    @Test
+    void shouldReturnProductDetailsForValidCode() {
+        assertThat(mockMvcTester
+                        .get()
+                        .uri("/api/admin/catalog/products/P100")
+                        .with(jwt().authorities(new SimpleGrantedAuthority("ROLE_ADMIN"))))
+                .hasStatus(HttpStatus.OK)
+                .bodyJson()
+                .convertTo(ProductDto.class)
+                .satisfies(product -> {
+                    assertThat(product.code()).isEqualTo("P100");
+                    assertThat(product.name()).isEqualTo("The Hunger Games");
+                    assertThat(product.price()).isNotNull();
+                });
+    }
+
+    @Test
+    void shouldReturn404ForNonExistentProductCode() {
+        assertThat(mockMvcTester
+                        .get()
+                        .uri("/api/admin/catalog/products/INVALID")
+                        .with(jwt().authorities(new SimpleGrantedAuthority("ROLE_ADMIN"))))
+                .hasStatus(HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    void shouldReturn403ForNonAdminUserOnProductDetails() {
+        assertThat(mockMvcTester
+                        .get()
+                        .uri("/api/admin/catalog/products/P100")
+                        .with(jwt().authorities(new SimpleGrantedAuthority("ROLE_USER"))))
+                .hasStatus(HttpStatus.FORBIDDEN);
+    }
+
+    @Test
+    void shouldReturn401WhenNoTokenProvidedOnProductDetails() {
+        assertThat(mockMvcTester.get().uri("/api/admin/catalog/products/P100")).hasStatus(HttpStatus.UNAUTHORIZED);
     }
 
     @Test

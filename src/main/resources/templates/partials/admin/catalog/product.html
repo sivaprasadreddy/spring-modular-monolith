@@ -1,0 +1,52 @@
+<div id="admin-product" th:fragment="product" xmlns:th="http://www.thymeleaf.org">
+
+    <div class="mb-3">
+        <a th:href="@{/admin/catalog/products}" class="btn btn-sm btn-outline-secondary">
+            &larr; Back to Products
+        </a>
+    </div>
+
+    <div class="orders-card p-4">
+        <div class="row">
+            <div class="col-md-3 text-center mb-3 mb-md-0">
+                <img th:if="${product.imageUrl != null}"
+                     th:src="${product.imageUrl}"
+                     th:alt="${product.name}"
+                     class="img-fluid rounded"
+                     style="max-height:220px;object-fit:cover"/>
+                <div th:if="${product.imageUrl == null}"
+                     class="admin-product-thumb-placeholder mx-auto"
+                     style="width:120px;height:120px">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <polyline points="21 15 16 10 5 21"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <table class="table table-borderless mb-0">
+                    <tbody>
+                    <tr>
+                        <th class="text-muted" style="width:120px">Code</th>
+                        <td class="order-id" th:text="${product.code}">code</td>
+                    </tr>
+                    <tr>
+                        <th class="text-muted">Name</th>
+                        <td class="fw-semibold" th:text="${product.name}">name</td>
+                    </tr>
+                    <tr>
+                        <th class="text-muted">Price</th>
+                        <td class="fw-semibold" style="color:#0d6efd" th:text="${'$' + product.price}">price</td>
+                    </tr>
+                    <tr>
+                        <th class="text-muted">Description</th>
+                        <td class="admin-product-desc text-muted" th:text="${product.description}">description</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>

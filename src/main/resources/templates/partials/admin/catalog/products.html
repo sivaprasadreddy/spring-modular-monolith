@@ -55,7 +55,10 @@
                     </div>
                 </td>
                 <td class="order-id" th:text="${product.code}">code</td>
-                <td class="fw-semibold" th:text="${product.name}">name</td>
+                <td class="fw-semibold">
+                    <a th:href="@{/admin/catalog/products/{code}(code=${product.code})}"
+                       th:text="${product.name}">name</a>
+                </td>
                 <td class="fw-semibold" style="color:#0d6efd" th:text="${'$' + product.price}">price</td>
                 <td class="admin-product-desc text-muted" th:text="${product.description}">description</td>
             </tr>
