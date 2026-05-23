@@ -8,14 +8,11 @@
 <div layout:fragment="content">
     <div class="admin-page-header">
         <div>
-            <h2 class="admin-page-title">Products</h2>
-            <p class="admin-page-subtitle">Browse and manage the product catalogue.</p>
-        </div>
-        <div>
-            <a th:href="@{/admin/catalog/products/new}" class="btn btn-primary btn-sm">New Product</a>
+            <h2 class="admin-page-title">New Product</h2>
+            <p class="admin-page-subtitle">Add a new product to the catalogue.</p>
         </div>
     </div>
-    <div th:replace="~{partials/admin/catalog/products :: products}"></div>
+    <div th:replace="~{partials/admin/catalog/product-form :: product-form}"></div>
 </div>
 </body>
 </html>

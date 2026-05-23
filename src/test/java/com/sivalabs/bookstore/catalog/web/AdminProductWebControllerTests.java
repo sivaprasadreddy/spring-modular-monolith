@@ -2,6 +2,7 @@ package com.sivalabs.bookstore.catalog.web;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 
 import com.sivalabs.bookstore.TestcontainersConfiguration;
@@ -78,5 +79,71 @@ class AdminProductWebControllerTests {
                         .uri("/admin/catalog/products/INVALID")
                         .with(user("admin").roles("ADMIN")))
                 .hasStatus(HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    void shouldRenderCreateProductForm() {
+        assertThat(mockMvcTester
+                        .get()
+                        .uri("/admin/catalog/products/new")
+                        .with(user("admin").roles("ADMIN")))
+                .hasStatus(HttpStatus.OK)
+                .bodyText()
+                .contains("New Product");
+    }
+
+    @Test
+    void shouldCreateProductAndRedirectToDetailPage() {
+        assertThat(mockMvcTester
+                        .post()
+                        .uri("/admin/catalog/products")
+                        .param("code", "PTEST")
+                        .param("name", "Test Book")
+                        .param("price", "19.99")
+                        .with(user("admin").roles("ADMIN"))
+                        .with(csrf()))
+                .hasStatus(HttpStatus.FOUND)
+                .hasHeader("Location", "/admin/catalog/products/PTEST");
+    }
+
+    @Test
+    void shouldReRenderFormOnValidationError() {
+        assertThat(mockMvcTester
+                        .post()
+                        .uri("/admin/catalog/products")
+                        .param("code", "")
+                        .param("name", "")
+                        .param("price", "")
+                        .with(user("admin").roles("ADMIN"))
+                        .with(csrf()))
+                .hasStatus(HttpStatus.OK)
+                .bodyText()
+                .contains("Product code is required");
+    }
+
+    @Test
+    void shouldReRenderFormOnDuplicateCode() {
+        assertThat(mockMvcTester
+                        .post()
+                        .uri("/admin/catalog/products")
+                        .param("code", "P100")
+                        .param("name", "Duplicate Book")
+                        .param("price", "19.99")
+                        .with(user("admin").roles("ADMIN"))
+                        .with(csrf()))
+                .hasStatus(HttpStatus.OK)
+                .bodyText()
+                .contains("A product with this code already exists.");
+    }
+
+    @Test
+    void shouldShowNewProductButtonOnListPage() {
+        assertThat(mockMvcTester
+                        .get()
+                        .uri("/admin/catalog/products")
+                        .with(user("admin").roles("ADMIN")))
+                .hasStatus(HttpStatus.OK)
+                .bodyText()
+                .contains("/admin/catalog/products/new");
     }
 }

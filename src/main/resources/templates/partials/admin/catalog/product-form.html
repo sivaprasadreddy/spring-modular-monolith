@@ -1,0 +1,54 @@
+<div id="admin-product-form" th:fragment="product-form" xmlns:th="http://www.thymeleaf.org">
+
+    <div class="orders-card p-4">
+        <form th:action="@{/admin/catalog/products}" th:object="${product}" method="post">
+
+            <div class="mb-3">
+                <label for="code" class="form-label fw-semibold">Code <span class="text-danger">*</span></label>
+                <input type="text" id="code" class="form-control"
+                       th:field="*{code}" placeholder="e.g. P200"
+                       th:classappend="${#fields.hasErrors('code')} ? 'is-invalid' : ''"/>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('code')}" th:errors="*{code}">Error</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="name" class="form-label fw-semibold">Name <span class="text-danger">*</span></label>
+                <input type="text" id="name" class="form-control"
+                       th:field="*{name}" placeholder="Product name"
+                       th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''"/>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label fw-semibold">Description</label>
+                <textarea id="description" class="form-control" rows="3"
+                          th:field="*{description}" placeholder="Optional product description"
+                          th:classappend="${#fields.hasErrors('description')} ? 'is-invalid' : ''"></textarea>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Error</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="imageUrl" class="form-label fw-semibold">Image URL</label>
+                <input type="text" id="imageUrl" class="form-control"
+                       th:field="*{imageUrl}" placeholder="https://example.com/image.jpg"
+                       th:classappend="${#fields.hasErrors('imageUrl')} ? 'is-invalid' : ''"/>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}">Error</div>
+            </div>
+
+            <div class="mb-4">
+                <label for="price" class="form-label fw-semibold">Price <span class="text-danger">*</span></label>
+                <input type="number" id="price" class="form-control" step="0.01" min="0.1"
+                       th:field="*{price}" placeholder="0.00"
+                       th:classappend="${#fields.hasErrors('price')} ? 'is-invalid' : ''"/>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Error</div>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Create Product</button>
+                <a th:href="@{/admin/catalog/products}" class="btn btn-outline-secondary">Cancel</a>
+            </div>
+
+        </form>
+    </div>
+
+</div>

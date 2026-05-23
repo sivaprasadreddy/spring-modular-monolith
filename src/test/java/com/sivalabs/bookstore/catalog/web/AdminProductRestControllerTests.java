@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.modulith.test.ApplicationModuleTest;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.jdbc.Sql;
@@ -99,6 +100,77 @@ class AdminProductRestControllerTests {
     @Test
     void shouldReturn401WhenNoTokenProvidedOnProductDetails() {
         assertThat(mockMvcTester.get().uri("/api/admin/catalog/products/P100")).hasStatus(HttpStatus.UNAUTHORIZED);
+    }
+
+    @Test
+    void shouldCreateProductSuccessfully() {
+        assertThat(mockMvcTester
+                        .post()
+                        .uri("/api/admin/catalog/products")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"code":"PNEW","name":"New Book","description":"A new book","imageUrl":null,"price":29.99}
+                                """)
+                        .with(jwt().authorities(new SimpleGrantedAuthority("ROLE_ADMIN"))))
+                .hasStatus(HttpStatus.CREATED)
+                .bodyJson()
+                .convertTo(ProductDto.class)
+                .satisfies(product -> {
+                    assertThat(product.code()).isEqualTo("PNEW");
+                    assertThat(product.name()).isEqualTo("New Book");
+                    assertThat(product.price()).isNotNull();
+                });
+    }
+
+    @Test
+    void shouldReturn409ForDuplicateProductCode() {
+        assertThat(mockMvcTester
+                        .post()
+                        .uri("/api/admin/catalog/products")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"code":"P100","name":"Duplicate","price":10.00}
+                                """)
+                        .with(jwt().authorities(new SimpleGrantedAuthority("ROLE_ADMIN"))))
+                .hasStatus(HttpStatus.CONFLICT);
+    }
+
+    @Test
+    void shouldReturn400ForMissingRequiredFields() {
+        assertThat(mockMvcTester
+                        .post()
+                        .uri("/api/admin/catalog/products")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"code":"","name":"","price":null}
+                                """)
+                        .with(jwt().authorities(new SimpleGrantedAuthority("ROLE_ADMIN"))))
+                .hasStatus(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    void shouldReturn401WhenNoTokenProvidedOnCreate() {
+        assertThat(mockMvcTester
+                        .post()
+                        .uri("/api/admin/catalog/products")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"code":"PNEW","name":"New Book","price":29.99}
+                                """))
+                .hasStatus(HttpStatus.UNAUTHORIZED);
+    }
+
+    @Test
+    void shouldReturn403ForNonAdminUserOnCreate() {
+        assertThat(mockMvcTester
+                        .post()
+                        .uri("/api/admin/catalog/products")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"code":"PNEW","name":"New Book","price":29.99}
+                                """)
+                        .with(jwt().authorities(new SimpleGrantedAuthority("ROLE_USER"))))
+                .hasStatus(HttpStatus.FORBIDDEN);
     }
 
     @Test

@@ -1,5 +1,6 @@
 package com.sivalabs.bookstore.catalog.web;
 
+import com.sivalabs.bookstore.catalog.domain.DuplicateProductCodeException;
 import com.sivalabs.bookstore.catalog.domain.ProductNotFoundException;
 import java.time.Instant;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,14 @@ class CatalogExceptionHandler extends ResponseEntityExceptionHandler {
     ProblemDetail handle(ProductNotFoundException e) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, e.getMessage());
         problemDetail.setTitle("Product Not Found");
+        problemDetail.setProperty("timestamp", Instant.now());
+        return problemDetail;
+    }
+
+    @ExceptionHandler(DuplicateProductCodeException.class)
+    ProblemDetail handle(DuplicateProductCodeException e) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, e.getMessage());
+        problemDetail.setTitle("Duplicate Product Code");
         problemDetail.setProperty("timestamp", Instant.now());
         return problemDetail;
     }

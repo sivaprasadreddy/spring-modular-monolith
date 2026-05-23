@@ -1,5 +1,6 @@
 package com.sivalabs.bookstore.catalog.domain;
 
+import com.sivalabs.bookstore.catalog.CreateProductRequest;
 import com.sivalabs.bookstore.catalog.ProductDto;
 import org.springframework.stereotype.Component;
 
@@ -9,5 +10,15 @@ class ProductMapper {
     public ProductDto mapToDto(ProductEntity entity) {
         return new ProductDto(
                 entity.getCode(), entity.getName(), entity.getDescription(), entity.getImageUrl(), entity.getPrice());
+    }
+
+    public ProductEntity mapToEntity(CreateProductRequest request) {
+        ProductEntity entity = new ProductEntity();
+        entity.setCode(request.code());
+        entity.setName(request.name());
+        entity.setDescription(request.description());
+        entity.setImageUrl(request.imageUrl());
+        entity.setPrice(request.price());
+        return entity;
     }
 }

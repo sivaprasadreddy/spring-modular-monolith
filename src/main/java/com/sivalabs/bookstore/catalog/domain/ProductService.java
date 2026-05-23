@@ -1,5 +1,6 @@
 package com.sivalabs.bookstore.catalog.domain;
 
+import com.sivalabs.bookstore.catalog.CreateProductRequest;
 import com.sivalabs.bookstore.catalog.ProductDto;
 import com.sivalabs.bookstore.common.models.PagedResult;
 import java.util.Optional;
@@ -33,5 +34,14 @@ public class ProductService {
     @Transactional(readOnly = true)
     public Optional<ProductDto> getByCode(String code) {
         return repo.findByCode(code).map(productMapper::mapToDto);
+    }
+
+    @Transactional
+    public ProductDto createProduct(CreateProductRequest request) {
+        if (repo.existsByCode(request.code())) {
+            throw DuplicateProductCodeException.forCode(request.code());
+        }
+        ProductEntity entity = productMapper.mapToEntity(request);
+        return productMapper.mapToDto(repo.save(entity));
     }
 }
