@@ -24,7 +24,7 @@
         <datasource-micrometer-spring-boot.version>2.2.1</datasource-micrometer-spring-boot.version>
         <bootstrap.version>5.3.8</bootstrap.version>
         <htmx.version>2.0.10</htmx.version>
-        <spotless.version>3.5.1</spotless.version>
+        <spotless.version>3.6.0</spotless.version>
         <palantir-java-format.version>2.90.0</palantir-java-format.version>
         <error_prone.version>2.49.0</error_prone.version>
         <nullaway.version>0.13.4</nullaway.version>
