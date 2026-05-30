@@ -2,11 +2,7 @@
 
     <!-- Empty state -->
     <div th:if="${cart.item == null}" class="cart-empty">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-        </svg>
+        <i class="fa-solid fa-cart-shopping"></i>
         <h4>Your cart is empty</h4>
         <p class="text-muted">Looks like you haven't added anything yet.</p>
         <a href="/" class="btn btn-buy px-4 mt-1">Continue Shopping</a>

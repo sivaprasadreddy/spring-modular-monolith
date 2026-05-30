@@ -10,6 +10,7 @@
     <title>BookStore</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
     <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/webjars/font-awesome/css/all.css">
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
@@ -28,12 +29,7 @@
                     aria-controls="sfNavbar"
                     aria-expanded="false"
                     aria-label="Toggle navigation">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-                    <line x1="3" y1="6"  x2="21" y2="6"/>
-                    <line x1="3" y1="12" x2="21" y2="12"/>
-                    <line x1="3" y1="18" x2="21" y2="18"/>
-                </svg>
+                <i class="fa-solid fa-bars"></i>
             </button>
 
             <div class="collapse navbar-collapse" id="sfNavbar">
@@ -41,42 +37,42 @@
 
                     <li class="nav-item" sec:authorize="isAnonymous()">
                         <a class="sf-link" th:href="@{/login}">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+                            <i class="fa-solid fa-right-to-bracket"></i>
                             Sign In
                         </a>
                     </li>
 
                     <li class="nav-item" sec:authorize="isAnonymous()">
                         <a class="sf-link sf-link-register" th:href="@{/registration}">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            <i class="fa-solid fa-user-plus"></i>
                             Register
                         </a>
                     </li>
 
                     <li class="nav-item">
                         <a class="sf-link sf-link-cart" th:href="@{/cart}">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                            <i class="fa-solid fa-cart-shopping"></i>
                             Cart
                         </a>
                     </li>
 
                     <li class="nav-item" sec:authorize="isAuthenticated()">
                         <a class="sf-link" th:href="@{/orders}">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                            <i class="fa-solid fa-clipboard-list"></i>
                             Orders
                         </a>
                     </li>
 
                     <li class="nav-item" sec:authorize="hasRole('ADMIN')">
                         <a class="sf-link sf-link-admin" th:href="@{/admin}">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+                            <i class="fa-solid fa-gear"></i>
                             Admin
                         </a>
                     </li>
 
                     <li class="nav-item" sec:authorize="isAuthenticated()">
                         <a class="sf-link sf-link-logout" th:href="@{/logout}">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                            <i class="fa-solid fa-right-from-bracket"></i>
                             Logout
                         </a>
                     </li>

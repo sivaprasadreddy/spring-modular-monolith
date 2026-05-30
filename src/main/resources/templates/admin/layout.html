@@ -10,6 +10,7 @@
     <title>BookStore Admin</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
     <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/webjars/font-awesome/css/all.css">
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body class="admin-body">
@@ -21,11 +22,11 @@
     </a>
     <div class="admin-topbar-actions">
         <a class="admin-topbar-link" th:href="@{/}">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <i class="fa-solid fa-store"></i>
             Storefront
         </a>
         <a class="admin-topbar-link" th:href="@{/logout}" sec:authorize="isAuthenticated()">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            <i class="fa-solid fa-right-from-bracket"></i>
             Logout
         </a>
     </div>
@@ -38,7 +39,7 @@
                 <span class="admin-nav-section-label">Catalog</span>
                 <a class="admin-nav-link"
                    th:href="@{/admin/catalog/products}">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                    <i class="fa-solid fa-book"></i>
                     Products
                 </a>
             </div>
@@ -46,7 +47,7 @@
                 <span class="admin-nav-section-label">Sales</span>
                 <a class="admin-nav-link"
                    th:href="@{/admin/orders}">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                    <i class="fa-solid fa-clipboard-list"></i>
                     Orders
                 </a>
             </div>
@@ -54,7 +55,7 @@
                 <span class="admin-nav-section-label">Warehouse</span>
                 <a class="admin-nav-link"
                    th:href="@{/admin/inventory}">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                    <i class="fa-solid fa-boxes-stacked"></i>
                     Stock Levels
                 </a>
             </div>
@@ -64,7 +65,7 @@
                 <a class="admin-nav-link"
                    target="_blank"
                    th:href="@{/bootui}">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    <i class="fa-solid fa-display"></i>
                     Boot UI
                 </a>
             </div>

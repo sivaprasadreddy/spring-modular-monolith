@@ -25,6 +25,7 @@
         <bootui.version>0.1.0</bootui.version>
         <bootstrap.version>5.3.8</bootstrap.version>
         <htmx.version>2.0.10</htmx.version>
+        <font-awesome.version>7.2.0</font-awesome.version>
         <spotless.version>3.6.0</spotless.version>
         <palantir-java-format.version>2.90.0</palantir-java-format.version>
         <error_prone.version>2.49.0</error_prone.version>
@@ -155,6 +156,11 @@
             <groupId>org.webjars.npm</groupId>
             <artifactId>htmx.org</artifactId>
             <version>${htmx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>font-awesome</artifactId>
+            <version>${font-awesome.version}</version>
         </dependency>
 
         <!-- Dev dependencies -->

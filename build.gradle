@@ -31,6 +31,7 @@ ext {
     set("htmxSpringBootVersion", "5.1.0")
     set("bootstrapVersion", "5.3.8")
     set("htmxVersion", "2.0.10")
+    set("fontawesomeVersion", "7.2.0")
     set("bootUIVersion", "0.1.0")
 }
 
@@ -64,6 +65,7 @@ dependencies {
     implementation "io.github.wimdeblauwe:htmx-spring-boot-thymeleaf:${htmxSpringBootVersion}"
     implementation "org.webjars:webjars-locator-lite"
     implementation "org.webjars:bootstrap:${bootstrapVersion}"
+    implementation "org.webjars:font-awesome:${fontawesomeVersion}"
     implementation "org.webjars.npm:htmx.org:${htmxVersion}"
 
     developmentOnly "org.springframework.boot:spring-boot-docker-compose"
