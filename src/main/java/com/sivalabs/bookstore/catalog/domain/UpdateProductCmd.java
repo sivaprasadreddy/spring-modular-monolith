@@ -1,4 +1,4 @@
-package com.sivalabs.bookstore.catalog;
+package com.sivalabs.bookstore.catalog.domain;
 
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
@@ -6,8 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import org.jspecify.annotations.Nullable;
 
-public record CreateProductRequest(
-        @NotBlank(message = "Product code is required") String code,
+public record UpdateProductCmd(
         @NotBlank(message = "Product name is required") String name,
         @Nullable String description,
         @Nullable String imageUrl,

@@ -2,7 +2,7 @@ plugins {
     id "java"
     id "org.springframework.boot" version "4.0.6"
     id "io.spring.dependency-management" version "1.1.7"
-    id "com.diffplug.spotless" version "8.5.1"
+    id "com.diffplug.spotless" version "8.6.0"
 }
 
 group = "com.sivalabs"
@@ -31,6 +31,7 @@ ext {
     set("htmxSpringBootVersion", "5.1.0")
     set("bootstrapVersion", "5.3.8")
     set("htmxVersion", "2.0.10")
+    set("bootUIVersion", "0.1.0")
 }
 
 dependencies {
@@ -68,6 +69,7 @@ dependencies {
     developmentOnly "org.springframework.boot:spring-boot-docker-compose"
     developmentOnly "org.springframework.boot:spring-boot-devtools"
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    implementation "com.julien-dubois.bootui:bootui-spring-boot-starter:${bootUIVersion}"
 
     testImplementation "org.springframework.boot:spring-boot-starter-webmvc-test"
     testImplementation "org.springframework.boot:spring-boot-starter-data-jpa-test"

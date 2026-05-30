@@ -17,7 +17,7 @@ import org.jspecify.annotations.Nullable;
 
 @Entity
 @Table(name = "products", schema = "catalog")
-public class ProductEntity {
+class ProductEntity {
     @Id
     @GeneratedValue(strategy = SEQUENCE, generator = "product_id_generator")
     @SequenceGenerator(name = "product_id_generator", sequenceName = "product_id_seq", schema = "catalog")

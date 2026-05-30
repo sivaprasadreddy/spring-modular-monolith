@@ -1,8 +1,6 @@
 package com.sivalabs.bookstore.catalog.domain;
 
-import com.sivalabs.bookstore.catalog.CreateProductRequest;
 import com.sivalabs.bookstore.catalog.ProductDto;
-import com.sivalabs.bookstore.catalog.UpdateProductRequest;
 import com.sivalabs.bookstore.common.models.PagedResult;
 import java.time.Instant;
 import java.util.Optional;
@@ -53,7 +51,7 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductDto createProduct(CreateProductRequest request) {
+    public ProductDto createProduct(CreateProductCmd request) {
         if (repo.existsByCode(request.code())) {
             throw DuplicateProductCodeException.forCode(request.code());
         }
@@ -62,7 +60,7 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductDto updateProduct(String code, UpdateProductRequest request) {
+    public ProductDto updateProduct(String code, UpdateProductCmd request) {
         ProductEntity entity = repo.findByCode(code).orElseThrow(() -> ProductNotFoundException.forCode(code));
         productMapper.updateEntity(entity, request);
         return productMapper.mapToDto(repo.save(entity));

@@ -15,7 +15,7 @@ import org.testcontainers.utility.DockerImageName;
 public class TestcontainersConfiguration {
 
     @Container
-    static RabbitMQContainer rabbitmq = new RabbitMQContainer(DockerImageName.parse("rabbitmq:4.3.0-alpine"));
+    static RabbitMQContainer rabbitmq = new RabbitMQContainer(DockerImageName.parse("rabbitmq:4.3.1-alpine"));
 
     @Container
     static LgtmStackContainer lgtm = new LgtmStackContainer(DockerImageName.parse("grafana/otel-lgtm:0.28.0"));

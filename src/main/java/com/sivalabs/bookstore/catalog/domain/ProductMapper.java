@@ -1,8 +1,6 @@
 package com.sivalabs.bookstore.catalog.domain;
 
-import com.sivalabs.bookstore.catalog.CreateProductRequest;
 import com.sivalabs.bookstore.catalog.ProductDto;
-import com.sivalabs.bookstore.catalog.UpdateProductRequest;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,7 +16,7 @@ class ProductMapper {
                 entity.getDeletedAt());
     }
 
-    public ProductEntity mapToEntity(CreateProductRequest request) {
+    public ProductEntity mapToEntity(CreateProductCmd request) {
         ProductEntity entity = new ProductEntity();
         entity.setCode(request.code());
         entity.setName(request.name());
@@ -28,7 +26,7 @@ class ProductMapper {
         return entity;
     }
 
-    public void updateEntity(ProductEntity entity, UpdateProductRequest request) {
+    public void updateEntity(ProductEntity entity, UpdateProductCmd request) {
         entity.setName(request.name());
         entity.setDescription(request.description());
         entity.setImageUrl(request.imageUrl());

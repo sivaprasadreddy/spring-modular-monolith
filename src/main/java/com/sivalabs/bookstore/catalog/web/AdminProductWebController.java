@@ -1,13 +1,14 @@
 package com.sivalabs.bookstore.catalog.web;
 
-import com.sivalabs.bookstore.catalog.CreateProductRequest;
 import com.sivalabs.bookstore.catalog.ProductDto;
-import com.sivalabs.bookstore.catalog.UpdateProductRequest;
+import com.sivalabs.bookstore.catalog.domain.CreateProductCmd;
 import com.sivalabs.bookstore.catalog.domain.DuplicateProductCodeException;
 import com.sivalabs.bookstore.catalog.domain.ProductNotFoundException;
 import com.sivalabs.bookstore.catalog.domain.ProductService;
+import com.sivalabs.bookstore.catalog.domain.UpdateProductCmd;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxRequest;
 import jakarta.validation.Valid;
+import java.math.BigDecimal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -44,13 +45,13 @@ class AdminProductWebController {
     @GetMapping("/new")
     String showCreateForm(Model model) {
         log.info("Admin showing create product form");
-        model.addAttribute("product", new CreateProductRequest(null, null, null, null, null));
+        model.addAttribute("product", new CreateProductCmd("", "", null, null, BigDecimal.ZERO));
         return "admin/catalog/product-form";
     }
 
     @PostMapping
     String createProduct(
-            @Valid @ModelAttribute("product") CreateProductRequest request, BindingResult result, Model model) {
+            @Valid @ModelAttribute("product") CreateProductCmd request, BindingResult result, Model model) {
         log.info("Admin creating product with code: {}", request.code());
         if (result.hasErrors()) {
             return "admin/catalog/product-form";
@@ -83,7 +84,7 @@ class AdminProductWebController {
         model.addAttribute("code", code);
         model.addAttribute(
                 "product",
-                new UpdateProductRequest(product.name(), product.description(), product.imageUrl(), product.price()));
+                new UpdateProductCmd(product.name(), product.description(), product.imageUrl(), product.price()));
         if (hxRequest.isHtmxRequest()) {
             return "partials/admin/catalog/product-edit";
         }
@@ -93,7 +94,7 @@ class AdminProductWebController {
     @PostMapping("/{code}/edit")
     String updateProduct(
             @PathVariable String code,
-            @Valid @ModelAttribute("product") UpdateProductRequest request,
+            @Valid @ModelAttribute("product") UpdateProductCmd request,
             BindingResult result,
             Model model) {
         log.info("Admin updating product with code: {}", code);

@@ -65,7 +65,7 @@ public class OrderService {
     }
 
     @Transactional
-    public OrderDto updateOrderStatus(String orderNumber, OrderStatus newStatus) {
+    public void updateOrderStatus(String orderNumber, OrderStatus newStatus) {
         OrderEntity entity = orderRepository
                 .findByOrderNumber(orderNumber)
                 .orElseThrow(() -> OrderNotFoundException.forOrderNumber(orderNumber));
@@ -74,7 +74,7 @@ public class OrderService {
         }
         entity.setStatus(newStatus);
         entity.setUpdatedAt(LocalDateTime.now(ZoneId.systemDefault()));
-        return OrderMapper.convertToDto(orderRepository.save(entity));
+        orderRepository.save(entity);
     }
 
     @Transactional(readOnly = true)

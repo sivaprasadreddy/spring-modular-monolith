@@ -22,9 +22,10 @@
         <spring-modulith.version>2.0.6</spring-modulith.version>
         <htmx-spring-boot-thymeleaf.version>5.1.0</htmx-spring-boot-thymeleaf.version>
         <datasource-micrometer-spring-boot.version>2.2.1</datasource-micrometer-spring-boot.version>
+        <bootui.version>0.1.0</bootui.version>
         <bootstrap.version>5.3.8</bootstrap.version>
         <htmx.version>2.0.10</htmx.version>
-        <spotless.version>3.5.1</spotless.version>
+        <spotless.version>3.6.0</spotless.version>
         <palantir-java-format.version>2.90.0</palantir-java-format.version>
         <error_prone.version>2.49.0</error_prone.version>
         <nullaway.version>0.13.4</nullaway.version>
@@ -116,6 +117,11 @@
             <groupId>org.springframework.modulith</groupId>
             <artifactId>spring-modulith-observability</artifactId>
             <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.julien-dubois.bootui</groupId>
+            <artifactId>bootui-spring-boot-starter</artifactId>
+            <version>${bootui.version}</version>
         </dependency>
 
         <!-- WebApp dependencies -->
@@ -367,7 +373,7 @@
             <plugin>
                 <groupId>org.openrewrite.maven</groupId>
                 <artifactId>rewrite-maven-plugin</artifactId>
-                <version>6.39.0</version>
+                <version>6.40.0</version>
                 <configuration>
                     <exportDatatables>true</exportDatatables>
                     <activeRecipes>
@@ -378,7 +384,7 @@
                     <dependency>
                         <groupId>org.openrewrite.recipe</groupId>
                         <artifactId>rewrite-spring</artifactId>
-                        <version>6.30.4</version>
+                        <version>6.31.0</version>
                     </dependency>
                 </dependencies>
             </plugin>
