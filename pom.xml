@@ -29,7 +29,7 @@
         <spotless.version>3.6.0</spotless.version>
         <palantir-java-format.version>2.90.0</palantir-java-format.version>
         <error_prone.version>2.49.0</error_prone.version>
-        <nullaway.version>0.13.4</nullaway.version>
+        <nullaway.version>0.13.5</nullaway.version>
     </properties>
 
     <dependencyManagement>
