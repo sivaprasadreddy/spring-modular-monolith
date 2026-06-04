@@ -22,7 +22,7 @@ This application follows modular monolith architecture with the following module
 
 * **Common** module is an OPEN module that can be used by other modules.
 * **Orders** module invokes the **Catalog** module public API to validate the order details
-* When an Order is successfully created, **Orders** module publishes **"OrderCreatedEvent"**
+* When an Order is successfully created, the **Orders** module publishes **"OrderCreatedEvent"**
 * The **"OrderCreatedEvent"** will also be published to external broker like RabbitMQ. Other applications may consume and process those events.
 * **Inventory** module consumes "OrderCreatedEvent" and updates the stock level for the products.
 * **Notifications** module consumes "OrderCreatedEvent" and sends an order confirmation email to the customer.
@@ -39,6 +39,7 @@ $ curl -s "https://get.sdkman.io" | bash
 $ source "$HOME/.sdkman/bin/sdkman-init.sh"
 $ sdk install java 25-tem
 $ sdk install maven
+$ sdk install gradle
 ```
 
 Task is a task runner that we can use to run any arbitrary commands in an easier way.

@@ -33,7 +33,7 @@ public class WebSecurityConfig {
 
         http.authorizeHttpRequests(r -> r.requestMatchers(publicPaths)
                 .permitAll()
-                .requestMatchers("/admin/**")
+                .requestMatchers("/admin/**", "/bootui/**")
                 .hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET, "/products")
                 .permitAll()
