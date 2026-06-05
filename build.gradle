@@ -3,6 +3,8 @@ plugins {
     id "org.springframework.boot" version "4.0.6"
     id "io.spring.dependency-management" version "1.1.7"
     id "com.diffplug.spotless" version "8.6.0"
+    id "net.ltgt.errorprone" version "5.1.0" // https://github.com/tbroyer/gradle-errorprone-plugin
+    id "net.ltgt.nullaway" version "3.0.0" // https://github.com/tbroyer/gradle-nullaway-plugin
 }
 
 group = "com.sivalabs"
@@ -33,6 +35,23 @@ ext {
     set("htmxVersion", "2.0.10")
     set("fontawesomeVersion", "7.2.0")
     set("bootUIVersion", "0.5.1")
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.errorprone {
+        disableAllChecks = true // Other error prone checks are disabled
+        error("RequireExplicitNullMarking") // Require @NullMarked or @NullUnmarked on everything
+        nullaway {
+            error()
+        }
+    }
+    // Keep a JDK 25 baseline
+    options.release = 25
+}
+
+nullaway {
+    onlyNullMarked = true
+    jspecifyMode = true
 }
 
 dependencies {
@@ -72,6 +91,9 @@ dependencies {
     developmentOnly "org.springframework.boot:spring-boot-devtools"
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
     implementation "com.julien-dubois.bootui:bootui-spring-boot-starter:${bootUIVersion}"
+
+    errorprone "com.google.errorprone:error_prone_core:2.42.0" // https://github.com/google/error-prone
+    errorprone "com.uber.nullaway:nullaway:0.13.4" // https://github.com/uber/NullAway
 
     testImplementation "org.springframework.boot:spring-boot-starter-webmvc-test"
     testImplementation "org.springframework.boot:spring-boot-starter-data-jpa-test"

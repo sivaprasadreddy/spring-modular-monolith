@@ -1,11 +1,12 @@
 package com.sivalabs.bookstore.orders.web;
 
 import java.math.BigDecimal;
+import org.jspecify.annotations.Nullable;
 
 public class Cart {
-    private LineItem item;
+    @Nullable private LineItem item;
 
-    public LineItem getItem() {
+    @Nullable public LineItem getItem() {
         return item;
     }
 
@@ -25,6 +26,9 @@ public class Cart {
     }
 
     public void updateItemQuantity(int quantity) {
+        if (item == null) {
+            throw new RuntimeException("Item is null");
+        }
         if (quantity <= 0) {
             removeItem();
             return;
@@ -37,8 +41,6 @@ public class Cart {
         private String name;
         private BigDecimal price;
         private int quantity;
-
-        public LineItem() {}
 
         public LineItem(String code, String name, BigDecimal price, int quantity) {
             this.code = code;

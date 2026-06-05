@@ -2,6 +2,7 @@ package com.sivalabs.bookstore.users.domain;
 
 import com.sivalabs.bookstore.users.domain.models.CreateUserCmd;
 import com.sivalabs.bookstore.users.domain.models.UserDto;
+import java.util.Objects;
 import java.util.Optional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ public class UserService {
         var user = new UserEntity();
         user.setName(cmd.name());
         user.setEmail(cmd.email());
-        user.setPassword(passwordEncoder.encode(cmd.password()));
+        user.setPassword(Objects.requireNonNull(passwordEncoder.encode(cmd.password())));
         user.setRole(cmd.role());
         userRepository.save(user);
     }

@@ -43,17 +43,24 @@ class OrderWebController {
             model.addAttribute("cart", cart);
             return "cart";
         }
-        Cart.LineItem lineItem = cart.getItem();
-        OrderItem orderItem = new OrderItem(
-                lineItem.getCode(), lineItem.getName(),
-                lineItem.getPrice(), lineItem.getQuantity());
-        var userId = new CreateOrderCmd.UserId(UserContextUtils.getCurrentUserIdOrThrow());
-        var request = new CreateOrderCmd(userId, orderForm.customer(), orderForm.deliveryAddress(), orderItem);
+        var request = getCreateOrderCmd(orderForm, cart);
         productServiceClient.validate(request.item().code(), request.item().price());
         OrderEntity newOrder = OrderMapper.convertToEntity(request);
         var savedOrder = orderService.createOrder(newOrder);
         session.removeAttribute("cart");
         return "redirect:/orders/" + savedOrder.getOrderNumber();
+    }
+
+    private static CreateOrderCmd getCreateOrderCmd(OrderForm orderForm, Cart cart) {
+        Cart.LineItem lineItem = cart.getItem();
+        if (lineItem == null) {
+            throw new RuntimeException("LineItem not found");
+        }
+        OrderItem orderItem = new OrderItem(
+                lineItem.getCode(), lineItem.getName(),
+                lineItem.getPrice(), lineItem.getQuantity());
+        var userId = new CreateOrderCmd.UserId(UserContextUtils.getCurrentUserIdOrThrow());
+        return new CreateOrderCmd(userId, orderForm.customer(), orderForm.deliveryAddress(), orderItem);
     }
 
     @GetMapping("/orders")

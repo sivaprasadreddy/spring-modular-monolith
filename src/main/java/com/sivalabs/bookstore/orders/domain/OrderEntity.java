@@ -15,8 +15,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import org.jspecify.annotations.Nullable;
 
 @Entity
 @Table(name = "orders", schema = "orders")
@@ -25,13 +27,13 @@ public class OrderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_id_generator")
     @SequenceGenerator(name = "order_id_generator", sequenceName = "order_id_seq", schema = "orders")
-    private Long id;
+    private Long id = 0L;
 
     @Column(nullable = false, unique = true)
-    private String orderNumber;
+    private String orderNumber = "";
 
     @Column(name = "user_id", nullable = false)
-    private Long userId;
+    private Long userId = 0L;
 
     @Embedded
     @AttributeOverrides(
@@ -40,10 +42,10 @@ public class OrderEntity {
                 @AttributeOverride(name = "email", column = @Column(name = "customer_email")),
                 @AttributeOverride(name = "phone", column = @Column(name = "customer_phone"))
             })
-    private Customer customer;
+    private Customer customer = new Customer("", "", "");
 
     @Column(nullable = false)
-    private String deliveryAddress;
+    private String deliveryAddress = "";
 
     @Embedded
     @AttributeOverrides(
@@ -53,16 +55,16 @@ public class OrderEntity {
                 @AttributeOverride(name = "price", column = @Column(name = "product_price")),
                 @AttributeOverride(name = "quantity", column = @Column(name = "quantity"))
             })
-    private OrderItem orderItem;
+    private OrderItem orderItem = new OrderItem("", "", BigDecimal.ZERO, 1);
 
     @Enumerated(EnumType.STRING)
-    private OrderStatus status;
+    private OrderStatus status = OrderStatus.NEW;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now(ZoneId.systemDefault());
 
     @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    @Nullable private LocalDateTime updatedAt;
 
     public OrderEntity() {}
 
@@ -151,7 +153,7 @@ public class OrderEntity {
         this.createdAt = createdAt;
     }
 
-    public LocalDateTime getUpdatedAt() {
+    @Nullable public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 

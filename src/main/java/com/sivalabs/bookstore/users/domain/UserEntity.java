@@ -10,20 +10,20 @@ class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_generator")
     @SequenceGenerator(name = "user_id_generator", sequenceName = "user_id_seq", schema = "users")
-    private Long id;
+    private Long id = 0L;
 
     @Column(nullable = false)
-    private String name;
+    private String name = "";
 
     @Column(nullable = false, unique = true)
-    private String email;
+    private String email = "";
 
     @Column(nullable = false)
-    private String password;
+    private String password = "";
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private Role role = Role.ROLE_USER;
 
     public Long getId() {
         return id;
