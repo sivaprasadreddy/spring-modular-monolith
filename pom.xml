@@ -22,14 +22,14 @@
         <spring-modulith.version>2.0.6</spring-modulith.version>
         <htmx-spring-boot-thymeleaf.version>5.1.0</htmx-spring-boot-thymeleaf.version>
         <datasource-micrometer-spring-boot.version>2.2.1</datasource-micrometer-spring-boot.version>
-        <bootui.version>0.4.0</bootui.version>
+        <bootui.version>0.5.1</bootui.version>
         <bootstrap.version>5.3.8</bootstrap.version>
         <htmx.version>2.0.10</htmx.version>
         <font-awesome.version>7.2.0</font-awesome.version>
         <spotless.version>3.6.0</spotless.version>
         <palantir-java-format.version>2.90.0</palantir-java-format.version>
         <error_prone.version>2.49.0</error_prone.version>
-        <nullaway.version>0.13.4</nullaway.version>
+        <nullaway.version>0.13.5</nullaway.version>
     </properties>
 
     <dependencyManagement>
