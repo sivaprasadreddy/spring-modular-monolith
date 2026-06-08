@@ -34,7 +34,7 @@ ext {
     set("bootstrapVersion", "5.3.8")
     set("htmxVersion", "2.0.10")
     set("fontawesomeVersion", "7.2.0")
-    set("bootUIVersion", "1.0.0")
+    set("bootUIVersion", "1.1.0")
 }
 
 tasks.withType(JavaCompile).configureEach {
