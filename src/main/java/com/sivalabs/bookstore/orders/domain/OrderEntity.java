@@ -22,7 +22,7 @@ import org.jspecify.annotations.Nullable;
 
 @Entity
 @Table(name = "orders", schema = "orders")
-public class OrderEntity {
+class OrderEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_id_generator")

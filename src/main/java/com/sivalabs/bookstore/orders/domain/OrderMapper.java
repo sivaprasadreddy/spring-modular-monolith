@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public final class OrderMapper {
+class OrderMapper {
     private OrderMapper() {}
 
     public static OrderEntity convertToEntity(CreateOrderCmd cmd) {

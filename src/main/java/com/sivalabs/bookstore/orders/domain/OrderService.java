@@ -1,11 +1,7 @@
 package com.sivalabs.bookstore.orders.domain;
 
 import com.sivalabs.bookstore.common.models.PagedResult;
-import com.sivalabs.bookstore.orders.domain.models.AdminOrderView;
-import com.sivalabs.bookstore.orders.domain.models.OrderCreatedEvent;
-import com.sivalabs.bookstore.orders.domain.models.OrderDto;
-import com.sivalabs.bookstore.orders.domain.models.OrderStatus;
-import com.sivalabs.bookstore.orders.domain.models.OrderView;
+import com.sivalabs.bookstore.orders.domain.models.*;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
@@ -35,7 +31,8 @@ public class OrderService {
     }
 
     @Transactional
-    public OrderEntity createOrder(OrderEntity orderEntity) {
+    public CreateOrderResult createOrder(CreateOrderCmd cmd) {
+        OrderEntity orderEntity = OrderMapper.convertToEntity(cmd);
         OrderEntity savedOrder = orderRepository.save(orderEntity);
         log.info("Created Order with orderNumber={}", savedOrder.getOrderNumber());
         OrderCreatedEvent event = new OrderCreatedEvent(
@@ -44,7 +41,7 @@ public class OrderService {
                 savedOrder.getOrderItem().quantity(),
                 savedOrder.getCustomer());
         eventPublisher.publishEvent(event);
-        return savedOrder;
+        return new CreateOrderResult(savedOrder.getOrderNumber());
     }
 
     @Transactional(readOnly = true)

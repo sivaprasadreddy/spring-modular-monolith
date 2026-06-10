@@ -34,7 +34,8 @@ ext {
     set("bootstrapVersion", "5.3.8")
     set("htmxVersion", "2.0.10")
     set("fontawesomeVersion", "7.2.0")
-    set("bootUIVersion", "1.1.0")
+    set("bootUIVersion", "1.2.0")
+    set("archunitVersion", "1.4.2")
 }
 
 tasks.withType(JavaCompile).configureEach {
@@ -106,6 +107,7 @@ dependencies {
     testImplementation "org.testcontainers:testcontainers-rabbitmq"
     testImplementation "org.testcontainers:testcontainers-grafana"
     testRuntimeOnly "org.junit.platform:junit-platform-launcher"
+    testImplementation "com.tngtech.archunit:archunit-junit5:${archunitVersion}"
 }
 
 dependencyManagement {

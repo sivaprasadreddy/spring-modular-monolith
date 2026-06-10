@@ -1,7 +1,5 @@
 package com.sivalabs.bookstore.orders.web;
 
-import com.sivalabs.bookstore.orders.domain.OrderEntity;
-import com.sivalabs.bookstore.orders.domain.OrderMapper;
 import com.sivalabs.bookstore.orders.domain.OrderNotFoundException;
 import com.sivalabs.bookstore.orders.domain.OrderService;
 import com.sivalabs.bookstore.orders.domain.ProductServiceClient;
@@ -43,12 +41,11 @@ class OrderWebController {
             model.addAttribute("cart", cart);
             return "cart";
         }
-        var request = getCreateOrderCmd(orderForm, cart);
-        productServiceClient.validate(request.item().code(), request.item().price());
-        OrderEntity newOrder = OrderMapper.convertToEntity(request);
-        var savedOrder = orderService.createOrder(newOrder);
+        var cmd = getCreateOrderCmd(orderForm, cart);
+        productServiceClient.validate(cmd.item().code(), cmd.item().price());
+        var result = orderService.createOrder(cmd);
         session.removeAttribute("cart");
-        return "redirect:/orders/" + savedOrder.getOrderNumber();
+        return "redirect:/orders/" + result.orderNumber();
     }
 
     private static CreateOrderCmd getCreateOrderCmd(OrderForm orderForm, Cart cart) {

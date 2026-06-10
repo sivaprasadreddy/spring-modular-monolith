@@ -1,7 +1,5 @@
 package com.sivalabs.bookstore.orders;
 
-import com.sivalabs.bookstore.orders.domain.OrderEntity;
-import com.sivalabs.bookstore.orders.domain.OrderMapper;
 import com.sivalabs.bookstore.orders.domain.OrderService;
 import com.sivalabs.bookstore.orders.domain.models.CreateOrderCmd;
 import com.sivalabs.bookstore.orders.domain.models.CreateOrderResult;
@@ -20,9 +18,7 @@ public class OrdersApi {
     }
 
     public CreateOrderResult createOrder(CreateOrderCmd cmd) {
-        OrderEntity orderEntity = OrderMapper.convertToEntity(cmd);
-        var order = orderService.createOrder(orderEntity);
-        return new CreateOrderResult(order.getOrderNumber());
+        return orderService.createOrder(cmd);
     }
 
     public Optional<OrderDto> findOrder(String orderNumber, Long userId) {

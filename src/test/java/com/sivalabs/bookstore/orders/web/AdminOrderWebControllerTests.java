@@ -7,8 +7,6 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 
 import com.sivalabs.bookstore.TestcontainersConfiguration;
 import com.sivalabs.bookstore.catalog.ProductApi;
-import com.sivalabs.bookstore.orders.domain.OrderEntity;
-import com.sivalabs.bookstore.orders.domain.OrderMapper;
 import com.sivalabs.bookstore.orders.domain.OrderService;
 import com.sivalabs.bookstore.orders.domain.models.CreateOrderCmd;
 import com.sivalabs.bookstore.orders.domain.models.Customer;
@@ -48,8 +46,8 @@ class AdminOrderWebControllerTests {
     @BeforeEach
     void setUp() {
         jdbcTemplate.execute("DELETE FROM orders.orders");
-        orderService.createOrder(buildOrderEntity(1L, "Alice Smith", "alice@example.com"));
-        orderService.createOrder(buildOrderEntity(2L, "Bob Jones", "bob@example.com"));
+        orderService.createOrder(buildCreateOrderCmd(1L, "Alice Smith", "alice@example.com"));
+        orderService.createOrder(buildCreateOrderCmd(2L, "Bob Jones", "bob@example.com"));
     }
 
     @Test
@@ -120,11 +118,11 @@ class AdminOrderWebControllerTests {
 
     @Test
     void shouldRenderOrderDetailPage() {
-        OrderEntity saved = orderService.createOrder(buildOrderEntity(1L, "Alice Smith", "alice@example.com"));
+        var result = orderService.createOrder(buildCreateOrderCmd(1L, "Alice Smith", "alice@example.com"));
 
         assertThat(mockMvcTester
                         .get()
-                        .uri("/admin/orders/{orderNumber}", saved.getOrderNumber())
+                        .uri("/admin/orders/{orderNumber}", result.orderNumber())
                         .with(user("admin").roles("ADMIN")))
                 .hasStatus(HttpStatus.OK)
                 .bodyText()
@@ -133,11 +131,11 @@ class AdminOrderWebControllerTests {
 
     @Test
     void shouldShowOrderStatusOnDetailPage() {
-        OrderEntity saved = orderService.createOrder(buildOrderEntity(1L, "Alice Smith", "alice@example.com"));
+        var result = orderService.createOrder(buildCreateOrderCmd(1L, "Alice Smith", "alice@example.com"));
 
         assertThat(mockMvcTester
                         .get()
-                        .uri("/admin/orders/{orderNumber}", saved.getOrderNumber())
+                        .uri("/admin/orders/{orderNumber}", result.orderNumber())
                         .with(user("admin").roles("ADMIN")))
                 .hasStatus(HttpStatus.OK)
                 .bodyText()
@@ -155,11 +153,11 @@ class AdminOrderWebControllerTests {
 
     @Test
     void shouldReturnPartialFragmentForHtmxRequestOnDetail() {
-        OrderEntity saved = orderService.createOrder(buildOrderEntity(1L, "Alice Smith", "alice@example.com"));
+        var result = orderService.createOrder(buildCreateOrderCmd(1L, "Alice Smith", "alice@example.com"));
 
         assertThat(mockMvcTester
                         .get()
-                        .uri("/admin/orders/{orderNumber}", saved.getOrderNumber())
+                        .uri("/admin/orders/{orderNumber}", result.orderNumber())
                         .header("HX-Request", "true")
                         .with(user("admin").roles("ADMIN")))
                 .hasStatus(HttpStatus.OK)
@@ -169,35 +167,35 @@ class AdminOrderWebControllerTests {
 
     @Test
     void shouldLinkOrderNumberInListToDetailPage() {
-        OrderEntity saved = orderService.createOrder(buildOrderEntity(1L, "Alice Smith", "alice@example.com"));
+        var result = orderService.createOrder(buildCreateOrderCmd(1L, "Alice Smith", "alice@example.com"));
 
         assertThat(mockMvcTester.get().uri("/admin/orders").with(user("admin").roles("ADMIN")))
                 .hasStatus(HttpStatus.OK)
                 .bodyText()
-                .contains("/admin/orders/" + saved.getOrderNumber());
+                .contains("/admin/orders/" + result.orderNumber());
     }
 
     @Test
     void shouldUpdateOrderStatusAndRedirectToDetailPage() {
-        OrderEntity saved = orderService.createOrder(buildOrderEntity(1L, "Alice Smith", "alice@example.com"));
+        var result = orderService.createOrder(buildCreateOrderCmd(1L, "Alice Smith", "alice@example.com"));
 
         assertThat(mockMvcTester
                         .post()
-                        .uri("/admin/orders/{orderNumber}/status", saved.getOrderNumber())
+                        .uri("/admin/orders/{orderNumber}/status", result.orderNumber())
                         .param("status", "IN_PROCESS")
                         .with(csrf())
                         .with(user("admin").roles("ADMIN")))
                 .hasStatus(HttpStatus.FOUND)
-                .hasHeader("Location", "/admin/orders/" + saved.getOrderNumber());
+                .hasHeader("Location", "/admin/orders/" + result.orderNumber());
     }
 
     @Test
     void shouldShowMarkAsInProcessButtonForNewOrder() {
-        OrderEntity saved = orderService.createOrder(buildOrderEntity(1L, "Alice Smith", "alice@example.com"));
+        var result = orderService.createOrder(buildCreateOrderCmd(1L, "Alice Smith", "alice@example.com"));
 
         assertThat(mockMvcTester
                         .get()
-                        .uri("/admin/orders/{orderNumber}", saved.getOrderNumber())
+                        .uri("/admin/orders/{orderNumber}", result.orderNumber())
                         .with(user("admin").roles("ADMIN")))
                 .hasStatus(HttpStatus.OK)
                 .bodyText()
@@ -206,11 +204,11 @@ class AdminOrderWebControllerTests {
 
     @Test
     void shouldShowCancelButtonForNewOrder() {
-        OrderEntity saved = orderService.createOrder(buildOrderEntity(1L, "Alice Smith", "alice@example.com"));
+        var result = orderService.createOrder(buildCreateOrderCmd(1L, "Alice Smith", "alice@example.com"));
 
         assertThat(mockMvcTester
                         .get()
-                        .uri("/admin/orders/{orderNumber}", saved.getOrderNumber())
+                        .uri("/admin/orders/{orderNumber}", result.orderNumber())
                         .with(user("admin").roles("ADMIN")))
                 .hasStatus(HttpStatus.OK)
                 .bodyText()
@@ -219,13 +217,13 @@ class AdminOrderWebControllerTests {
 
     @Test
     void shouldNotShowTransitionButtonsForDeliveredOrder() {
-        OrderEntity saved = orderService.createOrder(buildOrderEntity(1L, "Alice Smith", "alice@example.com"));
-        orderService.updateOrderStatus(saved.getOrderNumber(), OrderStatus.IN_PROCESS);
-        orderService.updateOrderStatus(saved.getOrderNumber(), OrderStatus.DELIVERED);
+        var result = orderService.createOrder(buildCreateOrderCmd(1L, "Alice Smith", "alice@example.com"));
+        orderService.updateOrderStatus(result.orderNumber(), OrderStatus.IN_PROCESS);
+        orderService.updateOrderStatus(result.orderNumber(), OrderStatus.DELIVERED);
 
         assertThat(mockMvcTester
                         .get()
-                        .uri("/admin/orders/{orderNumber}", saved.getOrderNumber())
+                        .uri("/admin/orders/{orderNumber}", result.orderNumber())
                         .with(user("admin").roles("ADMIN")))
                 .hasStatus(HttpStatus.OK)
                 .bodyText()
@@ -234,13 +232,12 @@ class AdminOrderWebControllerTests {
                 .doesNotContain("Cancel Order");
     }
 
-    private static OrderEntity buildOrderEntity(Long userId, String customerName, String email) {
+    private static CreateOrderCmd buildCreateOrderCmd(Long userId, String customerName, String email) {
         OrderItem item = new OrderItem("P100", "The Hunger Games", new BigDecimal("34.0"), 1);
-        CreateOrderCmd cmd = new CreateOrderCmd(
+        return new CreateOrderCmd(
                 new CreateOrderCmd.UserId(userId),
                 new Customer(customerName, email, "9999999999"),
                 "Test Address",
                 item);
-        return OrderMapper.convertToEntity(cmd);
     }
 }
