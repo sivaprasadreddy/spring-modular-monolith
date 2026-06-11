@@ -68,6 +68,11 @@
             <version>2.21.0-alpha</version>
         </dependency>
         <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-api-incubator</artifactId>
+            <version>1.62.0-alpha</version>
+        </dependency>
+        <dependency>
             <groupId>net.ttddyy.observation</groupId>
             <artifactId>datasource-micrometer-spring-boot</artifactId>
             <version>${datasource-micrometer-spring-boot.version}</version>
