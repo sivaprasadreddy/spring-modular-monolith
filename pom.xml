@@ -22,7 +22,7 @@
         <spring-modulith.version>2.1.0</spring-modulith.version>
         <htmx-spring-boot-thymeleaf.version>5.1.0</htmx-spring-boot-thymeleaf.version>
         <datasource-micrometer-spring-boot.version>2.2.1</datasource-micrometer-spring-boot.version>
-        <bootui.version>1.2.0</bootui.version>
+        <bootui.version>1.4.0</bootui.version>
         <bootstrap.version>5.3.8</bootstrap.version>
         <htmx.version>2.0.10</htmx.version>
         <font-awesome.version>7.2.0</font-awesome.version>
@@ -117,12 +117,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.modulith</groupId>
-            <artifactId>spring-modulith-actuator</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.modulith</groupId>
-            <artifactId>spring-modulith-observability</artifactId>
+            <artifactId>spring-modulith-starter-insight</artifactId>
             <scope>runtime</scope>
         </dependency>
         <dependency>
