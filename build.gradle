@@ -3,6 +3,7 @@ plugins {
     id "org.springframework.boot" version "4.1.0"
     id "io.spring.dependency-management" version "1.1.7"
     id "com.diffplug.spotless" version "8.6.0"
+    id "org.openrewrite.rewrite" version "7.34.0"
     id "net.ltgt.errorprone" version "5.1.0" // https://github.com/tbroyer/gradle-errorprone-plugin
     id "net.ltgt.nullaway" version "3.1.0" // https://github.com/tbroyer/gradle-nullaway-plugin
 }
@@ -24,7 +25,6 @@ configurations {
 
 repositories {
     mavenCentral()
-    maven { url = "https://repo.spring.io/milestone" }
 }
 
 ext {
@@ -56,11 +56,14 @@ nullaway {
 }
 
 dependencies {
+    rewrite platform("org.openrewrite.recipe:rewrite-recipe-bom:3.32.0")
+
     implementation "org.springframework.boot:spring-boot-starter-webmvc"
     implementation "org.springframework.boot:spring-boot-starter-validation"
     implementation "org.springframework.boot:spring-boot-starter-actuator"
     runtimeOnly "io.micrometer:micrometer-registry-prometheus"
 
+    runtimeOnly "javax.xml.bind:jaxb-api:2.3.1"
     implementation "org.springframework.boot:spring-boot-starter-security"
     
     implementation "org.springframework.boot:spring-boot-starter-opentelemetry"
@@ -108,6 +111,9 @@ dependencies {
     testImplementation "org.testcontainers:testcontainers-grafana"
     testRuntimeOnly "org.junit.platform:junit-platform-launcher"
     testImplementation "com.tngtech.archunit:archunit-junit5:${archunitVersion}"
+
+    rewrite "org.openrewrite.recipe:rewrite-spring"
+    rewrite "org.openrewrite.recipe:rewrite-testing-frameworks"
 }
 
 dependencyManagement {
@@ -125,12 +131,19 @@ tasks.named("test") {
     }
 }
 
+rewrite {
+    activeRecipe(
+        "org.openrewrite.java.spring.boot4.UpgradeSpringBoot_4_0",
+        "org.openrewrite.java.testing.testcontainers.TestContainersBestPractices"
+    )
+}
+
 spotless {
     java {
         target("src/*/java/**/*.java")
         importOrder()
         removeUnusedImports()
-        palantirJavaFormat("2.90.0")
+        palantirJavaFormat("2.92.0")
         formatAnnotations()
     }
 }

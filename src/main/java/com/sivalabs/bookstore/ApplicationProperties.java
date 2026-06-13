@@ -1,5 +1,6 @@
 package com.sivalabs.bookstore;
 
+import jakarta.validation.Valid;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -12,9 +13,9 @@ public record ApplicationProperties(
         String supportEmail,
         String newsletterJobCron,
         @DefaultValue("10") int postsPerPage,
-        JwtProperties jwt,
-        CorsProperties cors,
-        OpenAPIProperties openApi) {
+        @Valid JwtProperties jwt,
+        @Valid CorsProperties cors,
+        @Valid OpenAPIProperties openApi) {
     public record JwtProperties(
             @DefaultValue("SivaLabs") String issuer,
             @DefaultValue("604800") Long expiresInSeconds,
@@ -34,7 +35,7 @@ public record ApplicationProperties(
             String description,
 
             @DefaultValue("v1.0.0") String version,
-            Contact contact) {
+            @Valid Contact contact) {
 
         public record Contact(
                 @DefaultValue("SivaLabs") String name,
