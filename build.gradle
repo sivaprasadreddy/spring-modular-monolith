@@ -77,7 +77,7 @@ dependencies {
     implementation "org.springframework.modulith:spring-modulith-starter-core"
     implementation "org.springframework.modulith:spring-modulith-starter-jdbc"
     implementation "org.springframework.modulith:spring-modulith-events-amqp"
-    runtimeOnly "org.springframework.modulith:spring-modulith-actuator"
+    runtimeOnly "org.springframework.modulith:spring-modulith-observability-core"
 
     implementation "org.springframework.boot:spring-boot-starter-thymeleaf"
     implementation "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect"
