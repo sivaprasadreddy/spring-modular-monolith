@@ -22,14 +22,14 @@
         <spring-modulith.version>2.1.0</spring-modulith.version>
         <htmx-spring-boot-thymeleaf.version>5.1.0</htmx-spring-boot-thymeleaf.version>
         <datasource-micrometer-spring-boot.version>2.2.1</datasource-micrometer-spring-boot.version>
-        <bootui.version>1.4.0</bootui.version>
+        <bootui.version>1.5.2</bootui.version>
         <bootstrap.version>5.3.8</bootstrap.version>
         <htmx.version>2.0.10</htmx.version>
         <font-awesome.version>7.2.0</font-awesome.version>
-        <spotless.version>3.6.0</spotless.version>
+        <spotless.version>3.7.0</spotless.version>
         <palantir-java-format.version>2.92.0</palantir-java-format.version>
         <error_prone.version>2.49.0</error_prone.version>
-        <nullaway.version>0.13.5</nullaway.version>
+        <nullaway.version>0.13.7</nullaway.version>
         <archunit.version>1.4.2</archunit.version>
     </properties>
 
@@ -362,7 +362,7 @@
             <plugin>
                 <groupId>org.openrewrite.maven</groupId>
                 <artifactId>rewrite-maven-plugin</artifactId>
-                <version>6.41.0</version>
+                <version>6.42.0</version>
                 <configuration>
                     <exportDatatables>true</exportDatatables>
                     <activeRecipes>
@@ -374,12 +374,12 @@
                     <dependency>
                         <groupId>org.openrewrite.recipe</groupId>
                         <artifactId>rewrite-spring</artifactId>
-                        <version>6.32.1</version>
+                        <version>6.33.0</version>
                     </dependency>
                     <dependency>
                         <groupId>org.openrewrite.recipe</groupId>
                         <artifactId>rewrite-testing-frameworks</artifactId>
-                        <version>3.37.0</version>
+                        <version>3.40.0</version>
                     </dependency>
                 </dependencies>
             </plugin>
