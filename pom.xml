@@ -22,7 +22,7 @@
         <spring-modulith.version>2.1.0</spring-modulith.version>
         <htmx-spring-boot-thymeleaf.version>5.1.0</htmx-spring-boot-thymeleaf.version>
         <datasource-micrometer-spring-boot.version>2.2.1</datasource-micrometer-spring-boot.version>
-        <bootui.version>1.5.2</bootui.version>
+        <bootui.version>1.7.0</bootui.version>
         <bootstrap.version>5.3.8</bootstrap.version>
         <htmx.version>2.0.10</htmx.version>
         <font-awesome.version>7.2.0</font-awesome.version>
@@ -45,7 +45,7 @@
             <dependency>
                 <groupId>org.openrewrite.recipe</groupId>
                 <artifactId>rewrite-recipe-bom</artifactId>
-                <version>3.32.0</version>
+                <version>3.33.0</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -275,7 +275,7 @@
             <plugin>
                 <groupId>am.ik.maven</groupId>
                 <artifactId>nullability-maven-plugin</artifactId>
-                <version>0.4.0</version>
+                <version>0.4.1</version>
                 <extensions>true</extensions>
                 <configuration>
                     <checking>tests</checking>
