@@ -33,7 +33,7 @@ ext {
     set("htmxSpringBootVersion", "5.1.0")
     set("bootstrapVersion", "5.3.8")
     set("htmxVersion", "2.0.10")
-    set("fontawesomeVersion", "7.2.0")
+    set("fontawesomeVersion", "7.3.0")
     set("bootUIVersion", "1.10.0")
     set("archunitVersion", "1.4.2")
 }
