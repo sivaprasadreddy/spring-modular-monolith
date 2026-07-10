@@ -21,6 +21,10 @@ tasks:
     cmds:
       - "{{.MVNW}} spotless:apply"
 
+  gbuild:
+    cmds:
+      - "./gradlew spotlessApply build"
+
   build_image:
     cmds:
       - "{{.MVNW}} clean compile spring-boot:build-image -DskipTests -DdockerImageName={{.IMAGE_NAME}}"
