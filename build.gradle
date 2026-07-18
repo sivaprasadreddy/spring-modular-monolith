@@ -34,7 +34,7 @@ ext {
     set("bootstrapVersion", "5.3.8")
     set("htmxVersion", "2.0.10")
     set("fontawesomeVersion", "7.3.0")
-    set("bootUIVersion", "1.11.0")
+    set("bootUIVersion", "1.12.0")
     set("archunitVersion", "1.4.2")
 }
 
