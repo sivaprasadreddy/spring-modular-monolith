@@ -31,6 +31,7 @@
         <error_prone.version>2.49.0</error_prone.version>
         <nullaway.version>0.13.8</nullaway.version>
         <archunit.version>1.4.2</archunit.version>
+        <argLine/>
     </properties>
 
     <dependencyManagement>
@@ -317,6 +318,7 @@
                     </dependency>
                 </dependencies>
                 <configuration>
+                    <argLine>@{argLine} -javaagent:${org.mockito:mockito-core:jar}</argLine>
                     <forkedProcessExitTimeoutInSeconds>10</forkedProcessExitTimeoutInSeconds>
                     <reportFormat>plain</reportFormat>
                     <consoleOutputReporter>
@@ -382,6 +384,17 @@
                         <version>3.42.0</version>
                     </dependency>
                 </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>properties</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

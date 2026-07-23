@@ -21,6 +21,7 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+    mockitoAgent
 }
 
 repositories {
@@ -54,6 +55,8 @@ nullaway {
     onlyNullMarked = true
     jspecifyMode = true
 }
+
+//def mockitoAgent = configurations.create("mockitoAgent")
 
 dependencies {
     rewrite platform("org.openrewrite.recipe:rewrite-recipe-bom:3.35.0")
@@ -99,6 +102,7 @@ dependencies {
     errorprone "com.google.errorprone:error_prone_core:2.50.0" // https://github.com/google/error-prone
     errorprone "com.uber.nullaway:nullaway:0.13.8" // https://github.com/uber/NullAway
 
+    mockitoAgent("org.mockito:mockito-core") { transitive = false }
     testImplementation "org.springframework.boot:spring-boot-starter-webmvc-test"
     testImplementation "org.springframework.boot:spring-boot-starter-data-jpa-test"
     testImplementation "org.springframework.boot:spring-boot-starter-security-test"
@@ -123,6 +127,7 @@ dependencyManagement {
 }
 
 tasks.named("test") {
+    jvmArgs += "-javaagent:${configurations.mockitoAgent.asPath}"
     useJUnitPlatform()
     testLogging {
         events = ["PASSED", "FAILED", "SKIPPED"]
