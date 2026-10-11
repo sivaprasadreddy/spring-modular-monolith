@@ -26,7 +26,7 @@
         <bootstrap.version>5.3.8</bootstrap.version>
         <htmx.version>4.0.0</htmx.version>
         <font-awesome.version>7.3.0</font-awesome.version>
-        <spotless.version>3.10.1</spotless.version>
+        <spotless.version>3.10.4</spotless.version>
         <palantir-java-format.version>2.97.0</palantir-java-format.version>
         <error_prone.version>2.49.0</error_prone.version>
         <nullaway.version>0.13.8</nullaway.version>
