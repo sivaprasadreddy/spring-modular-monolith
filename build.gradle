@@ -2,9 +2,9 @@ plugins {
     id "java"
     id "org.springframework.boot" version "4.1.1"
     id "io.spring.dependency-management" version "1.1.7"
-    id "com.diffplug.spotless" version "8.10.1"
+    id "com.diffplug.spotless" version "8.10.4"
     id "net.ltgt.errorprone" version "5.1.1"
-    id "net.ltgt.nullaway" version "3.2.0"
+    id "net.ltgt.nullaway" version "3.3.0"
 }
 
 group = "com.sivalabs"
@@ -29,13 +29,13 @@ repositories {
 
 ext {
     set("springModulithVersion", "2.1.1")
-    set("datasourceMicrometerSpringBootVersion", "2.2.1")
-    set("htmxSpringBootVersion", "5.1.0")
+    set("datasourceMicrometerSpringBootVersion", "2.3.0")
+    set("htmxSpringBootVersion", "6.0.0")
     set("bootstrapVersion", "5.3.8")
     set("htmxVersion", "4.0.0")
     set("fontawesomeVersion", "7.3.0")
-    set("bootUIVersion", "1.15.0")
-    set("archunitVersion", "1.5.0")
+    set("bootUIVersion", "1.21.0")
+    set("archunitVersion", "1.5.1")
 }
 
 tasks.withType(JavaCompile).configureEach {
@@ -96,7 +96,7 @@ dependencies {
     implementation "com.julien-dubois.bootui:bootui-spring-boot-starter:${bootUIVersion}"
 
     errorprone "com.google.errorprone:error_prone_core:2.50.0" // https://github.com/google/error-prone
-    errorprone "com.uber.nullaway:nullaway:0.13.8" // https://github.com/uber/NullAway
+    errorprone "com.uber.nullaway:nullaway:0.14.2" // https://github.com/uber/NullAway
 
     mockitoAgent("org.mockito:mockito-core") { transitive = false }
     testImplementation "org.springframework.boot:spring-boot-starter-webmvc-test"
@@ -134,7 +134,7 @@ spotless {
         target("src/*/java/**/*.java")
         importOrder()
         removeUnusedImports()
-        palantirJavaFormat("2.97.0")
+        palantirJavaFormat("2.102.0")
         formatAnnotations()
     }
 }

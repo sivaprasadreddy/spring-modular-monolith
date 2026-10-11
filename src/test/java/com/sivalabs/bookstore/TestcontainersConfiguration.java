@@ -16,10 +16,10 @@ import org.testcontainers.rabbitmq.RabbitMQContainer;
 public class TestcontainersConfiguration {
 
     @Container
-    static RabbitMQContainer rabbitmq = new RabbitMQContainer(parse("rabbitmq:4.3.4-alpine"));
+    static RabbitMQContainer rabbitmq = new RabbitMQContainer(parse("rabbitmq:4.3.6-alpine"));
 
     @Container
-    static LgtmStackContainer lgtm = new LgtmStackContainer(parse("grafana/otel-lgtm:0.30.0"));
+    static LgtmStackContainer lgtm = new LgtmStackContainer(parse("grafana/otel-lgtm:0.36.0"));
 
     @Bean
     @ServiceConnection
