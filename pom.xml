@@ -22,7 +22,7 @@
         <spring-modulith.version>2.1.1</spring-modulith.version>
         <htmx-spring-boot-thymeleaf.version>6.0.0</htmx-spring-boot-thymeleaf.version>
         <datasource-micrometer-spring-boot.version>2.3.0</datasource-micrometer-spring-boot.version>
-        <bootui.version>1.21.0</bootui.version>
+        <bootui.version>2.0.0</bootui.version>
         <bootstrap.version>5.3.8</bootstrap.version>
         <htmx.version>4.0.0</htmx.version>
         <font-awesome.version>7.3.0</font-awesome.version>
