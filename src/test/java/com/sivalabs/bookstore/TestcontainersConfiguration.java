@@ -19,7 +19,7 @@ public class TestcontainersConfiguration {
     static RabbitMQContainer rabbitmq = new RabbitMQContainer(parse("rabbitmq:4.3.6-alpine"));
 
     @Container
-    static LgtmStackContainer lgtm = new LgtmStackContainer(parse("grafana/otel-lgtm:0.36.0"));
+    static LgtmStackContainer lgtm = new LgtmStackContainer(parse("grafana/otel-lgtm:0.37.0"));
 
     @Bean
     @ServiceConnection
