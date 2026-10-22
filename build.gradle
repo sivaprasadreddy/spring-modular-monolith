@@ -28,7 +28,7 @@ repositories {
 }
 
 ext {
-    set("springModulithVersion", "2.1.1")
+    set("springModulithVersion", "2.1.2")
     set("datasourceMicrometerSpringBootVersion", "2.3.0")
     set("htmxSpringBootVersion", "6.0.1")
     set("bootstrapVersion", "5.3.8")
