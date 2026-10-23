@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.1.1</version>
+        <version>4.1.2</version>
         <relativePath/>
     </parent>
     <groupId>com.sivalabs</groupId>
@@ -19,7 +19,7 @@
     <properties>
         <java.version>25</java.version>
         <dockerImageName>sivaprasadreddy/${project.artifactId}</dockerImageName>
-        <spring-modulith.version>2.1.1</spring-modulith.version>
+        <spring-modulith.version>2.1.2</spring-modulith.version>
         <htmx-spring-boot-thymeleaf.version>6.0.1</htmx-spring-boot-thymeleaf.version>
         <datasource-micrometer-spring-boot.version>2.3.0</datasource-micrometer-spring-boot.version>
         <bootui.version>2.1.0</bootui.version>
@@ -28,8 +28,8 @@
         <font-awesome.version>7.3.0</font-awesome.version>
         <spotless.version>3.10.4</spotless.version>
         <palantir-java-format.version>2.102.0</palantir-java-format.version>
-        <error_prone.version>2.49.0</error_prone.version>
-        <nullaway.version>0.13.8</nullaway.version>
+        <error_prone.version>2.51.0</error_prone.version>
+        <nullaway.version>0.14.3</nullaway.version>
         <archunit.version>1.5.1</archunit.version>
         <argLine/>
     </properties>
