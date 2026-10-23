@@ -96,7 +96,7 @@ dependencies {
     implementation "com.julien-dubois.bootui:bootui-spring-boot-starter:${bootUIVersion}"
 
     errorprone "com.google.errorprone:error_prone_core:2.50.0" // https://github.com/google/error-prone
-    errorprone "com.uber.nullaway:nullaway:0.14.2" // https://github.com/uber/NullAway
+    errorprone "com.uber.nullaway:nullaway:0.14.3" // https://github.com/uber/NullAway
 
     mockitoAgent("org.mockito:mockito-core") { transitive = false }
     testImplementation "org.springframework.boot:spring-boot-starter-webmvc-test"
