@@ -1,6 +1,8 @@
 name: Maven Build
 
 on:
+  pull_request:
+  merge_group:
   push:
     branches:
       - "main"
