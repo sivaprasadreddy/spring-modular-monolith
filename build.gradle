@@ -32,7 +32,7 @@ ext {
     set("datasourceMicrometerSpringBootVersion", "2.3.0")
     set("htmxSpringBootVersion", "6.0.1")
     set("bootstrapVersion", "5.3.8")
-    set("htmxVersion", "4.0.0")
+    set("htmxVersion", "4.0.1")
     set("fontawesomeVersion", "7.3.0")
     set("bootUIVersion", "2.2.0")
     set("archunitVersion", "1.5.1")
