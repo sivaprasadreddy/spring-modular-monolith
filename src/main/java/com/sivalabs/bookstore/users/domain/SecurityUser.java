@@ -1,16 +1,12 @@
 package com.sivalabs.bookstore.users.domain;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Set;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-public class SecurityUser implements UserDetails, Serializable {
-    @Serial
-    private static final long serialVersionUID = 1L;
+public class SecurityUser implements UserDetails {
 
     private final Long id;
     private final String name;

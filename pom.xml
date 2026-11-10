@@ -27,7 +27,7 @@
         <htmx.version>4.0.1</htmx.version>
         <font-awesome.version>7.3.0</font-awesome.version>
         <spotless.version>3.11.0</spotless.version>
-        <palantir-java-format.version>2.102.0</palantir-java-format.version>
+        <palantir-java-format.version>2.103.0</palantir-java-format.version>
         <error_prone.version>2.51.0</error_prone.version>
         <nullaway.version>0.14.3</nullaway.version>
         <archunit.version>1.5.1</archunit.version>
@@ -337,6 +337,7 @@
                 <version>${spotless.version}</version>
                 <configuration>
                     <java>
+                        <shortenFullyQualifiedTypes/>
                         <importOrder />
                         <removeUnusedImports />
                         <palantirJavaFormat>

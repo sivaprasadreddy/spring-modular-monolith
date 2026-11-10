@@ -132,9 +132,10 @@ tasks.named("test") {
 spotless {
     java {
         target("src/*/java/**/*.java")
+        shortenFullyQualifiedTypes()
         importOrder()
         removeUnusedImports()
-        palantirJavaFormat("2.102.0")
+        palantirJavaFormat("2.103.0")
         formatAnnotations()
     }
 }
