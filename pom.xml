@@ -24,7 +24,7 @@
         <datasource-micrometer-spring-boot.version>2.3.1</datasource-micrometer-spring-boot.version>
         <bootui.version>2.4.0</bootui.version>
         <bootstrap.version>5.3.8</bootstrap.version>
-        <htmx.version>4.0.1</htmx.version>
+        <htmx.version>4.0.2</htmx.version>
         <font-awesome.version>7.3.0</font-awesome.version>
         <spotless.version>3.11.0</spotless.version>
         <palantir-java-format.version>2.103.0</palantir-java-format.version>
