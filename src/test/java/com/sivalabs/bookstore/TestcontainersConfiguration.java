@@ -24,7 +24,7 @@ public class TestcontainersConfiguration {
     @Bean
     @ServiceConnection
     PostgreSQLContainer postgres() {
-        return new PostgreSQLContainer(parse("postgres:18-alpine"));
+        return new PostgreSQLContainer(parse("postgres:19-alpine"));
     }
 
     @Bean
